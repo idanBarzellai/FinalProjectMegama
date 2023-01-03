@@ -280,7 +280,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         }
     }
 
-    public void JoinRoomn(RoomInfo roomInfo)
+    public void JoinRoom(RoomInfo roomInfo)
     {
         PhotonNetwork.JoinRoom(roomInfo.Name);
 

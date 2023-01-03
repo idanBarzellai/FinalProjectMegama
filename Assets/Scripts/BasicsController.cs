@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
 public class BasicsController : MonoBehaviourPunCallbacks
 {
@@ -24,18 +23,16 @@ public class BasicsController : MonoBehaviourPunCallbacks
     protected Rigidbody rb;
     private Animator anim;
 
-    private Vector3 dashDirection;
-    private Vector3 moveDir;
-    private float activeSpeed;
-    private float moveSpeed = 8f, runSpeed = 12f;
+    private Vector3 dashDirection, moveDir;
+    private float activeSpeed, moveSpeed = 8f;
 
     private float lastTimeDashed = 0f, dashCooldown = 1f;
 
     private float shotForce = 5f;
 
-    private bool inSkill = false;
-    private bool isStaticSkill = false;
-    private bool isRotationStaticSkill = false;
+    private bool inSkill = false, isStaticSkill = false, isRotationStaticSkill = false;
+    protected float skillCooldown = 5f, skillLastUseTime = 0f;
+
 
     private float verticalRotStore;
     private Vector2 mouseInput;
@@ -60,7 +57,10 @@ public class BasicsController : MonoBehaviourPunCallbacks
         activeSpeed = moveSpeed;
 
         currHealth = maxHelath;
+        skillLastUseTime = Time.time;
         UIController.instance.healthSlider.maxValue = maxHelath;
+        UIController.instance.skillSlider.maxValue = skillCooldown;
+
 
     }
 
@@ -69,6 +69,9 @@ public class BasicsController : MonoBehaviourPunCallbacks
         if (photonView.IsMine &&!isDead)
         {
             UIController.instance.healthSlider.value = currHealth;
+            UIController.instance.skillSlider.value =  Time.time - skillLastUseTime;
+
+
             // Reset isGrounded
             if (Physics.Raycast(transform.position, Vector3.down, rayhit, LayerMask.GetMask("Ground")))
                 setGrounded(true);
@@ -140,6 +143,13 @@ public class BasicsController : MonoBehaviourPunCallbacks
                 // Moving
                 transform.Translate(moveDir.normalized * activeSpeed * Time.deltaTime);
 
+            // Skill trigger
+            if (Time.time - skillLastUseTime > skillCooldown && Input.GetKeyDown(KeyCode.Q))
+            {
+                SkillTrigger();
+                skillLastUseTime = Time.time;
+            }
+
             if (Input.GetMouseButtonDown(0))
                 Shoot();
 
@@ -151,6 +161,10 @@ public class BasicsController : MonoBehaviourPunCallbacks
                 if (Input.GetMouseButtonDown(0))//&& !UIController.instance.optionsScreen.activeInHierarchy)
                     Cursor.lockState = CursorLockMode.Locked;
 
+            if (Input.GetKey(KeyCode.Equals))
+            {
+                UIController.instance.MainMenu();
+            }
         }
     }
 
@@ -231,6 +245,11 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     }
 
+    virtual protected void SkillTrigger()
+    {
+        SetInSkill(true);
+
+    }
 
 
     public void freezeMovement(bool toFreeze)

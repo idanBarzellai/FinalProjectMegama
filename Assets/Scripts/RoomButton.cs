@@ -19,6 +19,6 @@ public class RoomButton : MonoBehaviour
 
     public void OpenRoom()
     {
-        Launcher.instance.JoinRoomn(info);
+        Launcher.instance.JoinRoom(info);
     }
 }

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,5 +16,12 @@ public class UIController : MonoBehaviour
     public GameObject deathScreen;
     public TMP_Text deathText;
 
-    public Slider healthSlider;
+    public Slider healthSlider, skillSlider;
+    public Image skillSliderFillColor;
+
+
+    public void MainMenu()
+    {
+        PhotonNetwork.LoadLevel(0);
+    }
 }

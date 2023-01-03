@@ -9,7 +9,6 @@ public class EarthPlayer : BasicsController
 
     private int linePoints = 25;
     private float timeBetweenpoints = 0.1f;
-    private float skillDuration = 3f;
     public LayerMask floorCollisionMask;
 
     public GameObject ShowLandImpact;
@@ -24,14 +23,19 @@ public class EarthPlayer : BasicsController
     float upwordForce = 20;
 
 
+    protected override void Start()
+    {
+        base.Start();
+        UIController.instance.skillSliderFillColor.color = Color.magenta;
 
+
+    }
     protected override void Update()
     {
         base.Update();
         if (photonView.IsMine)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
-                skillStarted();
+            
             if (Input.GetKeyUp(KeyCode.Q))
                 earthSkill();
         }
@@ -60,11 +64,10 @@ public class EarthPlayer : BasicsController
         }
 
     }
-
-    private void skillStarted()
+    protected override void SkillTrigger()
     {
+        base.SkillTrigger();
         lineRenderer.enabled = true;
-        SetInSkill(true);
         SetIsStaticSkill(true);
         SetFallMultiplyer(addedFallForce);
     }

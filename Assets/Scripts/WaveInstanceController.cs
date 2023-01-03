@@ -6,7 +6,7 @@ using WebSocketSharp;
 
 public class WaveInstanceController : SkillInstanceController
 {
-    float pushForce = 50f;
+    float pushForce = 10f;
 
     protected override void Start()
     {

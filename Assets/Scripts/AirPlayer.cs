@@ -8,21 +8,30 @@ public class AirPlayer : BasicsController
 {
 
     private float skillDuration = 3f;
-    float dmg = 3;
     bool playerInMidAir = false;
     bool gettingLargerScale = false;
     float maxRadius = 6f;
 
     public GameObject ImpactArea;
 
+    protected override void Start()
+    {
+        base.Start();
+        UIController.instance.skillSliderFillColor.color = Color.white;
+
+
+    }
     protected override void Update()
     {
         base.Update();
 
         if (photonView.IsMine)
         {
-            if (Input.GetKeyDown(KeyCode.Q)) // Jump
-                airSkill();
+            //if (Time.time - skillLastUseTime > skillCooldown && Input.GetKeyDown(KeyCode.Q))
+            //{
+            //    airSkill();
+            //    skillLastUseTime = Time.time;
+            //}
 
             if (!playerInMidAir && GetInSkill() && rb.velocity.y <= 0.005)
             {
@@ -36,9 +45,9 @@ public class AirPlayer : BasicsController
         }
     }
 
-    private void airSkill()
+    protected override void SkillTrigger()
     {
-        SetInSkill(true);
+        base.SkillTrigger();
         photonView.RPC("SetAnim", RpcTarget.All, "Skill");
         ImpactArea.GetComponent<SkillInstanceController>().SetName(photonView.Owner.NickName);
         StartCoroutine(createAOEDamage());

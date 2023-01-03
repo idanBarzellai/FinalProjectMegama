@@ -13,7 +13,6 @@ public class SkillHelper4 : MonoBehaviour
 
     private Rigidbody playerRb;
 
-    private float skillDuration = 3f;
     public LayerMask floorCollisionMask;
 
     public CharcterController player;

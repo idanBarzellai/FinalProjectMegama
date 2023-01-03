@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class FirePlayer : BasicsController
 {
-    private float fireTrailDur = 5f;
     private float fireInstanceCreationRate = 0.3f;
     private int fireTrailCounter = 0;
     private int fireTrailMax = 10;
@@ -14,15 +13,20 @@ public class FirePlayer : BasicsController
 
     public GameObject fireTrail;
     public List<GameObject> firetrailInstances = new List<GameObject>();
+    protected override void Start()
+    {
+        base.Start();
+        UIController.instance.skillSliderFillColor.color = Color.red;
 
+
+    }
 
     protected override void Update()
     {
         base.Update();
         if (photonView.IsMine)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
-                fireSkill();
+            
 
             if (fireTrailCounter == fireTrailMax)
             {
@@ -31,14 +35,14 @@ public class FirePlayer : BasicsController
             }
         }
     }
-
-    private void fireSkill()
+    protected override void SkillTrigger()
     {
-        SetInSkill(true);
+        base.SkillTrigger();
         SetSpeed(runningSpeed);
         photonView.RPC("SetAnim", RpcTarget.All, "Skill");
         InvokeRepeating("fireSkillHelper", 0.5f, fireInstanceCreationRate);
     }
+
 
     private void resetVariables()
     {

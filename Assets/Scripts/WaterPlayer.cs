@@ -8,23 +8,31 @@ public class WaterPlayer : BasicsController
     Vector3 dir;
     Vector3 wavePos = new Vector3(0,-2, 0);
     private float skillDuration = 3f;
-    float pushForce = 6f;
     float skilljump = 0.7f;
-    float dmg = 15;
     bool playerInMidAir = false;
     bool skillCanceled = false;
 
     public GameObject impactArea;
     private GameObject impactAreaInstance;
 
+    protected override void Start()
+    {
+        base.Start();
+        UIController.instance.skillSliderFillColor.color = Color.blue;
 
+
+    }
     protected override void Update()
     {
         base.Update();
         if (photonView.IsMine)
         {
-            if (Input.GetKeyDown(KeyCode.Q)) 
-                waterSkill();
+            //if (Time.time - skillLastUseTime > skillCooldown && Input.GetKeyDown(KeyCode.Q))
+            //{
+            //    waterSkill();
+            //    skillLastUseTime = Time.time;
+            //}
+            
             if (Input.GetKeyUp(KeyCode.Q))
                 resetVariables();
 
@@ -41,8 +49,7 @@ public class WaterPlayer : BasicsController
     }
 
 
-
-    private void waterSkill()
+    protected override void SkillTrigger()
     {
         dir = transform.forward;
         dir = transform.InverseTransformDirection(dir);
@@ -52,6 +59,7 @@ public class WaterPlayer : BasicsController
         waterSkillHelper();
         Jump(skilljump);
     }
+
 
     private void waterSkillHelper()
     {
