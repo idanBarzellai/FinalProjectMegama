@@ -32,22 +32,24 @@ public class FirePlayer : BasicsController
         }
     }
 
+    private void fireSkill()
+    {
+        SetInSkill(true);
+        SetSpeed(runningSpeed);
+        photonView.RPC("SetAnim", RpcTarget.All, "Skill");
+        InvokeRepeating("fireSkillHelper", 0.5f, fireInstanceCreationRate);
+    }
+
     private void resetVariables()
     {
         CancelInvoke("fireSkillHelper");
         SetSpeed(regSpeed);
         SetInSkill(false);
-        SetAnim("SkillEnd");
+        photonView.RPC("SetAnim", RpcTarget.All, "SkillEnd");
         fireTrailCounter = 0;
     }
 
-    private void fireSkill()
-    {
-        SetInSkill(true);
-        SetSpeed(runningSpeed);
-        SetAnim("Skill");
-        InvokeRepeating("fireSkillHelper", 0.5f, fireInstanceCreationRate);
-    }
+   
 
     private void fireSkillHelper()
     {

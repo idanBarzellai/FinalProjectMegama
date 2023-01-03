@@ -38,6 +38,7 @@ MonoBehaviour:
   - DestroyRpc
   - DealDamage
   - PushedForce
+  - SetAnim
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

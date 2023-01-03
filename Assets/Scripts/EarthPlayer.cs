@@ -114,7 +114,7 @@ public class EarthPlayer : BasicsController
         playerLeapedFromGround = true;
 
         rb.AddForce(transform.forward * forwardForce + new Vector3(0, upwordForce * 1.5f, 0), ForceMode.Impulse);
-        SetAnim("Skill");
+        photonView.RPC("SetAnim", RpcTarget.All, "Skill");
 
     }
 
@@ -132,7 +132,7 @@ public class EarthPlayer : BasicsController
     private void resetVariables()
     {
         SetFallMultiplyer(basicFallForce);
-        SetAnim("SkillEnd");
+        photonView.RPC("SetAnim", RpcTarget.All, "SkillEnd");
         SetIsStaticSkill(false);
 
         SetInSkill(false);

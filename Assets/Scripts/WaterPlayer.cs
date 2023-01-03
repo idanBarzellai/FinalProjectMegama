@@ -59,9 +59,9 @@ public class WaterPlayer : BasicsController
         SetInSkill(true);
         SetIsStaticSkill(true);
         SetIsRotationStaticSkill(true);
-        SetAnim("Skill");  
+        photonView.RPC("SetAnim", RpcTarget.All, "Skill");
 
-        impactAreaInstance= PhotonNetwork.Instantiate(impactArea.name, transform.position - wavePos, transform.rotation);
+        impactAreaInstance = PhotonNetwork.Instantiate(impactArea.name, transform.position - wavePos, transform.rotation);
         impactAreaInstance.GetComponent<SkillInstanceController>().SetName(photonView.Owner.NickName);
         StartCoroutine(EndSkill());
 
@@ -74,7 +74,7 @@ public class WaterPlayer : BasicsController
         SetIsStaticSkill(false);
         SetIsRotationStaticSkill(false);
 
-        SetAnim("SkillEnd");
+        photonView.RPC("SetAnim", RpcTarget.All, "SkillEnd");
 
         playerInMidAir = false;
         rb.useGravity = true;

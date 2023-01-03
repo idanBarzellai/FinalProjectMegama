@@ -340,7 +340,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1448372210351852479}
-  m_Material: {fileID: 13400000, guid: 9d2c7c8867519dd4eae22e3aa5e6a066, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -407,7 +407,7 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: SkillEnd
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 1
     LayerIndex: 0
 --- !u!114 &5268265052445824854
 MonoBehaviour:
@@ -486,9 +486,57 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2256996609862766853}
     m_Modifications:
+    - target: {fileID: 905421632044996942, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: distPower
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199769830716641108, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: m_Height
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199769830716641108, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199769830716641108, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199769830716641108, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199769830716641108, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: m_Center.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199769830716641108, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199769830716641108, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199769830716641109, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1199769830716641110, guid: fbc289376161828478080458199ad40a, type: 3}
       propertyPath: m_RootOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199769830716641110, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199769830716641110, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199769830716641110, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1199769830716641110, guid: fbc289376161828478080458199ad40a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -530,16 +578,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1199769830716641111, guid: fbc289376161828478080458199ad40a, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1199769830716641113, guid: fbc289376161828478080458199ad40a, type: 3}
       propertyPath: m_Name
       value: AirSkill
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1199769830716641111, guid: fbc289376161828478080458199ad40a, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbc289376161828478080458199ad40a, type: 3}
 --- !u!1 &4743030604366730846 stripped
 GameObject:

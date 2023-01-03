@@ -15,7 +15,9 @@ public class PlayerSpawner : MonoBehaviour
     public GameObject[] playerPrefabs;
     private GameObject player;
     private float respawnTime = 1.5f;
-  
+    private float deathAnimTime = 1f;
+
+
     void Start()
     {
         if(PhotonNetwork.IsConnected)
@@ -40,12 +42,15 @@ public class PlayerSpawner : MonoBehaviour
 
         if (player)
         {
+            player.GetPhotonView().RPC("SetAnim", RpcTarget.All, "Dead");
+
             StartCoroutine(DieCo());
         }
     }
 
     public IEnumerator DieCo()
     {
+        yield return new WaitForSecondsRealtime(deathAnimTime);
         PhotonNetwork.Destroy(player);
         UIController.instance.deathScreen.SetActive(true);
 

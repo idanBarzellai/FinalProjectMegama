@@ -6,7 +6,7 @@ using WebSocketSharp;
 
 public class EarthshockInstanceController : SkillInstanceController
 {
-    float pushForce = 15f;
+    float pushForce = 6f;
 
     protected override void Start()
     {

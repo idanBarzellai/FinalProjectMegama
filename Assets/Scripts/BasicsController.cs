@@ -44,6 +44,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     public int maxHelath = 100;
     private int currHealth;
+    private bool isDead = false;
 
 
     protected virtual void Start()
@@ -65,7 +66,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     protected virtual void Update()
     {
-        if (photonView.IsMine)
+        if (photonView.IsMine &&!isDead)
         {
             UIController.instance.healthSlider.value = currHealth;
             // Reset isGrounded
@@ -100,7 +101,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
             if (!isGrounded && rb.velocity.y > 0)
                 rb.velocity += Vector3.up * Physics.gravity.y * Time.deltaTime;
 
-            anim.SetTrigger((Math.Abs(moveDir.x) > 0 || Math.Abs(moveDir.z) > 0) ? "Run" : "Idle");
+            photonView.RPC("SetAnim", RpcTarget.All, (Math.Abs(moveDir.x) > 0 || Math.Abs(moveDir.z) > 0) ? "Run" : "Idle");
 
             if (!inSkill)
             {
@@ -165,7 +166,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void DealDamage(int dmg, string damager = "default")
     {
-        TakeDamage(dmg, damager);
+        if(!isDead)
+            TakeDamage(dmg, damager);
     }
     public void TakeDamage(int dmg, string damager)
     {
@@ -175,6 +177,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
             
             if(currHealth <= 0)
             {
+                isDead = true;
                 PlayerSpawner.instance.Die(damager);
 
             }
@@ -186,6 +189,12 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     [PunRPC]
     public void PushedForce(Vector3 dir)
+    {
+        if (!isDead)
+            PushHandler(dir);
+        
+    }
+    private void PushHandler(Vector3 dir)
     {
         if (photonView.IsMine)
         {
@@ -201,7 +210,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     private void Dash(Vector3 dir)
     {
-        anim.SetTrigger("Dash");
+
+        photonView.RPC("SetAnim", RpcTarget.All, "Dash");
         dir.y += 0.5f;
         rb.AddForce(dir.normalized * dashForce, ForceMode.Impulse);
 
@@ -211,7 +221,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     private void Shoot()
     {
-        anim.SetTrigger("Attack");
+        photonView.RPC("SetAnim", RpcTarget.All, "Attack");
 
         GameObject shot = PhotonNetwork.Instantiate(shootPlaceholder.name, shootingPoint.position, Quaternion.identity);
         Debug.Log("nickname set to this shot is: " + photonView.Owner.NickName);
@@ -266,9 +276,17 @@ public class BasicsController : MonoBehaviourPunCallbacks
         isRotationStaticSkill = isStatic;
     }
 
-    protected void SetAnim(string animName)
+    [PunRPC]
+    public void SetAnim(string animName)
     {
-        anim.SetTrigger(animName);
+        animSetter(animName);
+    }
+
+    private void animSetter(string animName)
+    {
+        if(photonView.IsMine)   
+            anim.SetTrigger(animName);
+
     }
 
     protected void SetSpeed(float speed)

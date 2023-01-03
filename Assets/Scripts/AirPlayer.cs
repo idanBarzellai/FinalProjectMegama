@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,14 @@ public class AirPlayer : BasicsController
     float dmg = 3;
     bool playerInMidAir = false;
     bool gettingLargerScale = false;
+    float maxRadius = 6f;
 
     public GameObject ImpactArea;
 
     protected override void Update()
     {
         base.Update();
+
         if (photonView.IsMine)
         {
             if (Input.GetKeyDown(KeyCode.Q)) // Jump
@@ -26,7 +29,7 @@ public class AirPlayer : BasicsController
                 StartCoroutine(airSKillHelper());
             }
 
-            if (ImpactArea.transform.localScale.x <= 6f && gettingLargerScale)
+            if (ImpactArea.transform.localScale.x <= maxRadius && gettingLargerScale)
             {
                 ImpactArea.transform.localScale += new Vector3(0.5f, 0, 0.5f);
             }
@@ -36,7 +39,7 @@ public class AirPlayer : BasicsController
     private void airSkill()
     {
         SetInSkill(true);
-        SetAnim("Skill");
+        photonView.RPC("SetAnim", RpcTarget.All, "Skill");
         ImpactArea.GetComponent<SkillInstanceController>().SetName(photonView.Owner.NickName);
         StartCoroutine(createAOEDamage());
         Jump();
@@ -57,7 +60,7 @@ public class AirPlayer : BasicsController
         SetInSkill(false);
         playerInMidAir = false;
         rb.useGravity = true;
-        SetAnim("SkillEnd");
+        photonView.RPC("SetAnim", RpcTarget.All, "SkillEnd");
     }
 
     private IEnumerator createAOEDamage(float dmg = 1f)
@@ -66,14 +69,19 @@ public class AirPlayer : BasicsController
         ImpactArea.GetComponent<MeshRenderer>().enabled = true;
         ImpactArea.GetComponent<CapsuleCollider>().enabled = true;
         gettingLargerScale = true;
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(1f);
         gettingLargerScale = false;
 
         ImpactArea.GetComponent<MeshRenderer>().enabled = false;
         ImpactArea.GetComponent<CapsuleCollider>().enabled = false;
-        ImpactArea.transform.localScale = new Vector3(1, 0.4f, 1);
+        ImpactArea.transform.localScale = new Vector3(1f, 0.2f, 1f);
 
 
+    }
+
+    public float GetAirWaveRadius()
+    {
+        return maxRadius;
     }
 
     
