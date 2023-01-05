@@ -15,13 +15,16 @@ public class UIController : MonoBehaviour
     }
     public GameObject deathScreen;
     public TMP_Text deathText;
+    public TMP_Text respawntext;
+
 
     public Slider healthSlider, skillSlider;
     public Image skillSliderFillColor;
 
 
-    public void MainMenu()
+    public void Respawn()
     {
-        PhotonNetwork.LoadLevel(0);
+        respawntext.gameObject.SetActive(false);
+        deathText.text = "Respawing...";
     }
 }

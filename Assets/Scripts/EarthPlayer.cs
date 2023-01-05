@@ -13,9 +13,12 @@ public class EarthPlayer : BasicsController
 
     public GameObject ShowLandImpact;
     public GameObject impactArea;
+    public ParticleSystem impactAreaEffect;
+
     Vector3 dir;
 
     bool playerLeapedFromGround = false;
+    bool skillTriggered = false;
     float basicFallForce = 3f;
     float addedFallForce = 8f;
 
@@ -26,7 +29,8 @@ public class EarthPlayer : BasicsController
     protected override void Start()
     {
         base.Start();
-        UIController.instance.skillSliderFillColor.color = Color.magenta;
+        if(photonView.IsMine)
+            UIController.instance.skillSliderFillColor.color = Color.magenta;
 
 
     }
@@ -35,9 +39,13 @@ public class EarthPlayer : BasicsController
         base.Update();
         if (photonView.IsMine)
         {
-            
-            if (Input.GetKeyUp(KeyCode.Q))
+
+            if (!skillTriggered && GetInSkill() && Input.GetKeyUp(KeyCode.Q) && isGrounded)
+            {
+                skillTriggered = true;
+
                 earthSkill();
+            }
         }
     }
     protected override void LateUpdate()
@@ -57,6 +65,9 @@ public class EarthPlayer : BasicsController
             if (GetInSkill() && !lineRenderer.enabled && playerLeapedFromGround && isGrounded)
             {
                 impactArea.GetComponent<SkillInstanceController>().SetName(photonView.Owner.NickName);
+                photonView.RPC("triggerEffect", RpcTarget.All);
+                resetVariables();
+
                 StartCoroutine(createAOEDamage());
                 playerLeapedFromGround = false;
 
@@ -123,13 +134,13 @@ public class EarthPlayer : BasicsController
 
     public IEnumerator createAOEDamage()
     {
-        impactArea.GetComponent<MeshRenderer>().enabled = true;
+
+        //impactArea.GetComponent<MeshRenderer>().enabled = true;
         impactArea.GetComponent<SphereCollider>().enabled = true;
         yield return new WaitForSecondsRealtime(0.5f);
 
-        impactArea.GetComponent<MeshRenderer>().enabled = false;
+        //impactArea.GetComponent<MeshRenderer>().enabled = false;
         impactArea.GetComponent<SphereCollider>().enabled = false;
-        resetVariables();
     }
 
     private void resetVariables()
@@ -137,9 +148,18 @@ public class EarthPlayer : BasicsController
         SetFallMultiplyer(basicFallForce);
         photonView.RPC("SetAnim", RpcTarget.All, "SkillEnd");
         SetIsStaticSkill(false);
-
         SetInSkill(false);
+        skillTriggered = false;
+
+
     }
 
-    
+
+
+    [PunRPC]
+    public void triggerEffect()
+    {
+        impactAreaEffect.Play();
+
+    }
 }

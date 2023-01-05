@@ -7,6 +7,7 @@ using WebSocketSharp;
 public class ShotController : MonoBehaviourPunCallbacks
 {
     public GameObject hitEffect;
+    private Vector3 offset = new Vector3(0, 1.5f, 0);
     public string playerName;
     int dmg = 10;
     float lifetime = 5f;
@@ -23,8 +24,8 @@ public class ShotController : MonoBehaviourPunCallbacks
         {
             if (other.CompareTag("Player") && other.gameObject.GetPhotonView().Owner.NickName != playerName)
             {
-                PhotonNetwork.Instantiate(hitEffect.name, other.gameObject.transform.position, Quaternion.identity);
-                other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All,dmg ,playerName);
+                PhotonNetwork.Instantiate(hitEffect.name, other.gameObject.transform.position + offset, Quaternion.identity);
+                other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All,dmg , Vector3.zero,playerName);
             }
         }
 

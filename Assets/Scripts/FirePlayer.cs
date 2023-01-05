@@ -8,6 +8,7 @@ public class FirePlayer : BasicsController
     private float fireInstanceCreationRate = 0.3f;
     private int fireTrailCounter = 0;
     private int fireTrailMax = 10;
+    private float fireTrailCreation = 0.2f;
     private float runningSpeed = 18f;
     private float regSpeed = 8f;
 
@@ -16,7 +17,8 @@ public class FirePlayer : BasicsController
     protected override void Start()
     {
         base.Start();
-        UIController.instance.skillSliderFillColor.color = Color.red;
+        if (photonView.IsMine)
+            UIController.instance.skillSliderFillColor.color = Color.red;
 
 
     }
@@ -25,22 +27,15 @@ public class FirePlayer : BasicsController
     {
         base.Update();
         if (photonView.IsMine)
-        {
-            
-
             if (fireTrailCounter == fireTrailMax)
-            {
                 resetVariables();
-
-            }
-        }
     }
     protected override void SkillTrigger()
     {
         base.SkillTrigger();
         SetSpeed(runningSpeed);
         photonView.RPC("SetAnim", RpcTarget.All, "Skill");
-        InvokeRepeating("fireSkillHelper", 0.5f, fireInstanceCreationRate);
+        InvokeRepeating("fireSkillHelper", fireTrailCreation, fireInstanceCreationRate);
     }
 
 
@@ -59,7 +54,7 @@ public class FirePlayer : BasicsController
     {
         GameObject fireTrailInstance = PhotonNetwork.Instantiate(fireTrail.name, transform.position, transform.rotation);
         fireTrailInstance.GetComponent<SkillInstanceController>().SetName(photonView.Owner.NickName);
-        //Destroy(fireTrailInstance, fireTrailDur);
+        StartCoroutine(SkillManager.instance.DestroyOvertime(3f, fireTrailInstance));
         fireTrailCounter++;
     }
 }

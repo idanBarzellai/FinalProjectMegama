@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Enemy
   - AOEattack
+  - DeadHead
   layers:
   - Default
   - TransparentFX
@@ -15,11 +16,11 @@ TagManager:
   - Ground
   - Water
   - UI
+  - Player
+  - Skill
   - 
   - 
-  - 
-  - 
-  - 
+  - DeadBodyParts
   - 
   - 
   - 

@@ -15,8 +15,6 @@ public class PlayerSpawner : MonoBehaviour
     public GameObject[] playerPrefabs;
     private GameObject player;
     private float respawnTime = 1.5f;
-    private float deathAnimTime = 1f;
-
 
     void Start()
     {
@@ -28,6 +26,8 @@ public class PlayerSpawner : MonoBehaviour
 
     public void SpawnPlayer()
     {
+        UIController.instance.skillSlider.gameObject.SetActive(true);
+        UIController.instance.healthSlider.gameObject.SetActive(true);
         Transform spawnPoint = SpawnManager.instance.GetSpawnPoint();
 
         GameObject playerToSpawn = playerPrefabs[Random.Range(0, playerPrefabs.Length)];
@@ -38,28 +38,33 @@ public class PlayerSpawner : MonoBehaviour
     {
 
         UIController.instance.deathText.text = "You were killed by " + killingPlayer;
-
-
-        if (player)
-        {
-            player.GetPhotonView().RPC("SetAnim", RpcTarget.All, "Dead");
-
-            StartCoroutine(DieCo());
-        }
+        UIController.instance.respawntext.gameObject.SetActive(true);
+        UIController.instance.deathScreen.SetActive(true);
+        UIController.instance.skillSlider.gameObject.SetActive(false);
+        UIController.instance.healthSlider.gameObject.SetActive(false);
     }
 
-    public IEnumerator DieCo()
+    public void ReSpawn()
     {
-        yield return new WaitForSecondsRealtime(deathAnimTime);
-        PhotonNetwork.Destroy(player);
-        UIController.instance.deathScreen.SetActive(true);
+        StartCoroutine(SpawnCo());
+    }
+
+    public IEnumerator SpawnCo()
+    {
+        if (player)
+        {
+            // Make sure all instances of instatieted objects are destoried
+
+            PhotonNetwork.Destroy(player);
+        }
+        UIController.instance.Respawn();
 
         yield return new WaitForSecondsRealtime(respawnTime);
 
         UIController.instance.deathScreen.SetActive(false);
-
         SpawnPlayer();
 
-
     }
+
+
 }

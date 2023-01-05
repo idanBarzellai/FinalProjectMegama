@@ -1118,8 +1118,9 @@ MonoBehaviour:
   eyes: {fileID: 487602896}
   viewPoint: {fileID: 166672962}
   shootingPoint: {fileID: 877730506}
-  shootPlaceholder: {fileID: 4449766195229451486, guid: 826354f9929634f42aade5b7c0bbb23b, type: 3}
   mouseSensitivity: 2
+  shootPlaceholder: {fileID: 4449766195229451486, guid: 826354f9929634f42aade5b7c0bbb23b, type: 3}
+  playerHitEffect: {fileID: 0}
   jumpHeight: 20
   fallMultiplyer: 3
   dashForce: 20
@@ -1689,6 +1690,10 @@ PrefabInstance:
     - target: {fileID: 4641799441074548902, guid: 27ea7c070a7799644ab1d609978dbff5, type: 3}
       propertyPath: m_Name
       value: WaterSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136821182089578767, guid: 27ea7c070a7799644ab1d609978dbff5, type: 3}
+      propertyPath: sceneViewId
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27ea7c070a7799644ab1d609978dbff5, type: 3}

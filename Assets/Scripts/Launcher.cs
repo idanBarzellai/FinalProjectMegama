@@ -49,6 +49,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public GameObject roomTest;
 
+    public GameObject bodyParts;
+
     void Start()
     {
 
@@ -302,6 +304,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
             CloseMenus();
             menuButtons.SetActive(true);
+            bodyParts.SetActive(true);
+
         }
     }
 

@@ -502,6 +502,10 @@ PrefabInstance:
       value: BasicPlayer
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: b367b3d7da51ba6489ce288b969deb1f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: b367b3d7da51ba6489ce288b969deb1f, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}

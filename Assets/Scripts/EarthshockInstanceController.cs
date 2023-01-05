@@ -24,8 +24,8 @@ public class EarthshockInstanceController : SkillInstanceController
 
                 Vector3 dir = other.transform.position - this.transform.position + new Vector3(0, 2f, 0);
 
-                other.gameObject.GetPhotonView().RPC("PushedForce", RpcTarget.All, dir * pushForce);
-                other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg, photonView.name);
+                //other.gameObject.GetPhotonView().RPC("PushedForce", RpcTarget.All, dir * pushForce);
+                other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg, dir * pushForce, playerName);
 
             }
         }

@@ -18,7 +18,8 @@ public class WaterPlayer : BasicsController
     protected override void Start()
     {
         base.Start();
-        UIController.instance.skillSliderFillColor.color = Color.blue;
+        if (photonView.IsMine)
+            UIController.instance.skillSliderFillColor.color = Color.blue;
 
 
     }
@@ -27,11 +28,6 @@ public class WaterPlayer : BasicsController
         base.Update();
         if (photonView.IsMine)
         {
-            //if (Time.time - skillLastUseTime > skillCooldown && Input.GetKeyDown(KeyCode.Q))
-            //{
-            //    waterSkill();
-            //    skillLastUseTime = Time.time;
-            //}
             
             if (Input.GetKeyUp(KeyCode.Q))
                 resetVariables();
@@ -71,6 +67,7 @@ public class WaterPlayer : BasicsController
 
         impactAreaInstance = PhotonNetwork.Instantiate(impactArea.name, transform.position - wavePos, transform.rotation);
         impactAreaInstance.GetComponent<SkillInstanceController>().SetName(photonView.Owner.NickName);
+        SkillManager.instance.DestoryOverNetwork(5f, impactAreaInstance);
         StartCoroutine(EndSkill());
 
     }
@@ -108,16 +105,4 @@ public class WaterPlayer : BasicsController
         skillCanceled = false;
 
     }
-
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    // TODO need to be inside the water skill object prefab so it can deal damage properly and apply push force.
-    //    if (other.CompareTag("Player") && !other.gameObject.GetPhotonView().IsMine)
-    //    {
-    //        Vector3 dir = impactArea.transform.forward;
-    //        other.gameObject.GetPhotonView().RPC("PushedForce", RpcTarget.All, dir * pushForce);
-    //        other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg , photonView.name);
-
-    //    }
-    //}
 }

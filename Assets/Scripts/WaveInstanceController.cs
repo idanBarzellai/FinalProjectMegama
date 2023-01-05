@@ -6,14 +6,14 @@ using WebSocketSharp;
 
 public class WaveInstanceController : SkillInstanceController
 {
-    float pushForce = 10f;
+    float pushForce = 30f;
 
     protected override void Start()
     {
         base.Start();
         dmg = 5;
         skillManager.currectActiveSkillInstances.Add(this.gameObject);
-        StartCoroutine(skillManager.DestroyOvertime(lifetime));
+        //StartCoroutine(skillManager.DestroyOvertime(lifetime, photonView.Owner));
 
     }
     private void OnTriggerEnter(Collider other)
@@ -24,8 +24,8 @@ public class WaveInstanceController : SkillInstanceController
             {
 
                 Vector3 dir = transform.forward;
-                other.gameObject.GetPhotonView().RPC("PushedForce", RpcTarget.All, dir * pushForce);
-                other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg, photonView.name);
+                other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg, dir * pushForce, playerName);
+                //other.gameObject.GetPhotonView().RPC("PushedForce", RpcTarget.All, dir * pushForce);
 
             }
         }

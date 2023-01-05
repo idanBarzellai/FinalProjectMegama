@@ -13,11 +13,13 @@ public class AirPlayer : BasicsController
     float maxRadius = 6f;
 
     public GameObject ImpactArea;
+    public ParticleSystem impactAreaEffect;
 
     protected override void Start()
     {
         base.Start();
-        UIController.instance.skillSliderFillColor.color = Color.white;
+        if (photonView.IsMine)
+            UIController.instance.skillSliderFillColor.color = Color.white;
 
 
     }
@@ -27,11 +29,6 @@ public class AirPlayer : BasicsController
 
         if (photonView.IsMine)
         {
-            //if (Time.time - skillLastUseTime > skillCooldown && Input.GetKeyDown(KeyCode.Q))
-            //{
-            //    airSkill();
-            //    skillLastUseTime = Time.time;
-            //}
 
             if (!playerInMidAir && GetInSkill() && rb.velocity.y <= 0.005)
             {
@@ -50,6 +47,8 @@ public class AirPlayer : BasicsController
         base.SkillTrigger();
         photonView.RPC("SetAnim", RpcTarget.All, "Skill");
         ImpactArea.GetComponent<SkillInstanceController>().SetName(photonView.Owner.NickName);
+        photonView.RPC("triggerEffect", RpcTarget.All);
+
         StartCoroutine(createAOEDamage());
         Jump();
     }
@@ -75,13 +74,14 @@ public class AirPlayer : BasicsController
     private IEnumerator createAOEDamage(float dmg = 1f)
     {
         // Change to close tiles
-        ImpactArea.GetComponent<MeshRenderer>().enabled = true;
+        //ImpactArea.GetComponent<MeshRenderer>().enabled = true;
+
         ImpactArea.GetComponent<CapsuleCollider>().enabled = true;
         gettingLargerScale = true;
         yield return new WaitForSecondsRealtime(1f);
         gettingLargerScale = false;
 
-        ImpactArea.GetComponent<MeshRenderer>().enabled = false;
+        //ImpactArea.GetComponent<MeshRenderer>().enabled = false;
         ImpactArea.GetComponent<CapsuleCollider>().enabled = false;
         ImpactArea.transform.localScale = new Vector3(1f, 0.2f, 1f);
 
@@ -93,5 +93,10 @@ public class AirPlayer : BasicsController
         return maxRadius;
     }
 
-    
+    [PunRPC]
+    public void triggerEffect()
+    {
+        impactAreaEffect.Play();
+
+    }
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8294201466334074453}
   - component: {fileID: 8661223779921422816}
   - component: {fileID: 2610012781354928183}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FireTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,5 +152,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49cf06d2fd7ed5746872becbda744475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitEffect: {fileID: 7112559481847742946, guid: 7d466d6f614af424ca8a08291379324a, type: 3}
+  hitEffect: {fileID: 4787146697146794734, guid: e9050f838eb01db44b8958e4d8266866, type: 3}
   playerName: 

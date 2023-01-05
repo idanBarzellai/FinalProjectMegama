@@ -39,6 +39,9 @@ MonoBehaviour:
   - DealDamage
   - PushedForce
   - SetAnim
+  - DissmemberBodyParts
+  - ScatterBodyParts
+  - triggerEffect
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
