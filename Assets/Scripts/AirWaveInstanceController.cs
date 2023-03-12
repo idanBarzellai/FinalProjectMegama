@@ -33,7 +33,7 @@ public class AirWaveInstanceController : SkillInstanceController
                 push.y = 2;
 
                 //otherPlayerPhotoneView.RPC("PushedForce", RpcTarget.All,push);
-                otherPlayerPhotoneView.RPC("DealDamage", RpcTarget.All, dmg, push, playerName);
+                otherPlayerPhotoneView.RPC("DealDamage", RpcTarget.All, dmg, push, PhotonNetwork.LocalPlayer.ActorNumber,playerName);
 
             }
         }

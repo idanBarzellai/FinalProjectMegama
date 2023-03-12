@@ -36,7 +36,7 @@ public class PlayerSpawner : MonoBehaviour
 
     public void Die(string killingPlayer)
     {
-
+        MatchManager.instance.UpdateStatSend(PhotonNetwork.LocalPlayer.ActorNumber, 0, 1);
         UIController.instance.deathText.text = "You were killed by " + killingPlayer;
         UIController.instance.respawntext.gameObject.SetActive(true);
         UIController.instance.deathScreen.SetActive(true);
