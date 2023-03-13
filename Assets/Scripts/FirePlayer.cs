@@ -1,0 +1,60 @@
+using Photon.Pun;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FirePlayer : BasicsController
+{
+    private float fireInstanceCreationRate = 0.3f;
+    private int fireTrailCounter = 0;
+    private int fireTrailMax = 10;
+    private float fireTrailCreation = 0.2f;
+    private float runningSpeed = 18f;
+    private float regSpeed = 8f;
+
+    public GameObject fireTrail;
+    public List<GameObject> firetrailInstances = new List<GameObject>();
+    protected override void Start()
+    {
+        base.Start();
+        if (photonView.IsMine)
+            UIController.instance.skillSliderFillColor.color = Color.red;
+
+
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (photonView.IsMine)
+            if (fireTrailCounter == fireTrailMax)
+                resetVariables();
+    }
+    protected override void SkillTrigger()
+    {
+        base.SkillTrigger();
+        SetSpeed(runningSpeed);
+        photonView.RPC("SetAnim", RpcTarget.All, "Skill");
+        InvokeRepeating("fireSkillHelper", fireTrailCreation, fireInstanceCreationRate);
+    }
+
+
+    private void resetVariables()
+    {
+        CancelInvoke("fireSkillHelper");
+        SetSpeed(regSpeed);
+        SetInSkill(false);
+        photonView.RPC("SetAnim", RpcTarget.All, "SkillEnd");
+        fireTrailCounter = 0;
+    }
+
+   
+
+    private void fireSkillHelper()
+    {
+        GameObject fireTrailInstance = PhotonNetwork.Instantiate(fireTrail.name, transform.position, transform.rotation);
+        fireTrailInstance.GetComponent<SkillInstanceController>().SetName(photonView.Owner.NickName);
+        StartCoroutine(SkillManager.instance.DestroyOvertime(3f, fireTrailInstance));
+        fireTrailCounter++;
+    }
+}
