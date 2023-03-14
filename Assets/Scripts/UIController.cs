@@ -32,9 +32,43 @@ public class UIController : MonoBehaviour
 
     public TMP_Text timerText;
 
+    public GameObject optionsScreen;
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            ShowHideOptions();
+        }
+
+        if (optionsScreen.activeInHierarchy && Cursor.lockState != CursorLockMode.None)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
     public void Respawn()
     {
         respawntext.gameObject.SetActive(false);
         deathText.text = "Respawing...";
+    }
+
+    public void ShowHideOptions()
+    {
+
+        optionsScreen.SetActive(optionsScreen.activeInHierarchy ? false : true);
+        
+    }
+
+    public void ReturnToMainMenu()
+    {
+        PhotonNetwork.AutomaticallySyncScene = false;
+        PhotonNetwork.LeaveRoom();
+
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
