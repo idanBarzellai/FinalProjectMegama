@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Map 2.unity
     guid: 404df9e8d8c86d540a72f67d66b23ccb
-  - enabled: 0
-    path: Assets/Scenes/Map 1.unity
-    guid: a3ceac4090921e243940ac4694376d00
+  - enabled: 1
+    path: Assets/Scenes/ChangingMap Test.unity
+    guid: e2398eaca6c641d44bcb15bcf013e46f
   m_configObjects: {}

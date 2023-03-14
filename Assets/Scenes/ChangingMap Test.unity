@@ -284,6 +284,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Big Rock 1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7307381277321456973, guid: 83145382902cecc4286a4f62b720fb37, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83145382902cecc4286a4f62b720fb37, type: 3}
 --- !u!4 &164022881 stripped
@@ -298,6 +302,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 291189070}
     m_Modifications:
+    - target: {fileID: 492301693489935297, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     - target: {fileID: 2763398485800194716, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
       propertyPath: m_Name
       value: Big Rock 3 (3)
@@ -483,6 +491,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3620443100157493583, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
 --- !u!4 &325442394 stripped
@@ -557,6 +569,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Big Rock 1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7307381277321456973, guid: 83145382902cecc4286a4f62b720fb37, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83145382902cecc4286a4f62b720fb37, type: 3}
 --- !u!4 &385962075 stripped
@@ -631,6 +647,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3620443100157493583, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
 --- !u!4 &435594793 stripped
@@ -649,6 +669,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Big Rock 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5672133048800501202, guid: dd1832de68cba8f48960216dac3c4f3e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     - target: {fileID: 5977549091374805509, guid: dd1832de68cba8f48960216dac3c4f3e, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -779,6 +803,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8140522539512825168, guid: 4462df8489303ba448bfd5971b82232f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4462df8489303ba448bfd5971b82232f, type: 3}
 --- !u!4 &681561534 stripped
@@ -877,6 +905,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 291189070}
     m_Modifications:
+    - target: {fileID: 492301693489935297, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     - target: {fileID: 2763398485800194716, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
       propertyPath: m_Name
       value: Big Rock 3 (2)
@@ -955,6 +987,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Big Rock 4 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 5672133048800501202, guid: dd1832de68cba8f48960216dac3c4f3e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     - target: {fileID: 5977549091374805509, guid: dd1832de68cba8f48960216dac3c4f3e, type: 3}
       propertyPath: m_RootOrder
       value: 19
@@ -1085,6 +1121,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Big Rock 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7307381277321456973, guid: 83145382902cecc4286a4f62b720fb37, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83145382902cecc4286a4f62b720fb37, type: 3}
 --- !u!4 &1161895598 stripped
@@ -1099,6 +1139,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 291189070}
     m_Modifications:
+    - target: {fileID: 492301693489935297, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     - target: {fileID: 2763398485800194716, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
       propertyPath: m_Name
       value: Big Rock 3
@@ -1218,6 +1262,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 291189070}
     m_Modifications:
+    - target: {fileID: 492301693489935297, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     - target: {fileID: 2763398485800194716, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
       propertyPath: m_Name
       value: Big Rock 3 (1)
@@ -1296,6 +1344,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Big Rock 4 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5672133048800501202, guid: dd1832de68cba8f48960216dac3c4f3e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     - target: {fileID: 5977549091374805509, guid: dd1832de68cba8f48960216dac3c4f3e, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -1426,6 +1478,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3620443100157493583, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
 --- !u!4 &1580148816 stripped
@@ -1500,6 +1556,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3620443100157493583, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
 --- !u!4 &1623532629 stripped
@@ -1518,6 +1578,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Big Rock 4 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5672133048800501202, guid: dd1832de68cba8f48960216dac3c4f3e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     - target: {fileID: 5977549091374805509, guid: dd1832de68cba8f48960216dac3c4f3e, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -1592,6 +1656,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Big Rock 4 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5672133048800501202, guid: dd1832de68cba8f48960216dac3c4f3e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     - target: {fileID: 5977549091374805509, guid: dd1832de68cba8f48960216dac3c4f3e, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1722,6 +1790,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3620443100157493583, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
 --- !u!4 &1917061066 stripped
@@ -1736,6 +1808,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 291189070}
     m_Modifications:
+    - target: {fileID: 4937024418717615006, guid: 021cac7915726eb4c849c3c16ebe90bb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 593bf38400df68f4aa5798da4fa03c29, type: 2}
     - target: {fileID: 6200711919901767669, guid: 021cac7915726eb4c849c3c16ebe90bb, type: 3}
       propertyPath: m_Convex
       value: 0
@@ -1830,6 +1906,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Big Rock 4 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5672133048800501202, guid: dd1832de68cba8f48960216dac3c4f3e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -8649992195856677659, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
     - target: {fileID: 5977549091374805509, guid: dd1832de68cba8f48960216dac3c4f3e, type: 3}
       propertyPath: m_RootOrder
       value: 9

@@ -217,7 +217,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
                 photonView.RPC("ScatterBodyParts", RpcTarget.All);
                 PlayerSpawner.instance.Die(damager); // debug purposes change false to regular
                 PhotonNetwork.Instantiate(playerDeathEffect.name, transform.position, Quaternion.identity);
-                MatchManager.instance.UpdateStatSend(actor, 1, 1);
+                MatchManager.instance.UpdateStatSend(actor, 0, 1);
             }
             else
             {

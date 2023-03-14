@@ -28,7 +28,9 @@ public class UIController : MonoBehaviour
     public GameObject leaderboard;
     public LeaderboardPlayer leaderboardPlayerDisplay;
 
+    public GameObject endScreen;
 
+    public TMP_Text timerText;
 
     public void Respawn()
     {
