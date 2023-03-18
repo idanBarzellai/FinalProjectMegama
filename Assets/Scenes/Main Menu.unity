@@ -43492,6 +43492,10 @@ MonoBehaviour:
   startGameButton: {fileID: 1266457272}
   roomTest: {fileID: 283534621}
   bodyParts: {fileID: 166706822}
+  allMaps:
+  - Map 2
+  - ChangingMap Test
+  changeMapBetweenRounds: 1
 --- !u!1 &2020738788
 GameObject:
   m_ObjectHideFlags: 0
@@ -44313,7 +44317,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: (2-20)
+  m_text: (2-4)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 11be6a80d09e2cc42a789157960a82cc, type: 2}
   m_sharedMaterial: {fileID: -8952702852264950266, guid: 11be6a80d09e2cc42a789157960a82cc, type: 2}

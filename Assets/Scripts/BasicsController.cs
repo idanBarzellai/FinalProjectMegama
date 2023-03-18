@@ -77,7 +77,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     protected virtual void Update()
     {
-        if (photonView.IsMine)
+        if (photonView.IsMine && MatchManager.instance.state == MatchManager.GameState.Playing && !UIController.instance.optionsScreen.activeInHierarchy)
         {
             // Mouse movement
             mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")) * mouseSensitivity;
@@ -99,13 +99,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
                     deadHeadParent.transform.rotation = Quaternion.Euler(deadHeadParent.transform.rotation.eulerAngles.x, deadHeadParent.transform.rotation.eulerAngles.y + mouseInput.x, deadHeadParent.transform.rotation.eulerAngles.z);
             }
 
-            // Unlocking camera and mouse connection
-            if (Input.GetKeyDown(KeyCode.Escape))
-                Cursor.lockState = CursorLockMode.None;
-
-            else if (Cursor.lockState == CursorLockMode.None)
-                if (Input.GetMouseButtonDown(2))//&& !UIController.instance.optionsScreen.activeInHierarchy)
-                    Cursor.lockState = CursorLockMode.Locked;
+            
 
             moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
 
@@ -188,6 +182,17 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
             }
         }
+
+        // Unlocking camera and mouse connection
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Cursor.lockState = CursorLockMode.None;
+
+        else if (Cursor.lockState == CursorLockMode.None)
+            if (Input.GetMouseButtonDown(0) && !UIController.instance.optionsScreen.activeInHierarchy)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
     }
 
     protected virtual void LateUpdate()
@@ -217,7 +222,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
                 photonView.RPC("ScatterBodyParts", RpcTarget.All);
                 PlayerSpawner.instance.Die(damager); // debug purposes change false to regular
                 PhotonNetwork.Instantiate(playerDeathEffect.name, transform.position, Quaternion.identity);
-                MatchManager.instance.UpdateStatSend(actor, 1, 1);
+                MatchManager.instance.UpdateStatSend(actor, 0, 1);
             }
             else
             {
@@ -250,7 +255,6 @@ public class BasicsController : MonoBehaviourPunCallbacks
         photonView.RPC("SetAnim", RpcTarget.All, "Attack");
 
         GameObject shot = PhotonNetwork.Instantiate(shootPlaceholder.name, shootingPoint.position, Quaternion.identity);
-        Debug.Log("nickname set to this shot is: " + photonView.Owner.NickName);
         shot.GetComponent<ShotController>().SetName(photonView.Owner.NickName);
         shot.GetComponent<Rigidbody>().AddForce((eyes.forward) * shotForce, ForceMode.Impulse);
 

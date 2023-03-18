@@ -18,25 +18,35 @@ public class PlayerSpawner : MonoBehaviour
 
     void Start()
     {
-        if(PhotonNetwork.IsConnected)
-        {
-            SpawnPlayer();
-        }
+        //if(PhotonNetwork.IsConnected)
+        //{
+        //    SpawnPlayer();
+        //}
     }
 
+    //public void OpenPlayerChooseScreen()
+    //{
+    //    UIController.instance.playerChoosingScreen.SetActive(true);
+
+    //}
     public void SpawnPlayer()
     {
-        UIController.instance.skillSlider.gameObject.SetActive(true);
-        UIController.instance.healthSlider.gameObject.SetActive(true);
-        Transform spawnPoint = SpawnManager.instance.GetSpawnPoint();
+        if (PhotonNetwork.IsConnected) { 
+            UIController.instance.playerChoosingScreen.SetActive(false);
 
-        GameObject playerToSpawn = playerPrefabs[Random.Range(0, playerPrefabs.Length)];
-        player =  PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint.position, spawnPoint.rotation);
+            UIController.instance.skillSlider.gameObject.SetActive(true);
+            UIController.instance.healthSlider.gameObject.SetActive(true);
+            Transform spawnPoint = SpawnManager.instance.GetSpawnPoint();
+
+            int playerChosen = (int)UIController.instance.isPlayerPicked;
+            GameObject playerToSpawn = playerPrefabs[playerChosen == 4 ? Random.Range(0, playerPrefabs.Length) : playerChosen];
+            player = PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint.position, spawnPoint.rotation);
+        }
     }
 
     public void Die(string killingPlayer)
     {
-        MatchManager.instance.UpdateStatSend(PhotonNetwork.LocalPlayer.ActorNumber, 0, 1);
+        MatchManager.instance.UpdateStatSend(PhotonNetwork.LocalPlayer.ActorNumber, 1, 1);
         UIController.instance.deathText.text = "You were killed by " + killingPlayer;
         UIController.instance.respawntext.gameObject.SetActive(true);
         UIController.instance.deathScreen.SetActive(true);
@@ -56,13 +66,20 @@ public class PlayerSpawner : MonoBehaviour
             // Make sure all instances of instatieted objects are destoried
 
             PhotonNetwork.Destroy(player);
+            player = null;
         }
+
+        
         UIController.instance.Respawn();
 
         yield return new WaitForSecondsRealtime(respawnTime);
 
         UIController.instance.deathScreen.SetActive(false);
-        SpawnPlayer();
+
+        if(MatchManager.instance.state == MatchManager.GameState.Playing && player == null)
+        {
+            SpawnPlayer();
+        }
 
     }
 

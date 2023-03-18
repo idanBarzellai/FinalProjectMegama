@@ -28,11 +28,104 @@ public class UIController : MonoBehaviour
     public GameObject leaderboard;
     public LeaderboardPlayer leaderboardPlayerDisplay;
 
+    public GameObject endScreen;
+
+    public TMP_Text timerText;
+
+    public GameObject optionsScreen;
 
 
+    public enum PlayerChosen
+    {
+        Air, Fire, Water, Earth, None
+    }
+
+    public GameObject playerChoosingScreen;
+    public Toggle airButton, fireButton, waterButton, earthButton;
+    public PlayerChosen isPlayerPicked = PlayerChosen.None;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ShowHideOptions();
+        }
+
+        if (optionsScreen.activeInHierarchy && Cursor.lockState != CursorLockMode.None)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
     public void Respawn()
     {
         respawntext.gameObject.SetActive(false);
         deathText.text = "Respawing...";
+    }
+
+    public void ShowHideOptions()
+    {
+
+        optionsScreen.SetActive(optionsScreen.activeInHierarchy ? false : true);
+        
+    }
+
+    public void ReturnToMainMenu()
+    {
+        PhotonNetwork.AutomaticallySyncScene = false;
+        PhotonNetwork.LeaveRoom();
+
+    }
+
+    public void ChoosePlayerFire()
+    {
+        ReleasePlayersChooseButtons();
+        fireButton.SetIsOnWithoutNotify(false);
+        isPlayerPicked = PlayerChosen.Fire;
+
+    }
+
+    public void ChoosePlayerWater()
+    {
+        ReleasePlayersChooseButtons();
+        waterButton.SetIsOnWithoutNotify(false);
+        isPlayerPicked = PlayerChosen.Water;
+    }
+    public void ChoosePlayerEarth()
+    {
+        ReleasePlayersChooseButtons();
+        earthButton.SetIsOnWithoutNotify(false);
+        isPlayerPicked = PlayerChosen.Earth;
+    }
+    public void ChoosePlayerAir()
+    {
+        ReleasePlayersChooseButtons();
+        airButton.SetIsOnWithoutNotify(false);
+        isPlayerPicked = PlayerChosen.Air;
+    }
+
+    public void ReleasePlayersChooseButtons()
+    {
+        fireButton.SetIsOnWithoutNotify(true) ;
+        waterButton.SetIsOnWithoutNotify(true);
+        airButton.SetIsOnWithoutNotify(true);
+        earthButton.SetIsOnWithoutNotify(true);
+        isPlayerPicked = PlayerChosen.None;
+
+    }
+
+    public void ShowHidePlayerChoosingScreen()
+    {
+        playerChoosingScreen.SetActive(playerChoosingScreen.activeInHierarchy ? false : true);
+    }
+
+    public void StartMatchPlayerChosen()
+    {
+        PlayerSpawner.instance.SpawnPlayer();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

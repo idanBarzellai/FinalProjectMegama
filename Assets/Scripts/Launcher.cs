@@ -28,6 +28,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     public TMP_InputField maxPlayersCounter;
     public TMP_Text maxPlayersWariningText;
     private string deafultPlayers = "4";
+    private int maxPlayesNum = 4;
 
     public GameObject roomScreen;
     public TMP_Text roomNameText, playerNameLabel;
@@ -42,7 +43,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public GameObject nameInputScreen;
     public TMP_InputField nameInput;
-    private bool hasSetNickname;
+    public static bool hasSetNickname;
 
     public string gameToPlay;
     public GameObject startGameButton;
@@ -50,6 +51,9 @@ public class Launcher : MonoBehaviourPunCallbacks
     public GameObject roomTest;
 
     public GameObject bodyParts;
+
+    public string[] allMaps;
+    public bool changeMapBetweenRounds = true;
 
     void Start()
     {
@@ -59,11 +63,15 @@ public class Launcher : MonoBehaviourPunCallbacks
         loadingScreen.SetActive(true);
         loadingText.text = "Connecting to network...";
 
-        PhotonNetwork.ConnectUsingSettings();
+        if(!PhotonNetwork.IsConnected)
+            PhotonNetwork.ConnectUsingSettings();
 
 #if UNITY_EDITOR
         roomTest.SetActive(true);
 #endif
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     void CloseMenus()
@@ -126,7 +134,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             byte maxPlayersOut;
             byte.TryParse(maxPlayersCounter.text, out maxPlayersOut);
 
-            if (maxPlayersOut < 20 && maxPlayersOut > 1)
+            if (maxPlayersOut <= maxPlayesNum && maxPlayersOut > 1)
             {
                 options.MaxPlayers = maxPlayersOut;
 
@@ -311,7 +319,9 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel(gameToPlay);
+        //PhotonNetwork.LoadLevel(gameToPlay);
+
+        PhotonNetwork.LoadLevel(allMaps[Random.Range(0, allMaps.Length)]);
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -322,7 +332,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     public void QuickJoin()
     {
         RoomOptions options= new RoomOptions();
-        options.MaxPlayers = 8;
+        options.MaxPlayers = 4;
 
         PhotonNetwork.CreateRoom("Test");
         CloseMenus();
