@@ -34,9 +34,19 @@ public class UIController : MonoBehaviour
 
     public GameObject optionsScreen;
 
+
+    public enum PlayerChosen
+    {
+        Air, Fire, Water, Earth, None
+    }
+
+    public GameObject playerChoosingScreen;
+    public Toggle airButton, fireButton, waterButton, earthButton;
+    public PlayerChosen isPlayerPicked = PlayerChosen.None;
+
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             ShowHideOptions();
         }
@@ -65,6 +75,53 @@ public class UIController : MonoBehaviour
         PhotonNetwork.AutomaticallySyncScene = false;
         PhotonNetwork.LeaveRoom();
 
+    }
+
+    public void ChoosePlayerFire()
+    {
+        ReleasePlayersChooseButtons();
+        fireButton.SetIsOnWithoutNotify(false);
+        isPlayerPicked = PlayerChosen.Fire;
+
+    }
+
+    public void ChoosePlayerWater()
+    {
+        ReleasePlayersChooseButtons();
+        waterButton.SetIsOnWithoutNotify(false);
+        isPlayerPicked = PlayerChosen.Water;
+    }
+    public void ChoosePlayerEarth()
+    {
+        ReleasePlayersChooseButtons();
+        earthButton.SetIsOnWithoutNotify(false);
+        isPlayerPicked = PlayerChosen.Earth;
+    }
+    public void ChoosePlayerAir()
+    {
+        ReleasePlayersChooseButtons();
+        airButton.SetIsOnWithoutNotify(false);
+        isPlayerPicked = PlayerChosen.Air;
+    }
+
+    public void ReleasePlayersChooseButtons()
+    {
+        fireButton.SetIsOnWithoutNotify(true) ;
+        waterButton.SetIsOnWithoutNotify(true);
+        airButton.SetIsOnWithoutNotify(true);
+        earthButton.SetIsOnWithoutNotify(true);
+        isPlayerPicked = PlayerChosen.None;
+
+    }
+
+    public void ShowHidePlayerChoosingScreen()
+    {
+        playerChoosingScreen.SetActive(playerChoosingScreen.activeInHierarchy ? false : true);
+    }
+
+    public void StartMatchPlayerChosen()
+    {
+        PlayerSpawner.instance.SpawnPlayer();
     }
 
     public void QuitGame()

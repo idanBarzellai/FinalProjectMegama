@@ -45,6 +45,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public bool perpetual;
     public float matchLength = 60;
+    public float choosingTime = 10;
     private float currentMatchTime;
     private float sendTimer;
 
@@ -55,9 +56,9 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         else
         {
             NewPlayerSend(PhotonNetwork.NickName);
-            state = GameState.Playing;
+            state = GameState.Waiting;
 
-            SetupTimer();
+            SetupTimer(false);
         }
 
         if (!PhotonNetwork.IsMasterClient)
@@ -93,10 +94,11 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
                     state = GameState.Ending;
 
-                    
                     ListPlayersSend();
 
                     StateCheck();
+                    
+                    
                 }
 
                 UpdateTimerDisplay();
@@ -110,6 +112,22 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 }
             }
         }
+        // Choosing player screen timer
+        if(currentMatchTime > 0f && state == GameState.Waiting)
+        {
+            currentMatchTime -= Time.deltaTime;
+            if (currentMatchTime <= 0f)
+            {
+                currentMatchTime = 0f;
+                state = GameState.Playing;
+                ChoosePlayerRandomly();
+                SetupTimer(true);
+                    
+            }
+
+            UpdateTimerDisplay();
+
+        }
     }
 
     public void OnEvent(EventData photonEvent)
@@ -119,7 +137,6 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
             EventCodes theEvent = (EventCodes)photonEvent.Code;
             object[] data = (object[])photonEvent.CustomData;
 
-            Debug.Log("Received Event" + theEvent);
 
             switch (theEvent)
             {
@@ -412,7 +429,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void NextMatchReceive()
     {
-        state = GameState.Playing;
+        state = GameState.Waiting;
 
         UIController.instance.endScreen.SetActive(false);
         UIController.instance.leaderboard.SetActive(false);
@@ -425,9 +442,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         UpdateStatsDisplay();
 
-        PlayerSpawner.instance.SpawnPlayer();
-
-        SetupTimer();
+        SetupTimer(false);
     }
 
     public void TimerSyncSend()
@@ -450,14 +465,31 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         UIController.instance.timerText.gameObject.SetActive(true);
     }
 
-    public void SetupTimer()
+    public void SetupTimer(bool DoneChoosing)
     {
-        Debug.Log("in here " + matchLength);
-        if(matchLength > 0)
+        if (!DoneChoosing)
         {
-            currentMatchTime = matchLength;
-            UpdateTimerDisplay();
+            currentMatchTime = choosingTime;
+            UIController.instance.ShowHidePlayerChoosingScreen();
         }
+        else
+        {
+            if (matchLength > 0)
+            {
+                currentMatchTime = matchLength;
+                UpdateTimerDisplay();
+
+            }
+        }
+    }
+
+    public void ChoosePlayerRandomly()
+    {
+        if (UIController.instance.playerChoosingScreen.activeInHierarchy)
+        {
+            PlayerSpawner.instance.SpawnPlayer();
+        }
+
     }
 
     public void UpdateTimerDisplay()

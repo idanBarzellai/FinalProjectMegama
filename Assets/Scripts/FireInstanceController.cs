@@ -30,7 +30,6 @@ public class FireInstanceController : SkillInstanceController
                     player.SetReceivingDPS(true);
                     StartCoroutine(InflictDPS(player));
                 }
-                Debug.Log("Inflicting dps");
             }
         }
 
