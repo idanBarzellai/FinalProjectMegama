@@ -99,8 +99,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
                     deadHeadParent.transform.rotation = Quaternion.Euler(deadHeadParent.transform.rotation.eulerAngles.x, deadHeadParent.transform.rotation.eulerAngles.y + mouseInput.x, deadHeadParent.transform.rotation.eulerAngles.z);
             }
 
-            
-
+           
+            // you can move as a head hence movemnet is out of dead segment
             moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
 
             if (!isDead)
@@ -222,7 +222,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
                 photonView.RPC("ScatterBodyParts", RpcTarget.All);
                 PlayerSpawner.instance.Die(damager); // debug purposes change false to regular
                 PhotonNetwork.Instantiate(playerDeathEffect.name, transform.position, Quaternion.identity);
-                MatchManager.instance.UpdateStatSend(actor, 0, 1);
+                MatchManager.instance.UpdateStatSend(actor, 1, 1);
             }
             else
             {
@@ -257,14 +257,11 @@ public class BasicsController : MonoBehaviourPunCallbacks
         GameObject shot = PhotonNetwork.Instantiate(shootPlaceholder.name, shootingPoint.position, Quaternion.identity);
         shot.GetComponent<ShotController>().SetName(photonView.Owner.NickName);
         shot.GetComponent<Rigidbody>().AddForce((eyes.forward) * shotForce, ForceMode.Impulse);
-
-
     }
 
     virtual protected void SkillTrigger()
     {
         SetInSkill(true);
-
     }
 
 
@@ -272,6 +269,25 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         rb.constraints = toFreeze ? RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation : RigidbodyConstraints.FreezeRotation;
 
+    }
+
+    public void ApplyPowerup(PowerupsManager.PowerUpsPowers power)
+    {
+        switch (power)
+        {
+            case PowerupsManager.PowerUpsPowers.Armor:
+                break;
+            case PowerupsManager.PowerUpsPowers.DoubleJump:
+                break;
+            case PowerupsManager.PowerUpsPowers.ExtraDmg:
+                break;
+            case PowerupsManager.PowerUpsPowers.ExtraLife:
+                break;
+            case PowerupsManager.PowerUpsPowers.Shield:
+                break;
+            case PowerupsManager.PowerUpsPowers.Speed:
+                break;
+        }
     }
 
 
