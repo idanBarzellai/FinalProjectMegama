@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class RedHeartPowerup : PowerupBaseController
 {
-    // Start is called before the first frame update
-    void Start()
+    int bonusLifePoints = 10;
+    protected override void PowerupPowerHandler()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        playerThatTookMe.ApplyPowerup(PowerupsManager.PowerUpsPowers.ExtraLife, bonusLifePoints);
     }
 }

@@ -6,8 +6,9 @@ using Photon.Pun;
 public class PowerupBaseController : MonoBehaviourPunCallbacks
 {
     protected float createdTime;
-    protected float timeForDestruction = 10;
+    protected float timeForDestruction = 25;
     protected float timeForDestrcutionIfTouced = 0.5f;
+    protected BasicsController playerThatTookMe;
     /*
               
               * apply object on player
@@ -23,8 +24,14 @@ public class PowerupBaseController : MonoBehaviourPunCallbacks
     {
         if (other.CompareTag("Player"))
         {
-            //other.GetComponent<BasicsController>().
+            playerThatTookMe = other.GetComponent<BasicsController>();
+            PowerupPowerHandler();
             powerupsManager.DestoryOverNetwork(timeForDestrcutionIfTouced, this.gameObject);
         }
+    }
+
+    protected virtual void PowerupPowerHandler()
+    {
+        Debug.Log("Not implemented");
     }
 }

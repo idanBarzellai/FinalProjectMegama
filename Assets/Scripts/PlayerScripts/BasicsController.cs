@@ -54,7 +54,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     private GameObject deadHeadParent;
     private GameObject deadHead;
 
-
+    private List<PowerupBaseController> currentPowerups = new List<PowerupBaseController>();
     protected virtual void Start()
     {
 
@@ -271,7 +271,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     }
 
-    public void ApplyPowerup(PowerupsManager.PowerUpsPowers power)
+    public void ApplyPowerup(PowerupsManager.PowerUpsPowers power, int amountToAdd = 0)
     {
         switch (power)
         {
@@ -282,6 +282,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
             case PowerupsManager.PowerUpsPowers.ExtraDmg:
                 break;
             case PowerupsManager.PowerUpsPowers.ExtraLife:
+                currHealth += amountToAdd;
                 break;
             case PowerupsManager.PowerUpsPowers.Shield:
                 break;

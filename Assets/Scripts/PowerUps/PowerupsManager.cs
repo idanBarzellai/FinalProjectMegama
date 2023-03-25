@@ -7,6 +7,8 @@ public class PowerupsManager : MonoBehaviourPunCallbacks
 {
     public static PowerupsManager instance;
     public List<PowerupBaseController> currectActivePowerups = new List<PowerupBaseController>();
+    public PowerupBaseController[] powerupsToSummon;
+    public GameObject[] spawnPoints;
     //bool looping = false;
 
     public enum PowerUpsPowers
@@ -23,6 +25,11 @@ public class PowerupsManager : MonoBehaviourPunCallbacks
         instance = this;
     }
 
+    private void Start()
+    {
+        if(PhotonNetwork.IsMasterClient)
+            PhotonNetwork.Instantiate(powerupsToSummon[Random.Range(0, powerupsToSummon.Length)].name, spawnPoints[Random.Range(0, spawnPoints.Length)].transform.position, Quaternion.identity);
+    }
     // Update is called once per frame
     void Update()
     {
