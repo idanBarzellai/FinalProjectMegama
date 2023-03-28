@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class DoubleJumpPowerup : PowerupBaseController
 {
-    // Start is called before the first frame update
-    void Start()
+    int jumpIncreseAmount = 5;
+    protected override void PowerupPowerHandler()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        playerThatTookMe.ApplyPowerup(PowerupsManager.PowerUpsPowers.DoubleJump, jumpIncreseAmount);
     }
 }

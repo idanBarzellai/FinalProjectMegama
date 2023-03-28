@@ -232,7 +232,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
             }
         }
     }
-
+    
     public void Jump(float addition = 1f)
     {
         rb.velocity += Vector3.up * jumpHeight * addition;
@@ -278,8 +278,10 @@ public class BasicsController : MonoBehaviourPunCallbacks
             case PowerupsManager.PowerUpsPowers.Armor:
                 break;
             case PowerupsManager.PowerUpsPowers.DoubleJump:
+                jumpHeight += amountToAdd;
                 break;
             case PowerupsManager.PowerUpsPowers.ExtraDmg:
+                // Add dmg
                 break;
             case PowerupsManager.PowerUpsPowers.ExtraLife:
                 currHealth += amountToAdd;
@@ -321,7 +323,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
         isDead = true;
     }
 
-   
+    
 
     // Getters
     protected bool GetInSkill()

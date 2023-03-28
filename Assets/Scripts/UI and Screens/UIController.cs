@@ -129,6 +129,7 @@ public class UIController : MonoBehaviour
 
     public void QuitGame()
     {
+        PhotonNetwork.LeaveRoom();
         Application.Quit();
     }
 }

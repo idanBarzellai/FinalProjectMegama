@@ -6,8 +6,8 @@ using UnityEngine;
 public class PowerupsManager : MonoBehaviourPunCallbacks
 {
     public static PowerupsManager instance;
-    public List<PowerupBaseController> currectActivePowerups = new List<PowerupBaseController>();
-    public PowerupBaseController[] powerupsToSummon;
+    //public List<PowerupBaseController> currectActivePowerups = new List<PowerupBaseController>();
+    public GameObject[] powerupsToSummon;
     public GameObject[] spawnPoints;
     //bool looping = false;
 

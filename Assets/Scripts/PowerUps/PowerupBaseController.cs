@@ -8,6 +8,7 @@ public class PowerupBaseController : MonoBehaviourPunCallbacks
     protected float createdTime;
     protected float timeForDestruction = 25;
     protected float timeForDestrcutionIfTouced = 0.5f;
+    public ParticleSystem disappearEffect;
     protected BasicsController playerThatTookMe;
     /*
               
@@ -26,7 +27,8 @@ public class PowerupBaseController : MonoBehaviourPunCallbacks
         {
             playerThatTookMe = other.GetComponent<BasicsController>();
             PowerupPowerHandler();
-            powerupsManager.DestoryOverNetwork(timeForDestrcutionIfTouced, this.gameObject);
+            disappearEffect.Play();
+            powerupsManager.DestoryOverNetwork(0, this.gameObject);
         }
     }
 
