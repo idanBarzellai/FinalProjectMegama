@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1515,6 +1515,10 @@ PrefabInstance:
     - target: {fileID: 1199769830716641113, guid: fbc289376161828478080458199ad40a, type: 3}
       propertyPath: m_Name
       value: AirSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 3758487297441777853, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: sceneViewId
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbc289376161828478080458199ad40a, type: 3}
