@@ -22,7 +22,9 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         ListPlayers,
         UpdateStat,
         NextMatch,
-        TimerSync
+        MatchTimerSync,
+        WaitTimerSync,
+        ChoosePlayers
     }
 
     
@@ -83,51 +85,71 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         if (PhotonNetwork.IsMasterClient)
         {
-
-            if (currentMatchTime > 0f && state == GameState.Playing)
+            if (state == GameState.Waiting)
             {
                 currentMatchTime -= Time.deltaTime;
+                if(currentMatchTime - matchLength <= 0)
+                {
+                    //ChoosePlayerRandomly();
+                    //UIController.instance.playerChoosingScreen.SetActive(false);
+                    ChoosePlayersSend();
+                    state = GameState.Playing;
+                }
 
+                UpdateTimerDisplay(true);
+            }
+
+            if (state == GameState.Playing)
+            {
+                currentMatchTime -= Time.deltaTime;
                 if (currentMatchTime <= 0f)
                 {
                     currentMatchTime = 0f;
-
                     state = GameState.Ending;
-
                     ListPlayersSend();
-
                     StateCheck();
-                    
-                    
                 }
 
-                UpdateTimerDisplay();
+                UpdateTimerDisplay(false);
 
-                sendTimer -= Time.deltaTime;
-                if(sendTimer <= 0)
-                {
-                    sendTimer += 1f;
-
-                    TimerSyncSend();
-                }
             }
-        }
-        // Choosing player screen timer
-        if(currentMatchTime > 0f && state == GameState.Waiting)
-        {
-            currentMatchTime -= Time.deltaTime;
-            if (currentMatchTime <= 0f)
+            sendTimer -= Time.deltaTime;
+            if (sendTimer <= 0)
             {
-                currentMatchTime = 0f;
-                state = GameState.Playing;
-                ChoosePlayerRandomly();
-                SetupTimer(true);
-                    
-            }
+                sendTimer += 1f;
 
-            UpdateTimerDisplay();
+                MatchTimerSyncSend();
+            }
+            // Choosing player screen timer
+            
+            //UpdateTimerDisplay();
+            
 
         }
+        
+        //if (currentMatchTime > 0f && state == GameState.Waiting)
+        //{
+        //    currentMatchTime -= Time.deltaTime;
+        //    if (currentMatchTime <= 0f)
+        //    {
+        //        Debug.Log("whyyy");
+        //        currentMatchTime = 0f;
+        //        //state = GameState.Playing;
+        //        SetupTimer(true);
+        //        ChoosePlayersSend();
+        //    }
+            
+        //    UpdateTimerDisplay();
+
+        //    sendTimer -= Time.deltaTime;
+        //    if (sendTimer <= 0)
+        //    {
+        //        sendTimer += 1f;
+
+        //        MatchTimerSyncSend();
+        //    }
+            
+        //}
     }
 
     public void OnEvent(EventData photonEvent)
@@ -152,8 +174,12 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 case EventCodes.NextMatch:
                     NextMatchReceive();
                     break;
-                case EventCodes.TimerSync:
-                    TimerSyncReceive(data);
+                case EventCodes.MatchTimerSync:
+                    MatchTimerSyncReceive(data);
+                    break;
+
+                case EventCodes.ChoosePlayers:
+                    ChoosePlayersReceive();
                     break;
             }
         }
@@ -444,43 +470,88 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         SetupTimer(false);
     }
-
-    public void TimerSyncSend()
+    public void ChoosePlayersSend()
     {
-        object[] package = new object[] { (int)currentMatchTime, state };
-        PhotonNetwork.RaiseEvent((byte)EventCodes.TimerSync,
+        //object[] package = new object[] { state };
+        PhotonNetwork.RaiseEvent((byte)EventCodes.ChoosePlayers,
+          null,
+           new RaiseEventOptions { Receivers = ReceiverGroup.All },
+           new SendOptions { Reliability = true }
+           );
+    }
+
+    public void ChoosePlayersReceive()
+    {
+        //state = (GameState)dataReceived[0];
+        ChoosePlayerRandomly();
+        UIController.instance.playerChoosingScreen.SetActive(false);
+    }
+
+    public void MatchTimerSyncSend()
+    {
+        object[] package = new object[] { (int)currentMatchTime , state};
+        PhotonNetwork.RaiseEvent((byte)EventCodes.MatchTimerSync,
            package,
            new RaiseEventOptions { Receivers = ReceiverGroup.All },
            new SendOptions { Reliability = true }
            );
     }
 
-    public void TimerSyncReceive(object[] dataReceived)
+    public void MatchTimerSyncReceive(object[] dataReceived)
     {
+
         currentMatchTime = (int)dataReceived[0];
         state = (GameState)dataReceived[1];
 
-        UpdateTimerDisplay();
+        UpdateTimerDisplay(state == GameState.Waiting);
 
         UIController.instance.timerText.gameObject.SetActive(true);
     }
+    //public void WaitTimerSyncSend()
+    //{
+    //    Debug.Log("Sent " + currentMatchTime);
+    //    object[] package = new object[] { (int)currentMatchTime };
+    //    PhotonNetwork.RaiseEvent((byte)EventCodes.WaitTimerSync,
+    //       package,
+    //       new RaiseEventOptions { Receivers = ReceiverGroup.All },
+    //       new SendOptions { Reliability = true }
+    //       );
+    //}
+
+    //public void WaitTimerSyncReceive(object[] dataReceived)
+    //{
+    //    Debug.Log("Recieved " + currentMatchTime);
+
+    //    currentMatchTime = (int)dataReceived[0];
+    //    //state = (GameState)dataReceived[1];
+
+    //    UpdateTimerDisplay();
+
+    //    UIController.instance.timerText.gameObject.SetActive(true);
+    //}
 
     public void SetupTimer(bool DoneChoosing)
     {
-        if (!DoneChoosing)
-        {
-            currentMatchTime = choosingTime;
-            UIController.instance.ShowHidePlayerChoosingScreen();
-        }
-        else
-        {
-            if (matchLength > 0)
-            {
-                currentMatchTime = matchLength;
-                UpdateTimerDisplay();
+        currentMatchTime = matchLength + choosingTime;
+        UpdateTimerDisplay(true);
+        UIController.instance.ShowHidePlayerChoosingScreen();
+        //if (!DoneChoosing)
+        //{
+        //    currentMatchTime = choosingTime;
+        //    UIController.instance.ShowHidePlayerChoosingScreen();
 
-            }
-        }
+        //}
+        //else
+        //{
+
+        //    if (matchLength > 0)
+        //    {
+        //        currentMatchTime = matchLength;
+        //        UpdateTimerDisplay();
+        //        state = GameState.Playing;
+
+        //    }
+        //}
     }
 
     public void ChoosePlayerRandomly()
@@ -492,11 +563,13 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     }
 
-    public void UpdateTimerDisplay()
+    public void UpdateTimerDisplay(bool isChoosingPlayerScreen)
     {
-        var timeToDisplay = System.TimeSpan.FromSeconds(currentMatchTime);
+        var timeToDisplay = System.TimeSpan.FromSeconds(isChoosingPlayerScreen ? currentMatchTime - matchLength : currentMatchTime);
 
         UIController.instance.timerText.text = timeToDisplay.Minutes.ToString("00") + ":" + timeToDisplay.Seconds.ToString("00");
+
+        
     }
 }
 

@@ -43,7 +43,10 @@ public class UIController : MonoBehaviour
     public GameObject playerChoosingScreen;
     public Toggle airButton, fireButton, waterButton, earthButton;
     public PlayerChosen isPlayerPicked = PlayerChosen.None;
-
+    private void Start()
+    {
+        ReleasePlayersChooseButtons();
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -126,6 +129,7 @@ public class UIController : MonoBehaviour
 
     public void QuitGame()
     {
+        PhotonNetwork.LeaveRoom();
         Application.Quit();
     }
 }

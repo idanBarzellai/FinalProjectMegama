@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - AOEattack
   - DeadHead
+  - Powerup
   layers:
   - Default
   - TransparentFX

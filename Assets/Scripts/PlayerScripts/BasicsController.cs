@@ -54,7 +54,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     private GameObject deadHeadParent;
     private GameObject deadHead;
 
-
+    private List<PowerupBaseController> currentPowerups = new List<PowerupBaseController>();
     protected virtual void Start()
     {
 
@@ -232,7 +232,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
             }
         }
     }
-
+    
     public void Jump(float addition = 1f)
     {
         rb.velocity += Vector3.up * jumpHeight * addition;
@@ -271,17 +271,20 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     }
 
-    public void ApplyPowerup(PowerupsManager.PowerUpsPowers power)
+    public void ApplyPowerup(PowerupsManager.PowerUpsPowers power, int amountToAdd = 0)
     {
         switch (power)
         {
             case PowerupsManager.PowerUpsPowers.Armor:
                 break;
             case PowerupsManager.PowerUpsPowers.DoubleJump:
+                jumpHeight += amountToAdd;
                 break;
             case PowerupsManager.PowerUpsPowers.ExtraDmg:
+                // Add dmg
                 break;
             case PowerupsManager.PowerUpsPowers.ExtraLife:
+                currHealth += amountToAdd;
                 break;
             case PowerupsManager.PowerUpsPowers.Shield:
                 break;
@@ -320,7 +323,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
         isDead = true;
     }
 
-   
+    
 
     // Getters
     protected bool GetInSkill()
