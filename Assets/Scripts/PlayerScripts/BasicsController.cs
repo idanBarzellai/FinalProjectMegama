@@ -205,12 +205,12 @@ public class BasicsController : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void DealDamage(int dmg, Vector3 dir ,int actor ,string damager)
+    public void DealDamage(int dmg, Vector3 dir ,string damager)
     {
         if(!isDead)
-            TakeDamage(dmg, dir, actor, damager);
+            TakeDamage(dmg, dir, damager);
     }
-    public void TakeDamage(int dmg, Vector3 dir,  int actor, string damager)
+    public void TakeDamage(int dmg, Vector3 dir, string damager)
     {
         if(photonView.IsMine)
         {
@@ -222,7 +222,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
                 photonView.RPC("ScatterBodyParts", RpcTarget.All);
                 PlayerSpawner.instance.Die(damager); // debug purposes change false to regular
                 PhotonNetwork.Instantiate(playerDeathEffect.name, transform.position, Quaternion.identity);
-                MatchManager.instance.UpdateStatSend(actor, 1, 1);
+                MatchManager.instance.UpdateStatSend(photonView.Owner.ActorNumber, 1, 1);
             }
             else
             {
