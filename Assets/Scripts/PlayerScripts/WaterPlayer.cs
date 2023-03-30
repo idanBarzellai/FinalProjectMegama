@@ -67,6 +67,8 @@ public class WaterPlayer : BasicsController
 
         impactAreaInstance = PhotonNetwork.Instantiate(impactArea.name, transform.position - wavePos, transform.rotation);
         impactAreaInstance.GetComponent<SkillInstanceController>().SetName(photonView.Owner.NickName);
+        impactAreaInstance.GetComponent<SkillInstanceController>().SetPlayer(this);
+
         SkillManager.instance.DestoryOverNetwork(5f, impactAreaInstance);
         StartCoroutine(EndSkill());
 

@@ -9,7 +9,7 @@ public class DmgEffect : Effect {
         Vector3 push = Vector3.zero;
 
         GetComponent<Tile>().otherPlayerPhotoneView.RPC("DealDamage", RpcTarget.All,
-                                                         damage, push,
+                                                         damage, push, 200,
                                                         gameObject.name);
 
     }

@@ -24,7 +24,7 @@ public class WaveInstanceController : SkillInstanceController
             {
 
                 Vector3 dir = transform.forward;
-                other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg, dir * pushForce,  playerName);
+                other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg, dir * pushForce, player.gameObject.GetPhotonView().Owner.ActorNumber,  playerName);
                 //other.gameObject.GetPhotonView().RPC("PushedForce", RpcTarget.All, dir * pushForce);
 
             }

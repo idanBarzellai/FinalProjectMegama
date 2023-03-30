@@ -1825,6 +1825,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5555864709211849579, guid: a110136f401bf1a47bf78bfe1b4e369c, type: 3}
+      propertyPath: goodTile
+      value: 
+      objectReference: {fileID: 7540874455545602123, guid: e9c3f4129ae1b8a4dad9f331a3af2ccd, type: 3}
     - target: {fileID: 5555864709211849580, guid: a110136f401bf1a47bf78bfe1b4e369c, type: 3}
       propertyPath: m_Name
       value: Generator
