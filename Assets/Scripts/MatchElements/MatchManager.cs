@@ -73,14 +73,11 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         if (Input.GetKeyDown(KeyCode.Tab) && state != GameState.Ending)
         {
-            if (UIController.instance.leaderboard.activeInHierarchy)
-            {
-                UIController.instance.leaderboard.SetActive(false);
-            }
-            else
-            {
-                ShowLeaderboard();
-            }
+             ShowLeaderboard();
+        }
+        else if(Input.GetKeyUp(KeyCode.Tab) && state != GameState.Ending)
+        {
+            UIController.instance.leaderboard.SetActive(false);
         }
 
         if (PhotonNetwork.IsMasterClient)
@@ -329,6 +326,24 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         SceneManager.LoadScene(0);
     }
 
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+
+    {
+
+        int index = allplayers.FindIndex(x => x.name == otherPlayer.NickName);
+
+        Debug.Log(index);
+
+        if (index != -1)
+
+            allplayers.RemoveAt(index);
+
+
+
+        ListPlayersSend();
+
+    }
+
     void ScoreCheck()
     {
         bool winnerFound = false;
@@ -427,6 +442,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         state = GameState.Waiting;
 
+        UIController.instance.deathScreen.SetActive(false);
         UIController.instance.endScreen.SetActive(false);
         UIController.instance.leaderboard.SetActive(false);
         UIController.instance.playerChoosingScreen.SetActive(true);

@@ -38,8 +38,8 @@ public class WaterPlayer : BasicsController
             if (impactAreaInstance != null)
             {
                 if (GetIsStaticSkill())
-                    transform.Translate(dir * GetActiveSpeed() * Time.deltaTime);
-                impactAreaInstance.transform.Translate(dir * GetActiveSpeed() * Time.deltaTime);
+                    transform.Translate(dir * GetActiveSpeed() * impactAreaInstance.GetComponent<WaveInstanceController>().waveSpeed * Time.deltaTime);
+                
             }
         }
     }
@@ -68,6 +68,7 @@ public class WaterPlayer : BasicsController
         impactAreaInstance = PhotonNetwork.Instantiate(impactArea.name, transform.position - wavePos, transform.rotation);
         impactAreaInstance.GetComponent<SkillInstanceController>().SetName(photonView.Owner.NickName);
         impactAreaInstance.GetComponent<SkillInstanceController>().SetPlayer(this);
+        impactAreaInstance.GetComponent<WaveInstanceController>().Move(dir * GetActiveSpeed());
 
         SkillManager.instance.DestoryOverNetwork(5f, impactAreaInstance);
         StartCoroutine(EndSkill());

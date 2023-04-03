@@ -11,6 +11,7 @@ public class AirPlayer : BasicsController
     bool playerInMidAir = false;
     bool gettingLargerScale = false;
     float maxRadius = 6f;
+    float flightSpeed = 25f;
 
     public GameObject ImpactArea;
     public ParticleSystem impactAreaEffect;
@@ -58,6 +59,7 @@ public class AirPlayer : BasicsController
         playerInMidAir = true;
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
+        SetSpeed(flightSpeed);
         yield return new WaitForSecondsRealtime(skillDuration);
         
         resetVariables();
@@ -68,6 +70,7 @@ public class AirPlayer : BasicsController
         SetInSkill(false);
         playerInMidAir = false;
         rb.useGravity = true;
+        SetSpeed(moveSpeed);
         photonView.RPC("SetAnim", RpcTarget.All, "SkillEnd");
     }
 

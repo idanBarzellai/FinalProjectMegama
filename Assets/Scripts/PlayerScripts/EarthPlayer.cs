@@ -19,16 +19,19 @@ public class EarthPlayer : BasicsController
 
     bool playerLeapedFromGround = false;
     bool skillTriggered = false;
-    float basicFallForce = 3f;
-    float addedFallForce = 8f;
+    float basicFallForce;
+    float addedFallForce;
 
-    float forwardForce = 15;
-    float upwordForce = 20;
+    float forwardForce = 20;
+    float upwordForce = 25;
 
 
     protected override void Start()
     {
         base.Start();
+        basicFallForce = fallMultiplyer;
+        addedFallForce = fallMultiplyer * 3;//(2 *jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        upwordForce = addedFallForce * timeToJumpApex;
         if(photonView.IsMine)
             UIController.instance.skillSliderFillColor.color = Color.magenta;
 
@@ -39,6 +42,7 @@ public class EarthPlayer : BasicsController
         base.Update();
         if (photonView.IsMine)
         {
+            rb.AddForce(Vector3.up * -fallMultiplyer, ForceMode.Acceleration);
 
             if (!skillTriggered && GetInSkill() && Input.GetKeyUp(KeyCode.Q) && isGrounded)
             {
@@ -94,7 +98,7 @@ public class EarthPlayer : BasicsController
 
         lineRenderer.positionCount = Mathf.CeilToInt(linePoints / timeBetweenpoints) + 1;
         Vector3 startPosition = transform.position;
-        Vector3 startVelocity = (transform.forward * forwardForce + new Vector3(0, upwordForce - 1f, 0)) / (rb.mass * addedFallForce / 5.5f);
+        Vector3 startVelocity = (transform.forward * forwardForce + new Vector3(0, upwordForce - 5f, 0)) / (rb.mass * addedFallForce / 5.5f);
         int i = 0;
         lineRenderer.SetPosition(i, startPosition);
 
@@ -127,7 +131,8 @@ public class EarthPlayer : BasicsController
     {
         playerLeapedFromGround = true;
 
-        rb.AddForce(transform.forward * forwardForce + new Vector3(0, upwordForce * 1.5f, 0), ForceMode.Impulse);
+        //rb.AddForce(transform.forward * forwardForce + new Vector3(0, upwordForce * 1.5f, 0), ForceMode.Impulse);
+        rb.AddForce(Vector3.up * upwordForce, ForceMode.VelocityChange);
         photonView.RPC("SetAnim", RpcTarget.All, "Skill");
 
     }

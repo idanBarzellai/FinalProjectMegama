@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diffHeights: 1
-  mapRadius: 10
+  mapRadius: 8
   pBadTile: 0.1
-  goodTile: {fileID: 6741014122625897749, guid: f62d1b3f2bc9b9b4ab5fc77d3d903b3c, type: 3}
+  goodTile: {fileID: 7540874455545602123, guid: e9c3f4129ae1b8a4dad9f331a3af2ccd, type: 3}
   dmgTile: {fileID: 7341010099895832667, guid: 51569b6f1cf0386458f312f83696cd6c, type: 3}
   windingTile: {fileID: 4869981527726937669, guid: 41b8cfc31c646a14994f1edf37e18fb2, type: 3}
-  scaleFactor: 5
+  scaleFactor: 10

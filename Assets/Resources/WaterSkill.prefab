@@ -155,6 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitEffect: {fileID: 7112559481847742946, guid: 5028c109d1cd7234c8eb05fe9fa02ecb, type: 3}
   playerName: 
+  waveSpeed: 2
 --- !u!1 &8422566261192915321
 GameObject:
   m_ObjectHideFlags: 0

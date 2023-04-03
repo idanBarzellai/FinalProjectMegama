@@ -7,6 +7,8 @@ using WebSocketSharp;
 public class WaveInstanceController : SkillInstanceController
 {
     float pushForce = 30f;
+    Vector3 dir = Vector3.zero;
+    public float waveSpeed = 2f;
 
     protected override void Start()
     {
@@ -14,6 +16,17 @@ public class WaveInstanceController : SkillInstanceController
         dmg = 5;
         skillManager.currectActiveSkillInstances.Add(this.gameObject);
         //StartCoroutine(skillManager.DestroyOvertime(lifetime, photonView.Owner));
+
+    }
+
+    private void Update()
+    {
+        transform.Translate(dir * waveSpeed * Time.deltaTime);
+    }
+
+    public void Move(Vector3 _dir)
+    {
+        dir = _dir;
 
     }
     private void OnTriggerEnter(Collider other)

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3139539630725986210}
   - component: {fileID: 7624168300314800186}
   - component: {fileID: 1654905948480604741}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.030
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1356504228314374895}
   - component: {fileID: 1074783974322794583}
   - component: {fileID: 8312262263099301172}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.014
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 4345457476514353215}
   - component: {fileID: 4420888390595165237}
   - component: {fileID: 7145297139919914874}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.020
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 1845836639231529451}
   - component: {fileID: 2844561646629991506}
   - component: {fileID: 533779065404122763}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.016
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 2573183066050169236}
   - component: {fileID: 8406814628905593825}
   - component: {fileID: 3859079763351272419}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.033
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 162229039660215088}
   - component: {fileID: 8489580148777852714}
   - component: {fileID: 8342491753219165057}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 4994675429387941488}
   - component: {fileID: 4911361500658097805}
   - component: {fileID: 5349860672167796785}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -607,7 +607,7 @@ GameObject:
   - component: {fileID: 6696658114920528752}
   - component: {fileID: 3367118298614001819}
   - component: {fileID: 1639478015671473169}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.034
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -690,7 +690,7 @@ GameObject:
   - component: {fileID: 707032067117172167}
   - component: {fileID: 4628577887721968774}
   - component: {fileID: 2287209862387116564}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.025
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -773,7 +773,7 @@ GameObject:
   - component: {fileID: 5851045410234263055}
   - component: {fileID: 2708599280154720012}
   - component: {fileID: 826543889113853984}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -856,7 +856,7 @@ GameObject:
   - component: {fileID: 759464184221528401}
   - component: {fileID: 2862117040368222893}
   - component: {fileID: 7659126353383370531}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.026
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -939,7 +939,7 @@ GameObject:
   - component: {fileID: 8477567126082187649}
   - component: {fileID: 4479554023796839331}
   - component: {fileID: 8032075067842351204}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.027
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1022,7 +1022,7 @@ GameObject:
   - component: {fileID: 6576146239917596177}
   - component: {fileID: 7168422282370498171}
   - component: {fileID: 3884538434186934057}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1105,7 +1105,7 @@ GameObject:
   - component: {fileID: 959751600504384335}
   - component: {fileID: 4809955283997226421}
   - component: {fileID: 2482771496995524046}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1188,7 +1188,7 @@ GameObject:
   - component: {fileID: 3449687584345822862}
   - component: {fileID: 5807361476883542680}
   - component: {fileID: 6637334856836220666}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.009
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1271,7 +1271,7 @@ GameObject:
   - component: {fileID: 7427846938247840032}
   - component: {fileID: 2698889792005865079}
   - component: {fileID: 1008824172318583531}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1354,7 +1354,7 @@ GameObject:
   - component: {fileID: 2398697747642615392}
   - component: {fileID: 4223278365580244050}
   - component: {fileID: 7980378500401914938}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1437,7 +1437,7 @@ GameObject:
   - component: {fileID: 8512301479940439031}
   - component: {fileID: 3162598368427443308}
   - component: {fileID: 2286328896695577141}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1520,7 +1520,7 @@ GameObject:
   - component: {fileID: 8011912615947070369}
   - component: {fileID: 8004347599432054571}
   - component: {fileID: 6732236377334093204}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1603,7 +1603,7 @@ GameObject:
   - component: {fileID: 3651349612063590572}
   - component: {fileID: 573786411733051309}
   - component: {fileID: 4991875510463750695}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.024
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1686,7 +1686,7 @@ GameObject:
   - component: {fileID: 4864738641461231572}
   - component: {fileID: 8749735056227680599}
   - component: {fileID: 5716334013700239437}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.037
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1769,7 +1769,7 @@ GameObject:
   - component: {fileID: 649341430640887273}
   - component: {fileID: 2593034385785684567}
   - component: {fileID: 5872640305653281982}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1852,7 +1852,7 @@ GameObject:
   - component: {fileID: 167848752706069231}
   - component: {fileID: 6371475579630017337}
   - component: {fileID: 2947471595406526382}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.029
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1935,7 +1935,7 @@ GameObject:
   - component: {fileID: 4375310098543860636}
   - component: {fileID: 8787224026017761544}
   - component: {fileID: 5845500645266897306}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.011
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2018,7 +2018,7 @@ GameObject:
   - component: {fileID: 505440377218000538}
   - component: {fileID: 1194718025855851048}
   - component: {fileID: 4282882885923299319}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.036
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2101,7 +2101,7 @@ GameObject:
   - component: {fileID: 106114787033971154}
   - component: {fileID: 1028505302958031850}
   - component: {fileID: 5986243557056800207}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.019
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2184,7 +2184,7 @@ GameObject:
   - component: {fileID: 2397367339325335904}
   - component: {fileID: 2777725650296728466}
   - component: {fileID: 4801582092054361962}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2267,7 +2267,7 @@ GameObject:
   - component: {fileID: 6670266584865503363}
   - component: {fileID: 8336974776517344150}
   - component: {fileID: 5241410684902123672}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.017
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2350,7 +2350,7 @@ GameObject:
   - component: {fileID: 6878825867591565114}
   - component: {fileID: 8743287020952335131}
   - component: {fileID: 4561820274084056879}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.038
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2433,7 +2433,7 @@ GameObject:
   - component: {fileID: 1864677565248848689}
   - component: {fileID: 2840940123103587796}
   - component: {fileID: 7343329556610002598}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.015
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2516,7 +2516,7 @@ GameObject:
   - component: {fileID: 6539442190628528756}
   - component: {fileID: 1247146573312614553}
   - component: {fileID: 7127437849570235859}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.035
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2599,7 +2599,7 @@ GameObject:
   - component: {fileID: 2072642275632428301}
   - component: {fileID: 7449617117964944213}
   - component: {fileID: 4452456516479572552}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.022
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2682,7 +2682,7 @@ GameObject:
   - component: {fileID: 5156727234138357650}
   - component: {fileID: 2506089626727537036}
   - component: {fileID: 2201448109364509298}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.032
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2765,7 +2765,7 @@ GameObject:
   - component: {fileID: 6337344093069589020}
   - component: {fileID: 2085049493429333661}
   - component: {fileID: 2365445108165342068}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.013
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2848,7 +2848,7 @@ GameObject:
   - component: {fileID: 24156337298124604}
   - component: {fileID: 7010448545649925122}
   - component: {fileID: 5422604973263298522}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.021
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2931,7 +2931,7 @@ GameObject:
   - component: {fileID: 5102630267049921612}
   - component: {fileID: 2432408896952233866}
   - component: {fileID: 7304333760305169933}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.018
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3012,9 +3012,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7200483885399718641}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: tile for test
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3085,7 +3085,8 @@ GameObject:
   - component: {fileID: 5963674049738542119}
   - component: {fileID: 8403944716618821832}
   - component: {fileID: 5411239976596900454}
-  m_Layer: 0
+  - component: {fileID: 3963974692202605096}
+  m_Layer: 3
   m_Name: bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3157,6 +3158,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3963974692202605096
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8003409737975500335}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3796887150266652070, guid: a94156ff42239bb40b064570537cb633, type: 3}
 --- !u!1 &8062953083113493778
 GameObject:
   m_ObjectHideFlags: 0
@@ -3168,7 +3183,7 @@ GameObject:
   - component: {fileID: 658889447991654220}
   - component: {fileID: 4981783909951101440}
   - component: {fileID: 598126963274097209}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.028
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3251,7 +3266,7 @@ GameObject:
   - component: {fileID: 4943427531366096908}
   - component: {fileID: 448694077897936646}
   - component: {fileID: 16553496413095394}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.031
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3334,7 +3349,7 @@ GameObject:
   - component: {fileID: 5188606528464960602}
   - component: {fileID: 1072338179002660020}
   - component: {fileID: 3340002478713099052}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: stone.023
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -35,7 +35,8 @@ public class generate : MonoBehaviour
                                             spawnGoodTile ? goodTile : (Random.Range(0f,1f) < 0.5f ? dmgTile : windingTile), 
                                             new Vector3(x * scaleFactor, z * scaleFactor,  y * scaleFactor), 
                                             Quaternion.Euler(0, 0, 0));
-                    newTile.transform.localScale = newTile.transform.localScale * scaleFactor;
+                    newTile.transform.localScale = newTile.transform.localScale * scaleFactor * 1.1f;
+                    newTile.transform.Rotate(0, 60 * Random.Range(0, 6), 0);
                     newTile.transform.parent = this.transform;
                 }
 
