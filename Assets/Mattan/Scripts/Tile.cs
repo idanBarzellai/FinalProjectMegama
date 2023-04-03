@@ -4,8 +4,9 @@ using Photon.Pun;
 public class Tile : MonoBehaviour {
     public Effect effect{get; private set;}
     public bool playerTouching{get; private set;}
-    public PhotonView otherPlayerPhotoneView{get; private set;}
-    
+    //public PhotonView otherPlayerPhotoneView{get; private set;}
+    public BasicsController otherPlayerPhotoneView{get; private set;}
+
     public virtual void Awake() {
         playerTouching = false;
         effect = GetComponent<Effect>();
@@ -15,8 +16,8 @@ public class Tile : MonoBehaviour {
         if (other.gameObject.GetComponent<BasicsController>() == null)
             return;
 
-        otherPlayerPhotoneView = other.gameObject.GetPhotonView();
-
+        //otherPlayerPhotoneView = other.gameObject.GetPhotonView();
+        otherPlayerPhotoneView = other.gameObject.GetComponent<BasicsController>();
         playerTouching = true;
     }
 

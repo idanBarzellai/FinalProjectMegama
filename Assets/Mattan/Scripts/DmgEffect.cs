@@ -8,10 +8,9 @@ public class DmgEffect : Effect {
     public override void Apply(){
         Vector3 push = Vector3.zero;
 
-        GetComponent<Tile>().otherPlayerPhotoneView.RPC("DealDamage", RpcTarget.All,
-                                                         damage, push, 200,
-                                                        gameObject.name);
-
+        
+        //GetComponent<Tile>().otherPlayerPhotoneView.RPC("DealDamage", RpcTarget.All,gameObject.name);
+        GetComponent<Tile>().otherPlayerPhotoneView.TakeDamage(damage, push, 200, "Bad tile");
     }
 
 
