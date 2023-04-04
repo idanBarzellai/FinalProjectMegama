@@ -18,8 +18,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
     public GameObject playerHitEffect;
     public GameObject playerDeathEffect;
 
-
-    protected float jumpHeight = 2f, jumpVelocity, fallMultiplyer, timeToJumpApex = 0.5f;
+    
+    protected float jumpVelocity = 40, fallMultiplyer = -100;
     private float dashForce = 25f;
     public bool isGrounded = true;
     private float rayhit = 1.2f;
@@ -67,8 +67,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
         anim = GetComponent<Animator>();
 
         activeSpeed = moveSpeed;
-        fallMultiplyer = (2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
-        jumpVelocity = Mathf.Abs(fallMultiplyer) * timeToJumpApex;
+        
 
         currHealth = maxHelath;
         skillLastUseTime = Time.time;
@@ -77,8 +76,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
         UIController.instance.healthSlider.maxValue = maxHelath;
         UIController.instance.skillSlider.maxValue = skillCooldown;
         // Canvas controlller
-        UIController.instance.healthSlider.value = currHealth;
-        UIController.instance.skillSlider.value = Time.time - skillLastUseTime;
+        UpdateUIController(currHealth, Time.time - skillLastUseTime);
+        
 
 
     }
@@ -87,6 +86,11 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)// && !UIController.instance.optionsScreen.activeInHierarchy)
         {
+            if(MatchManager.instance.state == MatchManager.GameState.Waiting)
+            {
+                currHealth = maxHelath;
+                skillLastUseTime = Time.time;
+            }
             // Mouse movement
             mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")) * mouseSensitivity;
 
@@ -115,74 +119,61 @@ public class BasicsController : MonoBehaviourPunCallbacks
             {
                 if (!isDead)
                 {
-
                     // Canvas controlller
-                    UIController.instance.healthSlider.value = currHealth;
-                    UIController.instance.skillSlider.value = Time.time - skillLastUseTime;
+                    UpdateUIController(currHealth, Time.time - skillLastUseTime);
+
+                    // Moving
+                    if (!isStaticSkill)
+                        transform.Translate(moveDir.normalized * activeSpeed * Time.deltaTime);
+
+                    photonView.RPC("SetAnim", RpcTarget.All, (Math.Abs(moveDir.x) > 0 || Math.Abs(moveDir.z) > 0) ? "Run" : "Idle");
+
+                    // Appling down force
+                    rb.AddForce(Vector3.up * fallMultiplyer, ForceMode.Acceleration);
 
                     // Reset isGrounded
+                    //if (Physics.Raycast(transform.position, Vector3.down, rayhit, LayerMask.GetMask("Ground")))
+                    //    setGrounded(true);
+                    //else
+                    //    setGrounded(false);
+
+                    //// Falling
+                    //if (!isGrounded && rb.velocity.y < 0)
+                    //    rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplyer * Time.deltaTime;
+
+                    //if (!isGrounded && rb.velocity.y > 0)
+                    //    rb.velocity += Vector3.up * Physics.gravity.y * Time.deltaTime;
+
+
+
+
                     if (Physics.Raycast(transform.position, Vector3.down, rayhit, LayerMask.GetMask("Ground")))
                         setGrounded(true);
                     else
                         setGrounded(false);
 
-                    // Falling
-                    if (!isGrounded && rb.velocity.y < 0)
-                        rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplyer * Time.deltaTime;
-
-                    if (!isGrounded && rb.velocity.y > 0)
-                        rb.velocity += Vector3.up * Physics.gravity.y * Time.deltaTime;
-
-                    photonView.RPC("SetAnim", RpcTarget.All, (Math.Abs(moveDir.x) > 0 || Math.Abs(moveDir.z) > 0) ? "Run" : "Idle");
-
-                    if (!inSkill)
+                    
+                    if (!inSkill && isGrounded && Input.GetKeyDown(KeyCode.Space))
                     {
-                        //// Jumping
-                        //rb.AddForce(Physics.gravity * fallMultiplyer );
-                        rb.AddForce(Vector3.up * -fallMultiplyer, ForceMode.Acceleration);
-                        // Jumping
-                        if (Input.GetKeyDown(KeyCode.Space))
+                        //if (isGrounded)// && Physics.Raycast(transform.position, Vector3.down, rayhit))
+                        Jump();
+                    }
+
+
+                    // Dashing 
+                    if (!inSkill && Input.GetKeyDown(KeyCode.LeftShift) && Time.time - lastTimeDashed > dashCooldown)
+                    {
+                        if (moveDir.z < dashThershold && moveDir.x < dashThershold)
                         {
-                            if (isGrounded)// && Physics.Raycast(transform.position, Vector3.down, rayhit))
-                                Jump();
+                            Dash(transform.forward, true);
                         }
-
-
-                        // Dashing 
-                        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time - lastTimeDashed > dashCooldown)
+                        else
                         {
-                            if (moveDir.z < dashThershold && moveDir.x < dashThershold)
-                            {
-                                Dash(transform.forward, true);
-                            }
-                            else
-                            {
-                                dashDirection = (moveDir.z * transform.forward) + (moveDir.x * transform.right);
+                            dashDirection = (moveDir.z * transform.forward) + (moveDir.x * transform.right);
 
-                                Dash(dashDirection, true);
-                            }
+                            Dash(dashDirection, true);
                         }
                     }
-                    else
-                    {
-                        //// Check minmumHeight
-                        //if (transform.position.y > 18)
-                        //{
-                        //    rb.velocity = new Vector3(rb.velocity.x, Physics.gravity.y, rb.velocity.z);
-                        //}
-
-
-                    }
-
-                    // Check for fall death
-                    if (transform.position.y < minimumHeight)
-                    {
-                        Die("Height", 200);
-                    }
-                    if (!isStaticSkill)
-                        // Moving
-                        transform.Translate(moveDir.normalized * activeSpeed * Time.deltaTime);
-
                     // Skill trigger
                     if (Time.time - skillLastUseTime > skillCooldown && Input.GetKeyDown(KeyCode.Q))
                     {
@@ -191,8 +182,15 @@ public class BasicsController : MonoBehaviourPunCallbacks
                         SkillTrigger();
                     }
 
+                    // Shooting
                     if (Input.GetMouseButtonDown(0))
                         Shoot();
+
+                    // Check for fall death
+                    if (transform.position.y < minimumHeight)
+                    {
+                        Die("Height", 200);
+                    }
                 }
                 // Rolling Head
                 else
@@ -276,7 +274,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     public void Jump(float addition = 1f)
     {
         //rb.velocity += Vector3.up * jumpHeight * addition;
-        rb.AddForce(Vector3.up * jumpVelocity *addition, ForceMode.VelocityChange);
+        rb.AddForce(Vector3.up * jumpVelocity *addition, ForceMode.Impulse);
         setGrounded(false);
     }
 
@@ -309,9 +307,10 @@ public class BasicsController : MonoBehaviourPunCallbacks
         SetInSkill(true);
     }
 
-    public void UpdateUIController()
+    public void UpdateUIController(float health, float skillTime)
     {
-
+        UIController.instance.healthSlider.value = health;
+        UIController.instance.skillSlider.value = skillTime;
     } 
 
     public void freezeMovement(bool toFreeze)
@@ -327,7 +326,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
             case PowerupsManager.PowerUpsPowers.Armor:
                 break;
             case PowerupsManager.PowerUpsPowers.DoubleJump:
-                jumpHeight += amountToAdd;
+                jumpVelocity += amountToAdd;
                 break;
             case PowerupsManager.PowerUpsPowers.ExtraDmg:
                 // Add dmg
@@ -369,6 +368,11 @@ public class BasicsController : MonoBehaviourPunCallbacks
         }
 
         isDead = true;
+    }
+
+    private bool amIPlayingAndNotDead()
+    {
+        return photonView.IsMine && MatchManager.instance.state == MatchManager.GameState.Playing && !isDead;
     }
 
     

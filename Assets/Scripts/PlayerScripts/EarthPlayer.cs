@@ -22,16 +22,16 @@ public class EarthPlayer : BasicsController
     float basicFallForce;
     float addedFallForce;
 
-    float forwardForce = 20;
-    float upwordForce = 25;
+    float forwardForce = 40;
+    float upwordForce = 120;
 
 
     protected override void Start()
     {
         base.Start();
         basicFallForce = fallMultiplyer;
-        addedFallForce = fallMultiplyer * 3;//(2 *jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
-        upwordForce = addedFallForce * timeToJumpApex;
+        addedFallForce = fallMultiplyer * 4;//(2 *jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        //upwordForce = addedFallForce * timeToJumpApex;
         if(photonView.IsMine)
             UIController.instance.skillSliderFillColor.color = Color.magenta;
 
@@ -42,7 +42,7 @@ public class EarthPlayer : BasicsController
         base.Update();
         if (photonView.IsMine)
         {
-            rb.AddForce(Vector3.up * -fallMultiplyer, ForceMode.Acceleration);
+            //rb.AddForce(Vector3.up * -fallMultiplyer, ForceMode.Acceleration);
 
             if (!skillTriggered && GetInSkill() && Input.GetKeyUp(KeyCode.Q) && isGrounded)
             {
@@ -98,15 +98,16 @@ public class EarthPlayer : BasicsController
 
         lineRenderer.positionCount = Mathf.CeilToInt(linePoints / timeBetweenpoints) + 1;
         Vector3 startPosition = transform.position;
-        Vector3 startVelocity = (transform.forward * forwardForce + new Vector3(0, upwordForce - 5f, 0)) / (rb.mass * addedFallForce / 5.5f);
+        Vector3 startVelocity = (transform.forward * forwardForce + Vector3.up * upwordForce );
+        //startVelocity.y -= (Mathf.Abs(fallMultiplyer) + Mathf.Abs(Physics.gravity.y));//+ new Vector3(0, jumpVelocity, 0)) / (fallMultiplyer);
         int i = 0;
         lineRenderer.SetPosition(i, startPosition);
 
-        for (float time = 0; time < linePoints; time += timeBetweenpoints)
+        for (float time = 0; time < linePoints; time += timeBetweenpoints) // 250 points
         {
             i++;
             Vector3 point = startPosition + time * startVelocity;
-            point.y = startPosition.y + startVelocity.y * time + (Physics.gravity.y / 2f * time * time);
+            point.y = startPosition.y + startVelocity.y * time + 0.5f * (-(Mathf.Abs(fallMultiplyer) + Mathf.Abs(Physics.gravity.y)) * time * time);
 
             lineRenderer.SetPosition(i, point);
 
@@ -114,7 +115,7 @@ public class EarthPlayer : BasicsController
             if (Physics.Raycast(lastPosition,
                 (point - lastPosition).normalized,
                 out RaycastHit hit,
-                (point - lastPosition).magnitude,
+                5,
                 floorCollisionMask))
             {
                 lineRenderer.SetPosition(i, hit.point);
@@ -132,7 +133,7 @@ public class EarthPlayer : BasicsController
         playerLeapedFromGround = true;
 
         //rb.AddForce(transform.forward * forwardForce + new Vector3(0, upwordForce * 1.5f, 0), ForceMode.Impulse);
-        rb.AddForce(Vector3.up * upwordForce, ForceMode.VelocityChange);
+        rb.AddForce(transform.forward * forwardForce +  Vector3.up * upwordForce, ForceMode.VelocityChange);
         photonView.RPC("SetAnim", RpcTarget.All, "Skill");
 
     }
