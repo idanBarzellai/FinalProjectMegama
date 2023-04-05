@@ -5,7 +5,7 @@ public class Tile : MonoBehaviour {
     public Effect effect{get; private set;}
     public bool playerTouching{get; private set;}
     //public PhotonView otherPlayerPhotoneView{get; private set;}
-    public BasicsController otherPlayerPhotoneView{get; private set;}
+    public BasicsController otherPlayerPhotoneView{get; set;}
 
     public virtual void Awake() {
         playerTouching = false;

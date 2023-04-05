@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 338925361295076208}
   - component: {fileID: 3472729028027802936}
   - component: {fileID: 366110372404153978}
+  - component: {fileID: 2839431117074919920}
   m_Layer: 10
   m_Name: Dead-Head
   m_TagString: DeadHead
@@ -194,7 +195,7 @@ MeshCollider:
   m_GameObject: {fileID: 1647762968100922351}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
@@ -250,6 +251,19 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!135 &2839431117074919920
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647762968100922351}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.010755892
+  m_Center: {x: 0, y: -0.0007558934, z: -0.00003604544}
 --- !u!1 &2098288572222404809
 GameObject:
   m_ObjectHideFlags: 0
@@ -1694,6 +1708,38 @@ PrefabInstance:
     - target: {fileID: 5143287160920949689, guid: fbc289376161828478080458199ad40a, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[1].value
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5143287160920949689, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.maxCurve.m_Curve.Array.data[0].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5143287160920949689, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.maxCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5143287160920949689, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[0].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5143287160920949689, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5143287160920949689, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.maxCurve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5143287160920949689, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.maxCurve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5143287160920949689, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5143287160920949689, guid: fbc289376161828478080458199ad40a, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 5812868501701946207, guid: fbc289376161828478080458199ad40a, type: 3}
       propertyPath: m_Mesh

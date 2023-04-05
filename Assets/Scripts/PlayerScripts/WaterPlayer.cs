@@ -95,6 +95,11 @@ public class WaterPlayer : BasicsController
         rb.velocity = Vector3.zero;
     }
 
+    protected override bool IsApplingDownForce()
+    {
+        return !isGrounded && !playerInMidAir;
+    }
+
     private IEnumerator EndSkill()
     {
         yield return new WaitForSecondsRealtime(skillDuration);

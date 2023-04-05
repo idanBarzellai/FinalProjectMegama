@@ -38,7 +38,10 @@ public class FirePlayer : BasicsController
         InvokeRepeating("fireSkillHelper", fireTrailCreation, fireInstanceCreationRate);
     }
 
-
+    protected override bool IsAbleToJump()
+    {
+        return Input.GetKeyDown(KeyCode.Space) && isGrounded;
+    }
     private void resetVariables()
     {
         CancelInvoke("fireSkillHelper");

@@ -8,8 +8,8 @@ public class AirPlayer : BasicsController
 {
 
     private float skillDuration = 3f;
-    bool playerInMidAir = false;
     bool gettingLargerScale = false;
+    bool isStopGravity = false;
     float maxRadius = 6f;
     float flightSpeed = 25f;
 
@@ -31,9 +31,9 @@ public class AirPlayer : BasicsController
         if (photonView.IsMine)
         {
 
-            if (!playerInMidAir && GetInSkill() && rb.velocity.y <= 0.005)
+            if (isStopGravity && GetInSkill() && rb.velocity.y <= 0.005)
             {
-                StartCoroutine(airSKillHelper());
+                StartCoroutine(Fly());
             }
 
             if (ImpactArea.transform.localScale.x <= maxRadius && gettingLargerScale)
@@ -45,20 +45,33 @@ public class AirPlayer : BasicsController
 
     protected override void SkillTrigger()
     {
+
+        Jump();
+
         base.SkillTrigger();
         photonView.RPC("SetAnim", RpcTarget.All, "Skill");
+
         ImpactArea.GetComponent<SkillInstanceController>().SetName(photonView.Owner.NickName);
         photonView.RPC("triggerEffect", RpcTarget.All);
 
         StartCoroutine(createAOEDamage());
-        Jump();
+        StartCoroutine(ShouldStopGravity());
+    }
+    private IEnumerator ShouldStopGravity()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+        isStopGravity = true;
     }
 
-    private IEnumerator airSKillHelper()
+    void StopGravity()
     {
-        playerInMidAir = true;
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
+    }
+
+    private IEnumerator Fly()
+    {
+        StopGravity();
         SetSpeed(flightSpeed);
         yield return new WaitForSecondsRealtime(skillDuration);
         
@@ -68,7 +81,7 @@ public class AirPlayer : BasicsController
     private void resetVariables()
     {
         SetInSkill(false);
-        playerInMidAir = false;
+        isStopGravity = false;
         rb.useGravity = true;
         SetSpeed(moveSpeed);
         photonView.RPC("SetAnim", RpcTarget.All, "SkillEnd");
@@ -91,9 +104,14 @@ public class AirPlayer : BasicsController
 
     }
 
-    public float GetAirWaveRadius()
+    protected override bool IsApplingDownForce()
     {
-        return maxRadius;
+        return !isGrounded && !GetInSkill();
+    }
+
+    protected override bool IsAbleToJump()
+    {
+        return (Input.GetKeyDown(KeyCode.Space)  || GetInSkill()) && isGrounded;
     }
 
     [PunRPC]
@@ -102,4 +120,10 @@ public class AirPlayer : BasicsController
         impactAreaEffect.Play();
 
     }
+
+    public float GetAirWaveRadius()
+    {
+        return maxRadius;
+    }
+
 }
