@@ -12,6 +12,9 @@ public class AirPlayer : BasicsController
     bool gravityShouldBeStopped = false;
     float maxRadius = 6f;
     float flightSpeed = 25f;
+    float upwordForce = 2;
+    float stopGravityThershold = -0.005f;
+    float JumpDuration = 0.6f;
 
     public GameObject ImpactArea;
     public ParticleSystem impactAreaEffect;
@@ -39,8 +42,8 @@ public class AirPlayer : BasicsController
 
     protected override void SkillTrigger()
     {
-
         AirSkillJumpStart();
+        StartCoroutine(ShouldStopGravity());
 
         base.SkillTrigger();
 
@@ -49,26 +52,21 @@ public class AirPlayer : BasicsController
         StartCoroutine(AirBurstHandler());
         
         photonView.RPC("SetAnim", RpcTarget.All, "Skill");
-
-
-        StartCoroutine(ShouldStopGravity());
     }
 
 
 
     private void Fly()
     {
-        if (GetInSkill() && !isGrounded && gravityShouldBeStopped && rb.velocity.y <= -0.05)
+        if (GetInSkill() && !isGrounded && gravityShouldBeStopped && rb.velocity.y <= stopGravityThershold)
         {
             StartCoroutine(FlyCo());
-
         }
-
     }
 
     private IEnumerator ShouldStopGravity()
     {
-        yield return new WaitForSecondsRealtime(0.2f);
+        yield return new WaitForSecondsRealtime(JumpDuration);
         gravityShouldBeStopped = true;
     }
     private IEnumerator FlyCo()
@@ -117,10 +115,10 @@ public class AirPlayer : BasicsController
     }
     private void AirSkillJumpStart()
     {
-        Debug.Log("flying");
 
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z) ;
+        Vector3 force = isGrounded ? Vector3.up * upwordForce: Vector3.up * upwordForce * 1.5f;
+        rb.AddForce(force);
         setGrounded(false);
 
     }

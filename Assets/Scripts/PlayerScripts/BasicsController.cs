@@ -107,7 +107,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
                     
                     setGrounded(Physics.Raycast(transform.position, Vector3.down, rayhit, LayerMask.GetMask("Ground")));
 
-                    Jump();
+                    TryJump();
 
                     Dash();
 
@@ -214,16 +214,19 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         return !isGrounded;
     }
-
-    public void Jump(float addition = 1f)
+    public void TryJump()
     {
         if (IsAbleToJump())
         {
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(Vector3.up * jumpVelocity * addition, ForceMode.Impulse);
-            setGrounded(false);
+            Jump();
         }
-        
+    }
+    public void Jump(float addition = 1f)
+    {
+        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        rb.AddForce(Vector3.up * jumpVelocity * addition, ForceMode.Impulse);
+        setGrounded(false);
+
     }
     protected virtual bool IsAbleToJump()
     {
