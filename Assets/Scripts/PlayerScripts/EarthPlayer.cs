@@ -9,7 +9,7 @@ public class EarthPlayer : BasicsController
 
     private int linePoints = 25;
     private float timeBetweenpoints = 0.1f;
-    public LayerMask floorCollisionMask;
+    private LayerMask floorCollisionMask;
 
     public GameObject ShowLandImpact;
     public GameObject impactArea;
@@ -22,15 +22,21 @@ public class EarthPlayer : BasicsController
     float basicFallForce;
     float addedFallForce;
 
-    float forwardForce = 40;
-    float upwordForce = 120;
+    float forwardForce = 50;
+    float upwordForce = 130;
+    float distanceCalc = 20;
 
 
     protected override void Start()
     {
         base.Start();
+
+        // This would cast rays only against colliders in layer 8.
+        int layerMask = 1 << 3;
+        floorCollisionMask = layerMask;
+        
         basicFallForce = fallMultiplyer;
-        addedFallForce = fallMultiplyer * 4;//(2 *jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        addedFallForce = fallMultiplyer *3;//(2 *jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         //upwordForce = addedFallForce * timeToJumpApex;
         if(photonView.IsMine)
             UIController.instance.skillSliderFillColor.color = Color.magenta;
@@ -44,7 +50,7 @@ public class EarthPlayer : BasicsController
         {
             //rb.AddForce(Vector3.up * -fallMultiplyer, ForceMode.Acceleration);
 
-            if (!skillTriggered && GetInSkill() && Input.GetKeyUp(KeyCode.Q) && isGrounded)
+            if (!skillTriggered && GetInSkill() && Input.GetKeyUp(KeyCode.Q))// && isGrounded) // TODO 
             {
                 skillTriggered = true;
 
@@ -92,22 +98,44 @@ public class EarthPlayer : BasicsController
     {
         // Should everyone see where the player is gonna land?
         dir = transform.forward;
-        dir = transform.InverseTransformDirection(dir);
-        dir.Normalize();
+        //dir = transform.InverseTransformDirection(dir);
+        //dir.Normalize();
+
+        GameObject myTile = FindTileUnderMe();
+        GameObject endTile;
+
+        if (myTile)
+        {
+            endTile = FindTileToLand(myTile.transform.position, dir);
+            if (endTile)
+            {
+                ShowLandImpact.transform.position = endTile.transform.position + new Vector3(0, 10,0);
+                ShowLandImpact.SetActive(true);
+            }
+            else { return; }
+
+            DrawLine(transform.position, endTile.transform.position);
+
+        }
 
 
+    }
+
+    private void DrawLine(Vector3 start, Vector3 end)
+    {
         lineRenderer.positionCount = Mathf.CeilToInt(linePoints / timeBetweenpoints) + 1;
-        Vector3 startPosition = transform.position;
-        Vector3 startVelocity = (transform.forward * forwardForce + Vector3.up * upwordForce );
+        Vector3 startVelocity = (transform.forward * (forwardForce/2) + Vector3.up * (upwordForce/4));
+        Debug.Log(startVelocity);
         //startVelocity.y -= (Mathf.Abs(fallMultiplyer) + Mathf.Abs(Physics.gravity.y));//+ new Vector3(0, jumpVelocity, 0)) / (fallMultiplyer);
         int i = 0;
-        lineRenderer.SetPosition(i, startPosition);
+        lineRenderer.SetPosition(i, start);
 
         for (float time = 0; time < linePoints; time += timeBetweenpoints) // 250 points
         {
             i++;
-            Vector3 point = startPosition + time * startVelocity;
-            point.y = startPosition.y + startVelocity.y * time + 0.5f * (-(Mathf.Abs(fallMultiplyer) + Mathf.Abs(Physics.gravity.y)) * time * time);
+
+            Vector3 point = start + time * startVelocity;
+            point.y = start.y + startVelocity.y * time + 0.5f * (-(Mathf.Abs(fallMultiplyer) + Mathf.Abs(Physics.gravity.y)) * time * time);
 
             lineRenderer.SetPosition(i, point);
 
@@ -120,12 +148,49 @@ public class EarthPlayer : BasicsController
             {
                 lineRenderer.SetPosition(i, hit.point);
                 lineRenderer.positionCount = i + 1;
-
-                ShowLandImpact.transform.position = lastPosition;
-                ShowLandImpact.SetActive(true);
-                return;
             }
         }
+    }
+
+    private GameObject FindTileUnderMe()
+    {
+        
+        // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
+
+        RaycastHit hit;
+        // Does the ray intersect any objects excluding the player layer
+        if(Physics.Raycast(transform.position, Vector3.down, out hit, 100, floorCollisionMask))
+            return hit.collider.gameObject;
+
+        return null;
+        
+    }
+
+    private GameObject FindTileToLand(Vector3 startTilePos, Vector3 dir)
+    {
+        // Q = P + (d / ||v||) * (v / ||v||)
+        // Q - end point
+        // P - start tile point
+        // d - distance
+        // v - dir
+        float d = (forwardForce) * Mathf.Sqrt(distanceCalc / addedFallForce);
+        float magV = dir.magnitude;
+        
+        Vector3 endTilePos = startTilePos + (d / magV) * (dir / magV);
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(endTilePos, Vector3.down, out hit, 100, floorCollisionMask))
+        {
+
+            return hit.transform.gameObject;
+        }
+        else if(Physics.Raycast(endTilePos, Vector3.up, out hit, 100, floorCollisionMask))
+        {
+            return hit.transform.gameObject;
+        }
+        
+        return null;
     }
 
     public void earthSkill()
@@ -133,7 +198,7 @@ public class EarthPlayer : BasicsController
         playerLeapedFromGround = true;
 
         //rb.AddForce(transform.forward * forwardForce + new Vector3(0, upwordForce * 1.5f, 0), ForceMode.Impulse);
-        rb.AddForce(transform.forward * forwardForce +  Vector3.up * upwordForce, ForceMode.VelocityChange);
+        rb.AddForce(transform.forward * forwardForce +  Vector3.up * upwordForce, ForceMode.VelocityChange); // TODO forcemode.impulse
         photonView.RPC("SetAnim", RpcTarget.All, "Skill");
 
     }

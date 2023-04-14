@@ -59,7 +59,7 @@ public class AirPlayer : BasicsController
     }
     private IEnumerator ShouldStopGravity()
     {
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(1f);
         isStopGravity = true;
     }
 

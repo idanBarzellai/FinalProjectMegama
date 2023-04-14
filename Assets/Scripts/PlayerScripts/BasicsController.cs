@@ -30,7 +30,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     private Vector3 dashDirection, moveDir;
     protected float activeSpeed, moveSpeed = 8f;
 
-    private float lastTimeDashed = 0f, dashCooldown = 1f, dashThershold = 0.05f;
+    private float lastTimeDashed = 0f, dashCooldown = 1f, dashThershold = 0.005f, dashDur = 0.8f;
 
     private float shotForce = 5f;
 
@@ -344,40 +344,33 @@ public class BasicsController : MonoBehaviourPunCallbacks
         }
     }
 
+    
+
     private void Dash()//Vector3 dir, bool withDir)
     {
         Vector3 dir = Vector3.zero;
         if (!inSkill && Input.GetKeyDown(KeyCode.LeftShift) && Time.time - lastTimeDashed > dashCooldown)
         {
-            if (moveDir.z < dashThershold && moveDir.x < dashThershold)
-            {
+            if (Mathf.Abs(moveDir.z) < dashThershold && Mathf.Abs(moveDir.x) < dashThershold)
                 dir = transform.forward;
-                //Dash(transform.forward, true);
-            }
+            
             else
-            {
                 dir = (moveDir.z * transform.forward) + (moveDir.x * transform.right);
 
-                //Dash(dashDirection, true);
-            }
-
             dir.y += 0.5f;
-            photonView.RPC("SetAnim", RpcTarget.All, "Dash");
-            rb.AddForce(dir.normalized * dashForce, ForceMode.Impulse);
 
+            //rb.AddForce(dir.normalized * dashForce, ForceMode.Impulse);
+            StartCoroutine(DashCo(dir));
             lastTimeDashed = Time.time;
         }
+    }
 
-        //if (withDir)
-        //{
-        //    dir.y += 0.5f;
-        //}
-        //dir.y += 0.5f;
-        //photonView.RPC("SetAnim", RpcTarget.All, "Dash");
-        //rb.AddForce(dir.normalized * dashForce, ForceMode.Impulse);
-
-        //lastTimeDashed = Time.time;
-
+    private IEnumerator DashCo(Vector3 dir)
+    {
+        photonView.RPC("SetAnim", RpcTarget.All, "Dash");
+        rb.velocity = rb.velocity + dir.normalized * dashForce;
+        yield return new WaitForSeconds(dashDur);
+        rb.velocity = Vector3.zero;
     }
 
     [PunRPC]

@@ -1682,9 +1682,6 @@ MonoBehaviour:
   - {fileID: 3471555419671228164}
   - {fileID: 8704945030515875947}
   lineRenderer: {fileID: 8575864299353309809}
-  floorCollisionMask:
-    serializedVersion: 2
-    m_Bits: 8
   ShowLandImpact: {fileID: 8411121931842418889}
   impactArea: {fileID: 4344771732463078517}
   impactAreaEffect: {fileID: 1733887475443806906}
@@ -1784,6 +1781,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6681016405463188944, guid: cf1874179c8449d469830340c808cf8e, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681016405463188944, guid: cf1874179c8449d469830340c808cf8e, type: 3}
+      propertyPath: m_Parameters.textureMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681016405463188944, guid: cf1874179c8449d469830340c808cf8e, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681016405463188944, guid: cf1874179c8449d469830340c808cf8e, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681016405463188944, guid: cf1874179c8449d469830340c808cf8e, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681016405463188944, guid: cf1874179c8449d469830340c808cf8e, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 0.34450993
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681016405463188944, guid: cf1874179c8449d469830340c808cf8e, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].value
+      value: 0.6473217
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849523084478562152, guid: cf1874179c8449d469830340c808cf8e, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8158504660025884173, guid: cf1874179c8449d469830340c808cf8e, type: 3}
