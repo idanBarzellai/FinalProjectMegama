@@ -80,38 +80,13 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-            //if(MatchManager.instance.state == MatchManager.GameState.Waiting)
-            //{
-            //    currHealth = maxHelath;
-            //    skillLastUseTime = Time.time;
-            //}
             ResetUIControllerInGame();
-
 
             // Mouse movement
             mouseInput = MouseMovement();
 
-            //mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")) * mouseSensitivity;
-
-            //verticalRotStore += mouseInput.y;
-            //verticalRotStore = Mathf.Clamp(verticalRotStore, -60f, 60f);
-
-            //if (invertLook)
-            //    viewPoint.rotation = Quaternion.Euler(verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
-            //else
-            //    viewPoint.rotation = Quaternion.Euler(-verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
-
             // Rotation with camera movement
             RotateWithCamMovement();
-
-            //if (!isRotationStaticSkill)
-            //{
-            //    if (!isDead)
-            //        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + mouseInput.x, transform.rotation.eulerAngles.z);
-            //    else
-            //        deadHeadParent.transform.rotation = Quaternion.Euler(deadHeadParent.transform.rotation.eulerAngles.x, deadHeadParent.transform.rotation.eulerAngles.y + mouseInput.x, deadHeadParent.transform.rotation.eulerAngles.z);
-            //}
-
 
             // you can move as a head hence movemnet is out of dead segment
             //moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
@@ -126,116 +101,35 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
                     // Moving
                     MoveTowards();
-                    //if (!isStaticSkill)
-                    //    transform.Translate(moveDir.normalized * activeSpeed * Time.deltaTime);
-
-                    //photonView.RPC("SetAnim", RpcTarget.All, (Math.Abs(moveDir.x) > 0 || Math.Abs(moveDir.z) > 0) ? "Run" : "Idle");
-
+                    
                     // Appling down force
                     ApplyDownForce();
-                    //rb.AddForce(Vector3.up * fallMultiplyer, ForceMode.Acceleration);
-
-
-                    //// Falling
-                    //if (!isGrounded && rb.velocity.y < 0)
-                    //    rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplyer * Time.deltaTime;
-
-                    //if (!isGrounded && rb.velocity.y > 0)
-                    //    rb.velocity += Vector3.up * Physics.gravity.y * Time.deltaTime;
-
-                    // Reset isGrounded
-                    //if (Physics.Raycast(transform.position, Vector3.down, rayhit, LayerMask.GetMask("Ground")))
-                    //    setGrounded(true);
-                    //else
-                    //    setGrounded(false);
-
-
-
-
+                    
                     setGrounded(Physics.Raycast(transform.position, Vector3.down, rayhit, LayerMask.GetMask("Ground")));
 
-                    //if (Physics.Raycast(transform.position, Vector3.down, rayhit, LayerMask.GetMask("Ground")))
-                    //    setGrounded(true);
-                    //else
-                    //    setGrounded(false);
-
                     Jump();
-                    //if (!inSkill && isGrounded && Input.GetKeyDown(KeyCode.Space))
-                    //{
-                    //    //if (isGrounded)// && Physics.Raycast(transform.position, Vector3.down, rayhit))
-                    //    Jump();
-                    //}
 
-
-                    // Dashing 
                     Dash();
-
-                    //if (!inSkill && Input.GetKeyDown(KeyCode.LeftShift) && Time.time - lastTimeDashed > dashCooldown)
-                    //{
-                    //    if (moveDir.z < dashThershold && moveDir.x < dashThershold)
-                    //    {
-                    //        Dash(transform.forward, true);
-                    //    }
-                    //    else
-                    //    {
-                    //        dashDirection = (moveDir.z * transform.forward) + (moveDir.x * transform.right);
-
-                    //        Dash(dashDirection, true);
-                    //    }
-                    //}
-
 
                     // Skill trigger
                     IsAbleToPreformSkill();
-                    //if (Time.time - skillLastUseTime > skillCooldown && Input.GetKeyDown(KeyCode.Q))
-                    //{
-                    //    skillLastUseTime = Time.time;
-
-                    //    SkillTrigger();
-                    //}
-
-                    // Shooting
-                    //if (Input.GetMouseButtonDown(0))
-                        Shoot();
+                    
+                     Shoot();
 
                     // Check for fall death
                     IsDeadFromFallDmg();
-                    //if (transform.position.y < minimumHeight)
-                    //{
-                    //    Die("Height", 200);
-                    //}
+                    
                 }
                 // Rolling Head
                 else
                 {
                     MoveDeadHead();
-                    //deadHeadParent.transform.Translate(moveDir.normalized * activeSpeed * 1.5f * Time.deltaTime);
-
-                    //Vector3 rotateDir = new Vector3(moveDir.z, moveDir.y, moveDir.x);
-                    //deadHead.transform.Rotate(rotateDir.normalized * (activeSpeed / 2));
-
-                    // Resapwn
+                    
                     Respawn();
-                    //if (Input.GetKey(KeyCode.R))
-                    //    PlayerSpawner.instance.ReSpawn();
-
                 }
-
-
             }
-
-
             // Unlocking camera and mouse connection
             UnlockAndLockMouse();
-            //if (Input.GetKeyDown(KeyCode.Escape))
-            //    Cursor.lockState = CursorLockMode.None;
-
-            //else if (Cursor.lockState == CursorLockMode.None)
-            //    if (Input.GetMouseButtonDown(0) && !UIController.instance.optionsScreen.activeInHierarchy)
-            //    {
-            //        Cursor.lockState = CursorLockMode.Locked;
-            //        Cursor.visible = false;
-            //    }
         }
     }
 
@@ -464,7 +358,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     protected virtual void IsAbleToPreformSkill()
     {
-        if (Time.time - skillLastUseTime > skillCooldown && Input.GetKeyDown(KeyCode.Q))
+        if (Time.time - skillLastUseTime > skillCooldown && !inSkill && Input.GetKeyDown(KeyCode.Q))
         {
             skillLastUseTime = Time.time;
 
