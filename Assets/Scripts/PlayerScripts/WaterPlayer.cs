@@ -22,27 +22,26 @@ public class WaterPlayer : BasicsController
     protected override void Start()
     {
         base.Start();
-        if (photonView.IsMine)
-            UIController.instance.skillSliderFillColor.color = Color.blue;
-
-
+        SetSkillBarColor(Color.blue);
     }
     protected override void Update()
     {
         base.Update();
-        if (photonView.IsMine)
+        if (amIPlayingAndNotDead())
         {
-            
-            if (Input.GetKeyUp(KeyCode.Q))
-                resetVariables();
-
-            
-            stopGravity();
-            MoveWithWave();
-            
+            WaterSKill();
         }
     }
 
+    private void WaterSKill()
+    {
+        if (Input.GetKeyUp(KeyCode.Q))
+            resetVariables();
+
+
+        stopGravityForSkill();
+        MoveWithWave();
+    }
 
     protected override void SkillTrigger()
     {
@@ -52,7 +51,7 @@ public class WaterPlayer : BasicsController
         dir.Normalize();
 
         waterSkillHelper();
-        Jump();
+        shouldJump = true;
         StartCoroutine(ShouldStopGravity());
     }
 
@@ -93,7 +92,7 @@ public class WaterPlayer : BasicsController
         rb.useGravity = true;
     }
 
-    private void stopGravity()
+    private void stopGravityForSkill()
     {
         if (GetInSkill() && !skillCanceled && gravityShouldBeStopped && rb.velocity.y <= stopGravityThershold)
         {

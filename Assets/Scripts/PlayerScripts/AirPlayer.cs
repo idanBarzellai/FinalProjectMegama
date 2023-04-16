@@ -22,27 +22,22 @@ public class AirPlayer : BasicsController
     protected override void Start()
     {
         base.Start();
-        if (photonView.IsMine)
-            UIController.instance.skillSliderFillColor.color = Color.white;
-
-
+        SetSkillBarColor(Color.white);
     }
     protected override void Update()
     {
         base.Update();
 
-        if (photonView.IsMine)
+        if (amIPlayingAndNotDead())
         {
             Fly();
-
-            AirBurstEffect();
-            
         }
     }
 
     protected override void SkillTrigger()
     {
-        AirSkillJumpStart();
+        additionToJump = 2;
+        shouldJump = true;//AirSkillJumpStart();
         StartCoroutine(ShouldStopGravity());
 
         base.SkillTrigger();
@@ -61,6 +56,7 @@ public class AirPlayer : BasicsController
         if (GetInSkill() && !isGrounded && gravityShouldBeStopped && rb.velocity.y <= stopGravityThershold)
         {
             StartCoroutine(FlyCo());
+            AirBurstEffect();
         }
     }
 
@@ -113,15 +109,7 @@ public class AirPlayer : BasicsController
         ImpactArea.GetComponent<CapsuleCollider>().enabled = false;
         ImpactArea.transform.localScale = new Vector3(1f, 0.2f, 1f);
     }
-    private void AirSkillJumpStart()
-    {
 
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z) ;
-        Vector3 force = isGrounded ? Vector3.up * upwordForce: Vector3.up * upwordForce * 1.5f;
-        rb.AddForce(force);
-        setGrounded(false);
-
-    }
     protected override bool IsApplingDownForce()
     {
         return !isGrounded && rb.useGravity;

@@ -38,30 +38,23 @@ public class EarthPlayer : BasicsController
         basicFallForce = fallMultiplyer;
         addedFallForce = fallMultiplyer *3;//(2 *jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         //upwordForce = addedFallForce * timeToJumpApex;
-        if(photonView.IsMine)
-            UIController.instance.skillSliderFillColor.color = Color.magenta;
 
-
+        SetSkillBarColor(new Color(167, 74, 8, 255)); //Brown color
     }
     protected override void Update()
     {
         base.Update();
-        if (photonView.IsMine)
+        if (amIPlayingAndNotDead())
         {
             //rb.AddForce(Vector3.up * -fallMultiplyer, ForceMode.Acceleration);
-
-            if (!skillTriggered && GetInSkill() && Input.GetKeyUp(KeyCode.Q))// && isGrounded) // TODO 
-            {
-                skillTriggered = true;
-
-                earthSkill();
-            }
+            earthSkill();
+            
         }
     }
     protected override void LateUpdate()
     {
         base.LateUpdate();
-        if (photonView.IsMine)
+        if (amIPlayingAndNotDead())
         {
             if (lineRenderer.enabled)
             {
@@ -195,11 +188,16 @@ public class EarthPlayer : BasicsController
 
     public void earthSkill()
     {
-        playerLeapedFromGround = true;
+        if (!skillTriggered && GetInSkill() && Input.GetKeyUp(KeyCode.Q))// && isGrounded) // TODO 
+        {
+            skillTriggered = true;
+            playerLeapedFromGround = true;
 
-        //rb.AddForce(transform.forward * forwardForce + new Vector3(0, upwordForce * 1.5f, 0), ForceMode.Impulse);
-        rb.AddForce(transform.forward * forwardForce +  Vector3.up * upwordForce, ForceMode.VelocityChange); // TODO forcemode.impulse
-        photonView.RPC("SetAnim", RpcTarget.All, "Skill");
+            //rb.AddForce(transform.forward * forwardForce + new Vector3(0, upwordForce * 1.5f, 0), ForceMode.Impulse);
+            rb.AddForce(transform.forward * forwardForce + Vector3.up * upwordForce, ForceMode.VelocityChange); // TODO forcemode.impulse
+            photonView.RPC("SetAnim", RpcTarget.All, "Skill");
+        }
+        
 
     }
 

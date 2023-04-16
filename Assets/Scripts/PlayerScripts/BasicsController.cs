@@ -20,6 +20,9 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
 
     protected float jumpVelocity = 40, fallMultiplyer = 10, downForce = 1.2f;
+    protected bool shouldJump = false;
+    protected float additionToJump = 1;
+
     private float dashForce = 25f;
     public bool isGrounded = true;
     private float rayhit = 1.2f;
@@ -132,6 +135,14 @@ public class BasicsController : MonoBehaviourPunCallbacks
             UnlockAndLockMouse();
         }
     }
+    protected virtual void FixedUpdate()
+    {
+        if (amIPlayingAndNotDead())
+        {
+            if(shouldJump)
+                Jump();
+        }
+    }
 
     protected virtual void LateUpdate()
     {
@@ -218,14 +229,17 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         if (IsAbleToJump())
         {
-            Jump();
+            shouldJump = true;
         }
+
     }
-    public void Jump(float addition = 1f)
+    public void Jump()
     {
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        rb.AddForce(Vector3.up * jumpVelocity * addition, ForceMode.Impulse);
+        rb.AddForce(Vector3.up * jumpVelocity * additionToJump, ForceMode.Impulse);
         setGrounded(false);
+        additionToJump = 1;
+        shouldJump = false;
 
     }
     protected virtual bool IsAbleToJump()
@@ -423,12 +437,16 @@ public class BasicsController : MonoBehaviourPunCallbacks
                 Cursor.visible = false;
             }
     }
-
+    protected void SetSkillBarColor(Color color)
+    {
+        if (photonView.IsMine)
+            UIController.instance.skillSliderFillColor.color = color;
+    }
     
 
     
 
-    private bool amIPlayingAndNotDead()
+    protected bool amIPlayingAndNotDead()
     {
         return photonView.IsMine && MatchManager.instance.state == MatchManager.GameState.Playing && !isDead;
     }
