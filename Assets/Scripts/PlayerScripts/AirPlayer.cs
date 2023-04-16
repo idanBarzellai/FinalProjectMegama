@@ -8,9 +8,13 @@ public class AirPlayer : BasicsController
 {
 
     private float skillDuration = 3f;
-    bool playerInMidAir = false;
     bool gettingLargerScale = false;
+    bool gravityShouldBeStopped = false;
     float maxRadius = 6f;
+    float flightSpeed = 25f;
+    float upwordForce = 2;
+    float stopGravityThershold = -0.005f;
+    float JumpDuration = 0.6f;
 
     public GameObject ImpactArea;
     public ParticleSystem impactAreaEffect;
@@ -18,60 +22,80 @@ public class AirPlayer : BasicsController
     protected override void Start()
     {
         base.Start();
-        if (photonView.IsMine)
-            UIController.instance.skillSliderFillColor.color = Color.white;
-
-
+        SetSkillBarColor(Color.white);
     }
     protected override void Update()
     {
         base.Update();
 
-        if (photonView.IsMine)
+        if (amIPlayingAndNotDead())
         {
-
-            if (!playerInMidAir && GetInSkill() && rb.velocity.y <= 0.005)
-            {
-                StartCoroutine(airSKillHelper());
-            }
-
-            if (ImpactArea.transform.localScale.x <= maxRadius && gettingLargerScale)
-            {
-                ImpactArea.transform.localScale += new Vector3(0.5f, 0, 0.5f);
-            }
+            Fly();
         }
     }
 
     protected override void SkillTrigger()
     {
+        additionToJump = 2;
+        shouldJump = true;//AirSkillJumpStart();
+        StartCoroutine(ShouldStopGravity());
+
         base.SkillTrigger();
-        photonView.RPC("SetAnim", RpcTarget.All, "Skill");
+
         ImpactArea.GetComponent<SkillInstanceController>().SetName(photonView.Owner.NickName);
         photonView.RPC("triggerEffect", RpcTarget.All);
-
-        StartCoroutine(createAOEDamage());
-        Jump();
+        StartCoroutine(AirBurstHandler());
+        
+        photonView.RPC("SetAnim", RpcTarget.All, "Skill");
     }
 
-    private IEnumerator airSKillHelper()
+
+
+    private void Fly()
     {
-        playerInMidAir = true;
-        rb.useGravity = false;
-        rb.velocity = Vector3.zero;
+        if (GetInSkill() && !isGrounded && gravityShouldBeStopped && rb.velocity.y <= stopGravityThershold)
+        {
+            StartCoroutine(FlyCo());
+            AirBurstEffect();
+        }
+    }
+
+    private IEnumerator ShouldStopGravity()
+    {
+        yield return new WaitForSecondsRealtime(JumpDuration);
+        gravityShouldBeStopped = true;
+    }
+    private IEnumerator FlyCo()
+    {
+        StopGravity();
+        SetSpeed(flightSpeed);
         yield return new WaitForSecondsRealtime(skillDuration);
         
         resetVariables();
+    }
+    void StopGravity()
+    {
+        rb.useGravity = false;
+        rb.velocity = Vector3.zero;
     }
 
     private void resetVariables()
     {
         SetInSkill(false);
-        playerInMidAir = false;
         rb.useGravity = true;
+        gravityShouldBeStopped = false;
+        SetSpeed(moveSpeed);
         photonView.RPC("SetAnim", RpcTarget.All, "SkillEnd");
     }
 
-    private IEnumerator createAOEDamage(float dmg = 1f)
+    private void AirBurstEffect()
+    {
+        if (ImpactArea.transform.localScale.x <= maxRadius && gettingLargerScale)
+        {
+            ImpactArea.transform.localScale += new Vector3(0.5f, 0, 0.5f);
+        }
+    }
+    private IEnumerator AirBurstHandler(float dmg = 1f)
     {
         // Change to close tiles
         //ImpactArea.GetComponent<MeshRenderer>().enabled = true;
@@ -84,13 +108,16 @@ public class AirPlayer : BasicsController
         //ImpactArea.GetComponent<MeshRenderer>().enabled = false;
         ImpactArea.GetComponent<CapsuleCollider>().enabled = false;
         ImpactArea.transform.localScale = new Vector3(1f, 0.2f, 1f);
-
-
     }
 
-    public float GetAirWaveRadius()
+    protected override bool IsApplingDownForce()
     {
-        return maxRadius;
+        return !isGrounded && rb.useGravity;
+    }
+
+    protected override bool IsAbleToJump()
+    {
+        return (Input.GetKeyDown(KeyCode.Space)  || GetInSkill()) && isGrounded;
     }
 
     [PunRPC]
@@ -99,4 +126,10 @@ public class AirPlayer : BasicsController
         impactAreaEffect.Play();
 
     }
+
+    public float GetAirWaveRadius()
+    {
+        return maxRadius;
+    }
+
 }

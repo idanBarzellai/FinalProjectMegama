@@ -11,6 +11,10 @@ public class WaterPlayer : BasicsController
     float skilljump = 0.7f;
     bool playerInMidAir = false;
     bool skillCanceled = false;
+    float stopGravityThershold = -0.005f;
+    float JumpDuration = 0.6f;
+    bool gravityShouldBeStopped = false;
+
 
     public GameObject impactArea;
     private GameObject impactAreaInstance;
@@ -18,32 +22,26 @@ public class WaterPlayer : BasicsController
     protected override void Start()
     {
         base.Start();
-        if (photonView.IsMine)
-            UIController.instance.skillSliderFillColor.color = Color.blue;
-
-
+        SetSkillBarColor(Color.blue);
     }
     protected override void Update()
     {
         base.Update();
-        if (photonView.IsMine)
+        if (amIPlayingAndNotDead())
         {
-            
-            if (Input.GetKeyUp(KeyCode.Q))
-                resetVariables();
-
-            if (GetInSkill() && !skillCanceled && !playerInMidAir && rb.velocity.y <= 0.005)
-                cancelGravity();
-
-            if (impactAreaInstance != null)
-            {
-                if (GetIsStaticSkill())
-                    transform.Translate(dir * GetActiveSpeed() * Time.deltaTime);
-                impactAreaInstance.transform.Translate(dir * GetActiveSpeed() * Time.deltaTime);
-            }
+            WaterSKill();
         }
     }
 
+    private void WaterSKill()
+    {
+        if (Input.GetKeyUp(KeyCode.Q))
+            resetVariables();
+
+
+        stopGravityForSkill();
+        MoveWithWave();
+    }
 
     protected override void SkillTrigger()
     {
@@ -53,7 +51,8 @@ public class WaterPlayer : BasicsController
         dir.Normalize();
 
         waterSkillHelper();
-        Jump(skilljump);
+        shouldJump = true;
+        StartCoroutine(ShouldStopGravity());
     }
 
 
@@ -65,11 +64,19 @@ public class WaterPlayer : BasicsController
         SetIsRotationStaticSkill(true);
         photonView.RPC("SetAnim", RpcTarget.All, "Skill");
 
+        CreateWave();
+
+        StartCoroutine(EndSkillCo());
+    }
+
+    private void CreateWave()
+    {
         impactAreaInstance = PhotonNetwork.Instantiate(impactArea.name, transform.position - wavePos, transform.rotation);
         impactAreaInstance.GetComponent<SkillInstanceController>().SetName(photonView.Owner.NickName);
-        SkillManager.instance.DestoryOverNetwork(5f, impactAreaInstance);
-        StartCoroutine(EndSkill());
+        impactAreaInstance.GetComponent<SkillInstanceController>().SetPlayer(this);
+        impactAreaInstance.GetComponent<WaveInstanceController>().Move(dir * GetActiveSpeed());
 
+        SkillManager.instance.DestoryOverNetwork(5f, impactAreaInstance);
     }
 
     private void resetVariables()
@@ -81,21 +88,43 @@ public class WaterPlayer : BasicsController
 
         photonView.RPC("SetAnim", RpcTarget.All, "SkillEnd");
 
-        playerInMidAir = false;
+        gravityShouldBeStopped = false;
         rb.useGravity = true;
     }
 
-    private void cancelGravity()
+    private void stopGravityForSkill()
     {
-        playerInMidAir = true;
-        rb.useGravity = false;
-        rb.velocity = Vector3.zero;
+        if (GetInSkill() && !skillCanceled && gravityShouldBeStopped && rb.velocity.y <= stopGravityThershold)
+        {
+            
+            rb.useGravity = false;
+            rb.velocity = Vector3.zero;
+        }
+    }
+    private IEnumerator ShouldStopGravity()
+    {
+        yield return new WaitForSecondsRealtime(JumpDuration);
+        gravityShouldBeStopped = true;
     }
 
-    private IEnumerator EndSkill()
+   
+    private void MoveWithWave()
+    {
+        if (impactAreaInstance != null)
+        {
+            if (GetIsStaticSkill())
+                transform.Translate(dir * GetActiveSpeed() * impactAreaInstance.GetComponent<WaveInstanceController>().waveSpeed * Time.deltaTime);
+
+        }
+    }
+    protected override bool IsApplingDownForce()
+    {
+        return !isGrounded && rb.useGravity;
+    }
+
+    private IEnumerator EndSkillCo()
     {
         yield return new WaitForSecondsRealtime(skillDuration);
-        //Destroy(impactAreaInstance);
 
         if (!skillCanceled)
         {

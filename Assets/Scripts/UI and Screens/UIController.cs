@@ -46,6 +46,9 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         ReleasePlayersChooseButtons();
+        playerChoosingScreen.SetActive(true);
+
+        
     }
     private void Update()
     {

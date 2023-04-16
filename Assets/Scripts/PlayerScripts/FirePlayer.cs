@@ -17,16 +17,13 @@ public class FirePlayer : BasicsController
     protected override void Start()
     {
         base.Start();
-        if (photonView.IsMine)
-            UIController.instance.skillSliderFillColor.color = Color.red;
-
-
+        SetSkillBarColor(Color.red);
     }
 
     protected override void Update()
     {
         base.Update();
-        if (photonView.IsMine)
+        if (amIPlayingAndNotDead())
             if (fireTrailCounter == fireTrailMax)
                 resetVariables();
     }
@@ -38,7 +35,10 @@ public class FirePlayer : BasicsController
         InvokeRepeating("fireSkillHelper", fireTrailCreation, fireInstanceCreationRate);
     }
 
-
+    protected override bool IsAbleToJump()
+    {
+        return Input.GetKeyDown(KeyCode.Space) && isGrounded;
+    }
     private void resetVariables()
     {
         CancelInvoke("fireSkillHelper");

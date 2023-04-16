@@ -12,6 +12,8 @@ public class generate : MonoBehaviour
     [SerializeField] GameObject goodTile;
     [SerializeField] GameObject dmgTile;
     [SerializeField] GameObject windingTile;
+
+    [SerializeField] float scaleFactor = 1;
     
     float heightDeltas = 3.5f;
  
@@ -31,8 +33,10 @@ public class generate : MonoBehaviour
                     bool spawnGoodTile = Random.Range(0f,1f) > pBadTile || ((Mathf.Abs(i) < 2) && (Mathf.Abs(j) < 2));
                     GameObject newTile = Instantiate(
                                             spawnGoodTile ? goodTile : (Random.Range(0f,1f) < 0.5f ? dmgTile : windingTile), 
-                                            new Vector3(x, z, y), 
+                                            new Vector3(x * scaleFactor, z * scaleFactor,  y * scaleFactor), 
                                             Quaternion.Euler(0, 0, 0));
+                    newTile.transform.localScale = newTile.transform.localScale * scaleFactor * 1.1f;
+                    newTile.transform.Rotate(0, 60 * Random.Range(0, 6), 0);
                     newTile.transform.parent = this.transform;
                 }
 

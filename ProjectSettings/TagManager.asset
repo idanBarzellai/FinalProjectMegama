@@ -10,6 +10,7 @@ TagManager:
   - AOEattack
   - DeadHead
   - Powerup
+  - TileTop
   layers:
   - Default
   - TransparentFX

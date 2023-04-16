@@ -22,7 +22,7 @@ public class ShotController : MonoBehaviourPunCallbacks
     {
         if (!playerName.IsNullOrEmpty())
         {
-            if (other.CompareTag("Player") && other.gameObject.GetPhotonView().Owner.NickName != playerName)
+            if (other.CompareTag("Player") && !other.CompareTag("DeadHead") && other.gameObject.GetPhotonView().Owner.NickName != playerName)
             {
                 PhotonNetwork.Instantiate(hitEffect.name, other.gameObject.transform.position + offset, Quaternion.identity);
                 other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All,dmg , Vector3.zero, PhotonNetwork.LocalPlayer.ActorNumber, playerName);
