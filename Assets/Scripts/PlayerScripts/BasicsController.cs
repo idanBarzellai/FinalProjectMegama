@@ -294,6 +294,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         if(photonView.IsMine)
         {
+            SoundManager.instacne.Play("Hit");
             currHealth -= dmg;
             
             if(currHealth <= 0)
@@ -317,6 +318,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     public void Die(string damager, int actor)
     {
+        SoundManager.instacne.Play("Death");
+
         rb.velocity = Vector3.zero;
         photonView.RPC("ScatterBodyParts", RpcTarget.All);
         PlayerSpawner.instance.Die(damager); // debug purposes change false to regular
@@ -365,6 +368,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         if (Input.GetMouseButtonDown(0))
         {
+            SoundManager.instacne.Play("Shot");
             photonView.RPC("SetAnim", RpcTarget.All, "Attack");
 
             GameObject shot = PhotonNetwork.Instantiate(shootPlaceholder.name, shootingPoint.position, Quaternion.identity);
