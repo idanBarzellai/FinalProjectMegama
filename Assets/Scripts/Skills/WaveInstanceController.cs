@@ -35,6 +35,7 @@ public class WaveInstanceController : SkillInstanceController
         {
             if (other.CompareTag("Player") && other.gameObject.GetPhotonView().Owner.NickName != playerName)
             {
+                PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 3);
 
                 Vector3 dir = transform.forward;
                 other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg, dir * pushForce, player.gameObject.GetPhotonView().Owner.ActorNumber,  playerName);

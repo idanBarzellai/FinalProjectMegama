@@ -48,6 +48,8 @@ public class FireInstanceController : SkillInstanceController
         {
             GameObject hitfx = PhotonNetwork.Instantiate(hitEffect.name, player.gameObject.transform.position, Quaternion.identity);
             PhotonNetwork.Destroy(hitfx);
+            PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 1);
+
             player.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg,Vector3.zero, player.gameObject.GetPhotonView().Owner.ActorNumber, playerName);
             yield return new WaitForSecondsRealtime(dpsCooldown);
         }

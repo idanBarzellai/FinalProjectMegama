@@ -34,6 +34,9 @@ public class UIController : MonoBehaviour
 
     public GameObject optionsScreen;
 
+    public TMP_Text currentCoins;
+    public GameObject[] powerupsButtons;
+
 
     public enum PlayerChosen
     {
@@ -43,6 +46,7 @@ public class UIController : MonoBehaviour
     public GameObject playerChoosingScreen;
     public Toggle airButton, fireButton, waterButton, earthButton;
     public PlayerChosen isPlayerPicked = PlayerChosen.None;
+
     private void Start()
     {
         ReleasePlayersChooseButtons();
@@ -62,6 +66,7 @@ public class UIController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+        currentCoins.text =  PlayerPrefs.GetInt("Coins").ToString() + " Coins";
     }
     public void Respawn()
     {
@@ -128,6 +133,24 @@ public class UIController : MonoBehaviour
     public void StartMatchPlayerChosen()
     {
         PlayerSpawner.instance.SpawnPlayer();
+    }
+
+    
+    public void TurnOffAllBuyButtons(PowerupsManager.PowerUpsPowers power)
+    {
+        foreach (GameObject button in powerupsButtons)
+        {
+            if (button.GetComponent<PowerUpButton>().myPower != power)
+            {
+                button.SetActive(false);
+            }
+            
+        } 
+    }
+
+    public void DebugCoins()
+    {
+        PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 50);
     }
 
     public void QuitGame()

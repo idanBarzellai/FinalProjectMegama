@@ -15,20 +15,9 @@ public class PlayerSpawner : MonoBehaviour
     public GameObject[] playerPrefabs;
     private GameObject player;
     private float respawnTime = 1.5f;
+    public PowerupsManager.PowerUpsPowers addedPower = PowerupsManager.PowerUpsPowers.Null;
 
-    void Start()
-    {
-        //if(PhotonNetwork.IsConnected)
-        //{
-        //    SpawnPlayer();
-        //}
-    }
 
-    //public void OpenPlayerChooseScreen()
-    //{
-    //    UIController.instance.playerChoosingScreen.SetActive(true);
-
-    //}
     public void SpawnPlayer()
     {
         if (PhotonNetwork.IsConnected) { 
@@ -41,6 +30,12 @@ public class PlayerSpawner : MonoBehaviour
             int playerChosen = (int)UIController.instance.isPlayerPicked;
             GameObject playerToSpawn = playerPrefabs[playerChosen == 4 ? Random.Range(0, playerPrefabs.Length) : playerChosen];
             player = PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint.position, spawnPoint.rotation);
+
+            // Addd powerup
+            if(addedPower != PowerupsManager.PowerUpsPowers.Null)
+            {
+                player.GetComponent<BasicsController>().ApplyPowerup(addedPower);
+            }
         }
     }
 
@@ -52,6 +47,7 @@ public class PlayerSpawner : MonoBehaviour
         UIController.instance.deathScreen.SetActive(true);
         UIController.instance.skillSlider.gameObject.SetActive(false);
         UIController.instance.healthSlider.gameObject.SetActive(false);
+        addedPower = PowerupsManager.PowerUpsPowers.Null;
     }
 
     public void ReSpawn()
