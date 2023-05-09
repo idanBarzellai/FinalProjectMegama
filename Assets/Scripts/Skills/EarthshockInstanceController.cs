@@ -23,6 +23,7 @@ public class EarthshockInstanceController : SkillInstanceController
             {
 
                 Vector3 dir = other.transform.position - this.transform.position + new Vector3(0, 2f, 0);
+                PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 5);
 
                 //other.gameObject.GetPhotonView().RPC("PushedForce", RpcTarget.All, dir * pushForce);
                 other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg, dir * pushForce, PhotonNetwork.LocalPlayer.ActorNumber, playerName);

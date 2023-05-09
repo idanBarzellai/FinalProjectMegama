@@ -13,13 +13,39 @@ public class PowerupsManager : MonoBehaviourPunCallbacks
 
     public enum PowerUpsPowers
     {
-        DoubleJump,
+        HigherJump,
         ExtraLife,
-        Shield,
         Armor,
         ExtraDmg,
-        Speed
+        Speed,
+        CooldownReduction,
+        Coin,
+        Null
     }
+
+    public Dictionary<PowerUpsPowers, int> PriceList = new Dictionary<PowerUpsPowers, int>()
+    {
+        {PowerUpsPowers.HigherJump, 50 },
+        {PowerUpsPowers.ExtraLife, 50},
+        {PowerUpsPowers.Armor, 100},
+        {PowerUpsPowers.ExtraDmg, 150},
+        {PowerUpsPowers.Speed, 50},
+        {PowerUpsPowers.CooldownReduction, 150},
+
+    };
+
+    public Dictionary<PowerUpsPowers, int> AdditionList = new Dictionary<PowerUpsPowers, int>()
+    {
+        {PowerUpsPowers.HigherJump, 20 },
+        {PowerUpsPowers.ExtraLife, 50},
+        {PowerUpsPowers.Armor, 100},
+        {PowerUpsPowers.ExtraDmg, 5},
+        {PowerUpsPowers.Speed, 3},
+        {PowerUpsPowers.CooldownReduction, 1},
+        {PowerUpsPowers.Coin, 1}
+
+    };
+
     private void Awake()
     {
         instance = this;
@@ -27,7 +53,7 @@ public class PowerupsManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.Instantiate(powerupsToSummon[Random.Range(0, powerupsToSummon.Length)].name, spawnPoints[Random.Range(0, spawnPoints.Length)].transform.position, Quaternion.identity);
     }
     // Update is called once per frame

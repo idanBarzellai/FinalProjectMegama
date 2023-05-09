@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -11,15 +10,6 @@ public class SpawnManager : MonoBehaviour
     {
         instance= this;
     }
-    void Start()
-    {
-        foreach(Transform spawn in spawnPoints)
-        {
-            spawn.gameObject.SetActive(false);
-        }
-    }
-
-    
 
     public Transform GetSpawnPoint()
     {

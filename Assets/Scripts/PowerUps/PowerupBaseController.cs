@@ -30,6 +30,11 @@ public class PowerupBaseController : MonoBehaviourPunCallbacks
             disappearEffect.Play();
             powerupsManager.DestoryOverNetwork(0, this.gameObject);
         }
+        if (other.CompareTag("Player"))
+        {
+            Rigidbody rb = GetComponent<Rigidbody>();
+            Destroy(rb);
+        }
     }
 
     protected virtual void PowerupPowerHandler()

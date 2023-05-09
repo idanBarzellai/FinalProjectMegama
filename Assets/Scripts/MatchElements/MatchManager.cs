@@ -47,7 +47,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public bool perpetual;
     private float matchLength = 60;
-    private float choosingTime = 3;
+    private float choosingTime = 15;
     private float currentMatchTime;
     private float sendTimer;
 
@@ -59,6 +59,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         {
             NewPlayerSend(PhotonNetwork.NickName);
             state = GameState.Waiting;
+            StartBGMusic();
 
             SetupTimer();
         }
@@ -512,6 +513,11 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         UIController.instance.timerText.text = timeToDisplay.Minutes.ToString("00") + ":" + timeToDisplay.Seconds.ToString("00");
 
         
+    }
+
+    private void StartBGMusic()
+    {
+        SoundManager.instacne.Play("BG");
     }
 }
 

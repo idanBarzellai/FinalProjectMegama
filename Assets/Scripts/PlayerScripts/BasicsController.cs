@@ -294,6 +294,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         if(photonView.IsMine)
         {
+            SoundManager.instacne.Play("Hit");
             currHealth -= dmg;
             
             if(currHealth <= 0)
@@ -317,6 +318,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     public void Die(string damager, int actor)
     {
+        SoundManager.instacne.Play("Death");
+
         rb.velocity = Vector3.zero;
         photonView.RPC("ScatterBodyParts", RpcTarget.All);
         PlayerSpawner.instance.Die(damager); // debug purposes change false to regular
@@ -365,6 +368,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         if (Input.GetMouseButtonDown(0))
         {
+            SoundManager.instacne.Play("Shot");
             photonView.RPC("SetAnim", RpcTarget.All, "Attack");
 
             GameObject shot = PhotonNetwork.Instantiate(shootPlaceholder.name, shootingPoint.position, Quaternion.identity);
@@ -388,26 +392,30 @@ public class BasicsController : MonoBehaviourPunCallbacks
         SetInSkill(true);
     }
 
-    public void ApplyPowerup(PowerupsManager.PowerUpsPowers power, int amountToAdd = 0)
+    public void ApplyPowerup(PowerupsManager.PowerUpsPowers power)
     {
+        int addition = PowerupsManager.instance.AdditionList[power];
         switch (power)
         {
             case PowerupsManager.PowerUpsPowers.Armor:
+
                 break;
-            case PowerupsManager.PowerUpsPowers.DoubleJump:
-                jumpVelocity += amountToAdd;
+            case PowerupsManager.PowerUpsPowers.HigherJump:
+                jumpVelocity += addition;
                 break;
             case PowerupsManager.PowerUpsPowers.ExtraDmg:
                 // Add dmg
                 break;
             case PowerupsManager.PowerUpsPowers.ExtraLife:
-                currHealth += amountToAdd;
-                break;
-            case PowerupsManager.PowerUpsPowers.Shield:
+                currHealth += addition;
                 break;
             case PowerupsManager.PowerUpsPowers.Speed:
                 break;
+            case PowerupsManager.PowerUpsPowers.CooldownReduction:
+                skillCooldown -= addition;
+                break;
         }
+        Debug.Log(power.ToString() + " Power was added");
     }
 
     // *****************************UI and Match*******************************************

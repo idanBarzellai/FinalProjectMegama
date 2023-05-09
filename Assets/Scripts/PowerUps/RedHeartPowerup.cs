@@ -7,6 +7,6 @@ public class RedHeartPowerup : PowerupBaseController
     int bonusLifePoints = 10;
     protected override void PowerupPowerHandler()
     {
-        playerThatTookMe.ApplyPowerup(PowerupsManager.PowerUpsPowers.ExtraLife, bonusLifePoints);
+        playerThatTookMe.ApplyPowerup(PowerupsManager.PowerUpsPowers.ExtraLife);
     }
 }

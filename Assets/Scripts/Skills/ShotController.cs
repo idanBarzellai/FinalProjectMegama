@@ -9,6 +9,7 @@ public class ShotController : MonoBehaviourPunCallbacks
     public GameObject hitEffect;
     private Vector3 offset = new Vector3(0, 1.5f, 0);
     public string playerName;
+    public BasicsController shooter;
     int dmg = 10;
     float lifetime = 5f;
 
@@ -26,6 +27,7 @@ public class ShotController : MonoBehaviourPunCallbacks
             {
                 PhotonNetwork.Instantiate(hitEffect.name, other.gameObject.transform.position + offset, Quaternion.identity);
                 other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All,dmg , Vector3.zero, PhotonNetwork.LocalPlayer.ActorNumber, playerName);
+                PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 1);
             }
         }
 
