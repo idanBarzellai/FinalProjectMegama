@@ -28,6 +28,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     private float rayhit = 1.2f;
 
     protected Rigidbody rb;
+    protected CapsuleCollider col;
     private Animator anim;
 
     private Vector3 dashDirection, moveDir;
@@ -66,6 +67,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
         cam = Camera.main;
 
         rb = GetComponent<Rigidbody>();
+        col = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
 
         activeSpeed = moveSpeed;
@@ -319,7 +321,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     public void Die(string damager, int actor)
     {
         SoundManager.instacne.Play("Death");
-
+        col.enabled = false;
         rb.velocity = Vector3.zero;
         photonView.RPC("ScatterBodyParts", RpcTarget.All);
         PlayerSpawner.instance.Die(damager); // debug purposes change false to regular
@@ -372,7 +374,10 @@ public class BasicsController : MonoBehaviourPunCallbacks
             photonView.RPC("SetAnim", RpcTarget.All, "Attack");
 
             GameObject shot = PhotonNetwork.Instantiate(shootPlaceholder.name, shootingPoint.position, Quaternion.identity);
+            shot.GetComponent<ShotController>().SetPlayer(this);
             shot.GetComponent<ShotController>().SetName(photonView.Owner.NickName);
+            
+
             shot.GetComponent<Rigidbody>().AddForce((eyes.forward) * shotForce, ForceMode.Impulse);
         }
     }

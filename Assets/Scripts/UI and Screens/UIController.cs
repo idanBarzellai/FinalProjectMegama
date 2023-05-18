@@ -49,6 +49,7 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
+        TurnOnOffAllBuyButtons(PowerupsManager.PowerUpsPowers.Null, false);
         ReleasePlayersChooseButtons();
         playerChoosingScreen.SetActive(true);
 
@@ -136,16 +137,26 @@ public class UIController : MonoBehaviour
     }
 
     
-    public void TurnOffAllBuyButtons(PowerupsManager.PowerUpsPowers power)
+    public void TurnOnOffAllBuyButtons(PowerupsManager.PowerUpsPowers power, bool isOff)
     {
-        foreach (GameObject button in powerupsButtons)
+        if (isOff)
         {
-            if (button.GetComponent<PowerUpButton>().myPower != power)
+            foreach (GameObject button in powerupsButtons)
             {
-                button.SetActive(false);
+                if (button.GetComponent<PowerUpButton>().myPower != power)
+                {
+                    button.SetActive(false);
+                }
+
             }
-            
-        } 
+        }
+        else
+        {
+            foreach (GameObject button in powerupsButtons)
+            {
+                 button.SetActive(true);
+            }
+        }
     }
 
     public void DebugCoins()

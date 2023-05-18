@@ -101,7 +101,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitEffect: {fileID: 4787146697146794734, guid: e9050f838eb01db44b8958e4d8266866, type: 3}
+  coinObject: {fileID: 6411240353531909997, guid: 7a962d6e8ce29fd47861d86d387d3785, type: 3}
   playerName: 
+  shooter: {fileID: 0}
 --- !u!54 &6824085355631941465
 Rigidbody:
   m_ObjectHideFlags: 0
