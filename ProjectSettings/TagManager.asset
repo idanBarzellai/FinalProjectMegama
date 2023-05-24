@@ -11,6 +11,7 @@ TagManager:
   - DeadHead
   - Powerup
   - TileTop
+  - TileDecor
   layers:
   - Default
   - TransparentFX

@@ -36,10 +36,17 @@ public class ShotController : MonoBehaviourPunCallbacks
 
                 other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All,dmg , Vector3.zero, PhotonNetwork.LocalPlayer.ActorNumber, playerName);
                 PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 1);
+                StartCoroutine(DestroyOvertime());
             }
+            
+        }
+        if(other.CompareTag("TileDecor") || other.CompareTag("Ground"))
+        {
+            StartCoroutine(DestroyOvertime());
         }
 
     }
+
 
     public void SetName(string name)
     {
@@ -53,11 +60,12 @@ public class ShotController : MonoBehaviourPunCallbacks
 
    
 
-    public IEnumerator DestroyOvertime(float waitBeforeDestroy)
+    public IEnumerator DestroyOvertime(float waitBeforeDestroy = 0)
     {
         yield return new WaitForSecondsRealtime(waitBeforeDestroy);
         if (photonView.IsMine)
         {
+            Debug.Log("Destoryed shot");
             PhotonNetwork.Destroy(gameObject);
         }
 

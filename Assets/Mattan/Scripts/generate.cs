@@ -9,7 +9,7 @@ public class generate : MonoBehaviour
     [SerializeField] int mapRadius = 3;
     [SerializeField] float pBadTile = 0.2f;
 
-    [SerializeField] GameObject goodTile;
+    [SerializeField] GameObject[] goodTiles;
     [SerializeField] GameObject dmgTile;
     [SerializeField] GameObject windingTile;
 
@@ -31,6 +31,7 @@ public class generate : MonoBehaviour
 
                     float z = !diffHeights ? 0 : Mathf.Sin((i + j) * 2.2f) / heightDeltas;
                     bool spawnGoodTile = Random.Range(0f,1f) > pBadTile || ((Mathf.Abs(i) < 2) && (Mathf.Abs(j) < 2));
+                    GameObject goodTile = goodTiles[Random.Range(0, goodTiles.Length)];
                     GameObject newTile = Instantiate(
                                             spawnGoodTile ? goodTile : (Random.Range(0f,1f) < 0.5f ? dmgTile : windingTile), 
                                             new Vector3(x * scaleFactor, z * scaleFactor,  y * scaleFactor), 
@@ -50,10 +51,9 @@ public class generate : MonoBehaviour
     }
 
 
-    // Update is called once per frame
-    void Update()
+    public float GetScaleFactor()
     {
-        
+        return scaleFactor;
     }
 
     class Polynom
