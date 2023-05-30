@@ -2299,6 +2299,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9001275978532985159, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
+      propertyPath: playerPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 4630659687412028171, guid: 5fcd61b5643bdf74b8e3fc726412388e, type: 3}
+    - target: {fileID: 9001275978532985159, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
+      propertyPath: playerPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 1181435818788363390, guid: a1f03f5b06b0ac04a8355a9e27845a5d, type: 3}
     - target: {fileID: 9001275978588736629, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
