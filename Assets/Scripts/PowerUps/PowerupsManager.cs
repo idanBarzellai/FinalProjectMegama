@@ -8,7 +8,11 @@ public class PowerupsManager : MonoBehaviourPunCallbacks
     public static PowerupsManager instance;
     //public List<PowerupBaseController> currectActivePowerups = new List<PowerupBaseController>();
     public GameObject[] powerupsToSummon;
-    public GameObject[] spawnPoints;
+    public Transform spawnPointParent;
+    float spawnDelay = 20f;
+    float spawnStart= 2f;
+    float powerUpYOffset = 25;
+
     //bool looping = false;
 
     public enum PowerUpsPowers
@@ -53,15 +57,24 @@ public class PowerupsManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
-            PhotonNetwork.Instantiate(powerupsToSummon[Random.Range(0, powerupsToSummon.Length)].name, spawnPoints[Random.Range(0, spawnPoints.Length)].transform.position, Quaternion.identity);
-    }
+        InvokeRepeating("CreatePowerUp", spawnStart, spawnDelay);
+            }
     // Update is called once per frame
     void Update()
     {
 
     }
 
+    public void CreatePowerUp()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Transform spawnPoint = spawnPointParent.GetChild(Random.Range(0, spawnPointParent.childCount));
+            Vector3 spawnPos = new Vector3(spawnPoint.position.x, spawnPoint.position.y + powerUpYOffset, spawnPoint.position.z);
+            PhotonNetwork.Instantiate(powerupsToSummon[Random.Range(0, powerupsToSummon.Length)].name, spawnPos, Quaternion.identity);
+        }
+
+    }
     public void DestoryOverNetwork(float waitBeforeDestroy, GameObject obj)
     {
         StartCoroutine(DestroyOvertime(waitBeforeDestroy, obj));

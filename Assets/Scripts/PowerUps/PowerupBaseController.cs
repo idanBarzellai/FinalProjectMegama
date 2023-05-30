@@ -21,7 +21,7 @@ public class PowerupBaseController : MonoBehaviourPunCallbacks
         powerupsManager = PowerupsManager.instance;
         powerupsManager.DestoryOverNetwork(timeForDestruction, this.gameObject);
     }
-    protected void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {

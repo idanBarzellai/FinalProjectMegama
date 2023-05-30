@@ -25,7 +25,7 @@ public class PowerUpButton : MonoBehaviour
         if (currentCoinsOnPlayer >= powerupCost)
         {
             PlayerPrefs.SetInt("Coins", currentCoinsOnPlayer - powerupCost);
-            UIController.instance.TurnOffAllBuyButtons(myPower);
+            UIController.instance.TurnOnOffAllBuyButtons(myPower, true);
             powerPrefab.SetActive(false);
             GetComponentInChildren<TMP_Text>().text = "Bought!";
             PlayerSpawner.instance.addedPower = myPower;
