@@ -2616,31 +2616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 9
-    SynchronizeType: 1
-    Name: Run
-  - Type: 9
-    SynchronizeType: 1
-    Name: RunBack
-  - Type: 9
-    SynchronizeType: 1
-    Name: Idle
-  - Type: 9
-    SynchronizeType: 1
-    Name: Attack
-  - Type: 9
-    SynchronizeType: 1
-    Name: Dead
-  - Type: 9
-    SynchronizeType: 1
-    Name: Dash
-  - Type: 9
-    SynchronizeType: 1
-    Name: Skill
-  - Type: 9
-    SynchronizeType: 1
-    Name: SkillEnd
+  m_SynchronizeParameters: []
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
