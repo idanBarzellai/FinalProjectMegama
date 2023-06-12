@@ -62,7 +62,7 @@ public class WaterPlayer : BasicsController
         SetInSkill(true);
         SetIsStaticSkill(true);
         SetIsRotationStaticSkill(true);
-        photonView.RPC("SetAnim", RpcTarget.All, "Skill");
+        photonView.RPC("SetAnimBool", RpcTarget.All, "InSkill", true);
 
         CreateWave();
 
@@ -86,7 +86,7 @@ public class WaterPlayer : BasicsController
         SetIsStaticSkill(false);
         SetIsRotationStaticSkill(false);
 
-        photonView.RPC("SetAnim", RpcTarget.All, "SkillEnd");
+        photonView.RPC("SetAnimBool", RpcTarget.All, "InSkill", false);
 
         gravityShouldBeStopped = false;
         rb.useGravity = true;

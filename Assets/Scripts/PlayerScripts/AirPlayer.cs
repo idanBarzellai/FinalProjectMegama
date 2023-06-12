@@ -77,6 +77,8 @@ public class AirPlayer : BasicsController
     {
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
+        photonView.RPC("SetAnimBool", RpcTarget.All, "InAir", true);
+
     }
 
     private void resetVariables()
@@ -85,7 +87,7 @@ public class AirPlayer : BasicsController
         rb.useGravity = true;
         gravityShouldBeStopped = false;
         SetSpeed(moveSpeed);
-        photonView.RPC("SetAnim", RpcTarget.All, "SkillEnd");
+        photonView.RPC("SetAnimBool", RpcTarget.All, "InAir", false);
     }
 
     private void AirBurstEffect()

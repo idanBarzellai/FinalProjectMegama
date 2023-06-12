@@ -46,8 +46,8 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public float waitAfterEnding = 5f;
 
     public bool perpetual;
-    private float matchLength = 60;
-    private float choosingTime = 15;
+    private float matchLength = 30;
+    private float choosingTime = 10;
     private float currentMatchTime;
     private float sendTimer;
 
@@ -447,6 +447,8 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         UIController.instance.endScreen.SetActive(false);
         UIController.instance.leaderboard.SetActive(false);
         UIController.instance.playerChoosingScreen.SetActive(true);
+        UIController.instance.TurnOnOffAllBuyButtons(PowerupsManager.PowerUpsPowers.Null, false);
+
 
         foreach (PlayerInfo player in allplayers)
         {

@@ -42,6 +42,9 @@ MonoBehaviour:
   - DissmemberBodyParts
   - ScatterBodyParts
   - triggerEffect
+  - SetAnimBool
+  - SetAnimFloat
+  - SetAnimInt
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

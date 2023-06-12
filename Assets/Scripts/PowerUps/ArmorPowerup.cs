@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class ArmorPowerup : PowerupBaseController
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void PowerupPowerHandler()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        playerThatTookMe.ApplyPowerup(PowerupsManager.PowerUpsPowers.Armor);
     }
 }

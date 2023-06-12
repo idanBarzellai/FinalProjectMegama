@@ -31,7 +31,7 @@ public class FirePlayer : BasicsController
     {
         base.SkillTrigger();
         SetSpeed(runningSpeed);
-        photonView.RPC("SetAnim", RpcTarget.All, "Skill");
+        photonView.RPC("SetAnimBool", RpcTarget.All, "InSkill", true);
         InvokeRepeating("fireSkillHelper", fireTrailCreation, fireInstanceCreationRate);
     }
 
@@ -44,7 +44,7 @@ public class FirePlayer : BasicsController
         CancelInvoke("fireSkillHelper");
         SetSpeed(regSpeed);
         SetInSkill(false);
-        photonView.RPC("SetAnim", RpcTarget.All, "SkillEnd");
+        photonView.RPC("SetAnimBool", RpcTarget.All, "InSkill", false);
         fireTrailCounter = 0;
     }
 

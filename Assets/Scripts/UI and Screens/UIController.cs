@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,8 +19,11 @@ public class UIController : MonoBehaviour
     public TMP_Text respawntext;
 
 
-    public Slider healthSlider, skillSlider;
-    public Image skillSliderFillColor;
+    public GameObject healthOrb;
+    public GameObject skillOrb;
+
+    public Material skillSliderFillColor;
+    public Material healthShaderProgress;
 
     public TMP_Text killsText;
     public TMP_Text deathsText;
@@ -67,7 +71,7 @@ public class UIController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-        currentCoins.text =  PlayerPrefs.GetInt("Coins").ToString() + " Coins";
+        currentCoins.text =  PlayerPrefs.GetInt("Coins").ToString();
     }
     public void Respawn()
     {
@@ -128,12 +132,15 @@ public class UIController : MonoBehaviour
 
     public void ShowHidePlayerChoosingScreen()
     {
-        playerChoosingScreen.SetActive(playerChoosingScreen.activeInHierarchy ? false : true);
+        bool turnOn = playerChoosingScreen.activeInHierarchy ? false : true;
+        playerChoosingScreen.SetActive(turnOn);
+        //urnOnOffAllBuyButtons(PowerupsManager.PowerUpsPowers.Null, !turnOn);
     }
 
     public void StartMatchPlayerChosen()
     {
-        PlayerSpawner.instance.SpawnPlayer();
+
+        //PlayerSpawner.instance.SpawnPlayer();
     }
 
     
@@ -154,7 +161,8 @@ public class UIController : MonoBehaviour
         {
             foreach (GameObject button in powerupsButtons)
             {
-                 button.SetActive(true);
+                button.SetActive(true);
+                 button.GetComponent<PowerUpButton>().ResetButton();
             }
         }
     }

@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using UnityEngine;
+using UnityEditor;
+
 
 public class BasicsController : MonoBehaviourPunCallbacks
 {
@@ -22,8 +24,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
     protected float jumpVelocity = 40, fallMultiplyer = 10, downForce = 1.2f;
     protected bool shouldJump = false;
     protected float additionToJump = 1;
+    private bool isAttackRight = true;
 
-    private float dashForce = 25f;
     public bool isGrounded = true;
     private float rayhit = 1.2f;
 
@@ -31,9 +33,10 @@ public class BasicsController : MonoBehaviourPunCallbacks
     protected CapsuleCollider col;
     private Animator anim;
 
-    private Vector3 dashDirection, moveDir;
+    private Vector3 moveDir;
     protected float activeSpeed, moveSpeed = 8f;
 
+    private float dashForce = 25f;
     private float lastTimeDashed = 0f, dashCooldown = 1f, dashThershold = 0.005f, dashDur = 0.8f;
 
     private float shotForce = 5f;
@@ -52,6 +55,10 @@ public class BasicsController : MonoBehaviourPunCallbacks
     private int currHealth;
     private bool receivingDPS = false;
     private bool isDead = false;
+
+
+    private float lastTimeMoved = 0;
+    private float triggerBoardTime = 4;
 
     public GameObject[] bodyParts;
     public GameObject deadBodyPartsParent;
@@ -76,8 +83,11 @@ public class BasicsController : MonoBehaviourPunCallbacks
         currHealth = maxHelath;
         skillLastUseTime = Time.time;
 
-        UIController.instance.healthSlider.maxValue = maxHelath;
-        UIController.instance.skillSlider.maxValue = skillCooldown;
+        UIController.instance.healthShaderProgress.SetFloat("_Progress", maxHelath / maxHelath);
+
+       // UIController.instance.healthSlider.maxValue = maxHelath;
+        UIController.instance.skillSliderFillColor.SetFloat("_Progress", (Time.time - skillLastUseTime) / skillCooldown);
+
         UpdateUIController(currHealth, Time.time - skillLastUseTime);
     }
 
@@ -123,6 +133,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
                     // Check for fall death
                     IsDeadFromFallDmg();
+
+
                     
                 }
                 // Rolling Head
@@ -192,7 +204,27 @@ public class BasicsController : MonoBehaviourPunCallbacks
         if (!isStaticSkill)
             transform.Translate(moveDir.normalized * activeSpeed * Time.deltaTime);
 
-        photonView.RPC("SetAnim", RpcTarget.All, (Math.Abs(moveDir.x) > 0 || Math.Abs(moveDir.z) > 0) ? "Run" : "Idle");
+        bool isMoving = Math.Abs(moveDir.x) > 0 || Math.Abs(moveDir.z) > 0;
+        if (isMoving)
+        {
+            lastTimeMoved = Time.time;
+            
+            photonView.RPC("SetAnimInt", RpcTarget.All, "WalkX" , calcDirValForAnim(moveDir.x));
+            photonView.RPC("SetAnimInt", RpcTarget.All, "WalkZ" , calcDirValForAnim(moveDir.z));
+        }
+        photonView.RPC("SetAnim", RpcTarget.All, isMoving ? "Run" : "Idle");
+    }
+    private int calcDirValForAnim(float dir)
+    {
+        float thershold = 0.1f;
+        
+        if (dir > thershold)
+            return 1;
+
+        else if (dir < (-thershold))
+           return -1;
+
+        return 0;
     }
 
     protected virtual void MoveDeadHead()
@@ -214,15 +246,19 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         if (IsApplingDownForce())
         {
+            // Falling down
             if (rb.velocity.y <= 0)
-                rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplyer  * downForce* Time.deltaTime;
-            //rb.AddForce(Vector3.down * fallMultiplyer, ForceMode.Force);
+            {
+                rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplyer * downForce * Time.deltaTime;
+                photonView.RPC("SetAnim", RpcTarget.All, "JumpZeroG");
 
+            }
+            // Going up
             else
-               // rb.AddForce(Vector3.down * fallMultiplyer * downForce, ForceMode.Force);
-                rb.velocity += Vector3.up * Physics.gravity.y *fallMultiplyer * Time.deltaTime;
+                rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplyer * Time.deltaTime;
         }
     }
+
     protected virtual bool IsApplingDownForce()
     {
         return !isGrounded;
@@ -237,6 +273,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     }
     public void Jump()
     {
+        photonView.RPC("SetAnim", RpcTarget.All, "Jump");
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         rb.AddForce(Vector3.up * jumpVelocity * additionToJump, ForceMode.Impulse);
         setGrounded(false);
@@ -280,7 +317,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     private IEnumerator DashCo(Vector3 dir)
     {
-        photonView.RPC("SetAnim", RpcTarget.All, "Dash");
+        photonView.RPC("SetAnimFloat", RpcTarget.All, "DashX", dir.x);
+        photonView.RPC("SetAnimFloat", RpcTarget.All, "DashZ", dir.z);
         rb.velocity = rb.velocity + dir.normalized * dashForce;
         yield return new WaitForSeconds(dashDur);
         rb.velocity = Vector3.zero;
@@ -364,14 +402,23 @@ public class BasicsController : MonoBehaviourPunCallbacks
             PlayerSpawner.instance.ReSpawn();
     }
 
-
-    // ******************************SKills******************************************
+    private void TryIdle()
+    {
+        if(lastTimeMoved - Time.time > triggerBoardTime)
+        {
+            photonView.RPC("SetAnim", RpcTarget.All, "Bored");
+            lastTimeMoved = Time.time;
+        }
+    }
+    // ******************************Skills******************************************
     protected virtual void Shoot()
     {
         if (Input.GetMouseButtonDown(0))
         {
             SoundManager.instacne.Play("Shot");
-            photonView.RPC("SetAnim", RpcTarget.All, "Attack");
+
+            photonView.RPC("SetAnimBool", RpcTarget.All, "Attack", isAttackRight);
+            isAttackRight = !isAttackRight;
 
             GameObject shot = PhotonNetwork.Instantiate(shootPlaceholder.name, shootingPoint.position, Quaternion.identity);
             shot.GetComponent<ShotController>().SetPlayer(this);
@@ -403,7 +450,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
         switch (power)
         {
             case PowerupsManager.PowerUpsPowers.Armor:
-
+                // Add armor
                 break;
             case PowerupsManager.PowerUpsPowers.HigherJump:
                 jumpVelocity += addition;
@@ -416,7 +463,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
                 break;
             case PowerupsManager.PowerUpsPowers.Speed:
                 break;
-            case PowerupsManager.PowerUpsPowers.CooldownReduction:
+            case PowerupsManager.PowerUpsPowers.ShortCooldown:
                 skillCooldown -= addition;
                 break;
         }
@@ -434,8 +481,11 @@ public class BasicsController : MonoBehaviourPunCallbacks
     }
     public void UpdateUIController(float health, float skillTime)
     {
-        UIController.instance.healthSlider.value = health;
-        UIController.instance.skillSlider.value = skillTime;
+        UIController.instance.healthShaderProgress.SetFloat("_Progress", health / maxHelath);
+        UIController.instance.skillSliderFillColor.SetFloat("_Progress", skillTime / skillCooldown);
+
+        //UIController.instance.healthSlider.value = health;
+        //UIController.instance.skillSlider.value = skillTime;
     } 
 
     private void UnlockAndLockMouse()
@@ -453,7 +503,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
     protected void SetSkillBarColor(Color color)
     {
         if (photonView.IsMine)
-            UIController.instance.skillSliderFillColor.color = color;
+            UIController.instance.skillSliderFillColor.SetColor("_WaterColor", color); ;
+
     }
     
 
@@ -519,8 +570,27 @@ public class BasicsController : MonoBehaviourPunCallbacks
             anim.SetTrigger(animName);
 
     }
+    [PunRPC]
+    public void SetAnimFloat(string animName, float amount)
+    {
+        if (anim)
+            anim.SetFloat(animName, amount);
 
+    }
+    [PunRPC]
+    public void SetAnimBool(string animName, bool _bool)
+    {
+        if (anim)
+            anim.SetBool(animName, _bool);
 
+    }
+    [PunRPC]
+    public void SetAnimInt(string animName, int amount)
+    {
+        if (anim)
+            anim.SetInteger(animName, amount);
+
+    }
     protected void SetSpeed(float speed)
     {
         activeSpeed = speed;
@@ -539,7 +609,11 @@ public class BasicsController : MonoBehaviourPunCallbacks
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.CompareTag("Ground"))
+        {
             setGrounded(true);
+            photonView.RPC("SetAnim", RpcTarget.All, "Land");
+
+        }
     }
 
 }

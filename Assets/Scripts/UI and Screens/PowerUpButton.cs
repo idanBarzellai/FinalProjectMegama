@@ -8,7 +8,8 @@ public class PowerUpButton : MonoBehaviour
 {
     public PowerupsManager.PowerUpsPowers myPower;
     int powerupCost;
-    public GameObject powerPrefab;
+    private GameObject powerPrefab;
+    public GameObject bg;
 
     // Start is called before the first frame update
     void Start()
@@ -26,9 +27,16 @@ public class PowerUpButton : MonoBehaviour
         {
             PlayerPrefs.SetInt("Coins", currentCoinsOnPlayer - powerupCost);
             UIController.instance.TurnOnOffAllBuyButtons(myPower, true);
-            powerPrefab.SetActive(false);
-            GetComponentInChildren<TMP_Text>().text = "Bought!";
+            bg.SetActive(false);
+            GetComponentInChildren<TMP_Text>().text = myPower.ToString() + "\n" + "Bought!";
             PlayerSpawner.instance.addedPower = myPower;
         }
+    }
+
+    public void ResetButton()
+    {
+        //powerPrefab.SetActive(true);
+        bg.SetActive(true);
+        GetComponentInChildren<TMP_Text>().text = myPower.ToString() + "\n" + powerupCost.ToString() + "    ";
     }
 }

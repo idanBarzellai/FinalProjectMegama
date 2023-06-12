@@ -7,6 +7,6 @@ public class SkillReductionPowerup : PowerupBaseController
 {
     protected override void PowerupPowerHandler()
     {
-        playerThatTookMe.ApplyPowerup(PowerupsManager.PowerUpsPowers.CooldownReduction);
+        playerThatTookMe.ApplyPowerup(PowerupsManager.PowerUpsPowers.ShortCooldown);
     }
 }

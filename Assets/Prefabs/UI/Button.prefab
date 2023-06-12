@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -125.7259, y: -31.1445}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5401395971817723953
 CanvasRenderer:
@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Find Room
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 11be6a80d09e2cc42a789157960a82cc, type: 2}
-  m_sharedMaterial: {fileID: -8952702852264950266, guid: 11be6a80d09e2cc42a789157960a82cc, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9eb4e3c0800a362438b9806b523f19c6, type: 2}
+  m_sharedMaterial: {fileID: -4337059333357787024, guid: 9eb4e3c0800a362438b9806b523f19c6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -93,13 +93,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 58.8
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

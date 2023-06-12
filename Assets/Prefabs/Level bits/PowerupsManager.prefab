@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerupsToSummon:
-  - {fileID: 8310802068292102832, guid: b8d52949c8fa7bb44bf4938d72823c8a, type: 3}
+  - {fileID: 5646294458251458061, guid: 95d30c319322c0b4c8bcfa8d930938de, type: 3}
   - {fileID: 7463045491122549445, guid: a3ae5babc0ea73a4faf66eb626bc3a1b, type: 3}
   - {fileID: 5815555664540826079, guid: 87645bfcbb90942418e7e2432123045c, type: 3}
+  - {fileID: 8310802068292102832, guid: b8d52949c8fa7bb44bf4938d72823c8a, type: 3}
+  - {fileID: 5646294458251458061, guid: f29581637f5a5384bb2cd267fb79fff2, type: 3}
   spawnPointParent: {fileID: 0}

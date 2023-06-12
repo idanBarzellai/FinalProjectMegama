@@ -22,7 +22,7 @@ public class PowerupsManager : MonoBehaviourPunCallbacks
         Armor,
         ExtraDmg,
         Speed,
-        CooldownReduction,
+        ShortCooldown,
         Coin,
         Null
     }
@@ -34,7 +34,7 @@ public class PowerupsManager : MonoBehaviourPunCallbacks
         {PowerUpsPowers.Armor, 100},
         {PowerUpsPowers.ExtraDmg, 150},
         {PowerUpsPowers.Speed, 50},
-        {PowerUpsPowers.CooldownReduction, 150},
+        {PowerUpsPowers.ShortCooldown, 150},
 
     };
 
@@ -45,7 +45,7 @@ public class PowerupsManager : MonoBehaviourPunCallbacks
         {PowerUpsPowers.Armor, 100},
         {PowerUpsPowers.ExtraDmg, 5},
         {PowerUpsPowers.Speed, 3},
-        {PowerUpsPowers.CooldownReduction, 1},
+        {PowerUpsPowers.ShortCooldown, 1},
         {PowerUpsPowers.Coin, 1}
 
     };
