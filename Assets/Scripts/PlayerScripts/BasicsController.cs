@@ -25,7 +25,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     protected bool shouldJump = false;
     protected float additionToJump = 1;
     private float lastValY = 0, newValY = 0;
-
+    private bool isDirectionChanged = false, isWalking = false;
 
     private bool isAttackRight = true;
 
@@ -210,18 +210,25 @@ public class BasicsController : MonoBehaviourPunCallbacks
         if (!isStaticSkill)
             transform.Translate(moveDir.normalized * activeSpeed * Time.deltaTime);
 
+
+        // Animation controller
         bool isMoving = Math.Abs(moveDir.x) > 0 || Math.Abs(moveDir.z) > 0;
         lastTimeMoved = Time.time;
         int newXDir = calcDirValForAnim(moveDir.x);
         int newZDir = calcDirValForAnim(moveDir.z);
-        if(newXDir != xDir || newZDir != zDir)
+
+
+        isDirectionChanged = newXDir != xDir || newZDir != zDir;
+        bool startedWalking = !isWalking && (isMoving && !inSkill && isGrounded);
+        if (isDirectionChanged && startedWalking)
             photonView.RPC("SetAnim", RpcTarget.All, "move Direction Changed");
 
         xDir = newXDir;
         zDir = newZDir;
+        isWalking = isMoving && !inSkill && isGrounded;
         photonView.RPC("SetAnimInt", RpcTarget.All, "Walk X" , xDir);
         photonView.RPC("SetAnimInt", RpcTarget.All, "Walk Z" , zDir);
-        photonView.RPC("SetAnimBool", RpcTarget.All, "is Walking", isMoving && !inSkill && isGrounded);
+        photonView.RPC("SetAnimBool", RpcTarget.All, "is Walking", isWalking);
     }
     private int calcDirValForAnim(float dir)
     {
