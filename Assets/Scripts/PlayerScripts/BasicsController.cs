@@ -211,19 +211,16 @@ public class BasicsController : MonoBehaviourPunCallbacks
             transform.Translate(moveDir.normalized * activeSpeed * Time.deltaTime);
 
         bool isMoving = Math.Abs(moveDir.x) > 0 || Math.Abs(moveDir.z) > 0;
-        if (isMoving)
-        {
-            lastTimeMoved = Time.time;
-            int newXDir = calcDirValForAnim(moveDir.x);
-            int newZDir = calcDirValForAnim(moveDir.z);
-            if(newXDir != xDir || newZDir != zDir)
-                photonView.RPC("SetAnim", RpcTarget.All, "move Direction Changed");
+        lastTimeMoved = Time.time;
+        int newXDir = calcDirValForAnim(moveDir.x);
+        int newZDir = calcDirValForAnim(moveDir.z);
+        if(newXDir != xDir || newZDir != zDir)
+            photonView.RPC("SetAnim", RpcTarget.All, "move Direction Changed");
 
-            xDir = newXDir;
-            zDir = newZDir;
-            photonView.RPC("SetAnimInt", RpcTarget.All, "Walk X" , xDir);
-            photonView.RPC("SetAnimInt", RpcTarget.All, "Walk Z" , zDir);
-        }
+        xDir = newXDir;
+        zDir = newZDir;
+        photonView.RPC("SetAnimInt", RpcTarget.All, "Walk X" , xDir);
+        photonView.RPC("SetAnimInt", RpcTarget.All, "Walk Z" , zDir);
         photonView.RPC("SetAnimBool", RpcTarget.All, "is Walking", isMoving && !inSkill && isGrounded);
     }
     private int calcDirValForAnim(float dir)
@@ -259,7 +256,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
         if (IsApplingDownForce())
         {
             newValY = rb.velocity.y;
-            if(newValY <= 0 && Mathf.Sign(newValY) != Mathf.Sign(lastValY))
+            if(newValY <= 0 && Mathf.Sign(newValY) != Mathf.Sign(lastValY) && !isGrounded)
                 photonView.RPC("SetAnim", RpcTarget.All, "Jump - Zero G");
 
             lastValY = newValY;
