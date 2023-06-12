@@ -205,7 +205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4f9e3f5aac96f49aed811ef8dba879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disappearEffect: {fileID: 1391160036557399179, guid: 5f7e6f6302c09d343a6b27936a81af1a, type: 3}
 --- !u!114 &4615334375782850106
 MonoBehaviour:
   m_ObjectHideFlags: 0
