@@ -140,7 +140,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
                     // Check for fall death
                     IsDeadFromFallDmg();
 
-
+                    TryIdle();
                     
                 }
                 // Rolling Head
