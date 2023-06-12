@@ -336,15 +336,15 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     private IEnumerator DashCo(Vector3 dir)
     {
-
-        if (dir.x > 0)
-            photonView.RPC("SetAnim", RpcTarget.All, "Dash R");
-        else if (dir.x < 0)
-            photonView.RPC("SetAnim", RpcTarget.All, "Dash L");
-        if (dir.z > 0)
-           photonView.RPC("SetAnim", RpcTarget.All, "Dash F");
-        else if (dir.z < 0)
-           photonView.RPC("SetAnim", RpcTarget.All, "Dash B");
+        photonView.RPC("SetAnim", RpcTarget.All, "Dash");
+        //if (dir.x > 0)
+        //    photonView.RPC("SetAnimInt", RpcTarget.All, "Dash R");
+        //else if (dir.x < 0)
+        //    photonView.RPC("SetAnimInt", RpcTarget.All, "Dash L");
+        //if (dir.z > 0)
+        //   photonView.RPC("SetAnim", RpcTarget.All, "Dash F");
+        //else if (dir.z < 0)
+        //   photonView.RPC("SetAnim", RpcTarget.All, "Dash B");
 
         rb.velocity = rb.velocity + dir.normalized * dashForce;
         yield return new WaitForSeconds(dashDur);
