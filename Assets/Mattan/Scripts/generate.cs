@@ -9,10 +9,8 @@ public class generate : MonoBehaviour
     [SerializeField] int mapRadius = 3;
     [SerializeField] float pBadTile = 0.2f;
 
-    [SerializeField] GameObject[] goodTiles;
-    [SerializeField] GameObject dmgTile;
-    [SerializeField] GameObject windingTile;
-
+    [SerializeField] MapPalletteScriptableObject [] pallettes;
+    MapPalletteScriptableObject chosenPallette;
     [SerializeField] float scaleFactor = 1;
     
     float heightDeltas = 3.5f;
@@ -31,9 +29,9 @@ public class generate : MonoBehaviour
 
                     float z = !diffHeights ? 0 : Mathf.Sin((i + j) * 2.2f) / heightDeltas;
                     bool spawnGoodTile = Random.Range(0f,1f) > pBadTile || ((Mathf.Abs(i) < 2) && (Mathf.Abs(j) < 2));
-                    GameObject goodTile = goodTiles[Random.Range(0, goodTiles.Length)];
+                    GameObject goodTile =  chosenPallette.goodTile;
                     GameObject newTile = Instantiate(
-                                            spawnGoodTile ? goodTile : (Random.Range(0f,1f) < 0.5f ? dmgTile : windingTile), 
+                                            spawnGoodTile ? goodTile : (Random.Range(0f,1f) < 0.5f ? chosenPallette.dmgTile : chosenPallette.windingTile), 
                                             new Vector3(x * scaleFactor, z * scaleFactor,  y * scaleFactor), 
                                             Quaternion.Euler(0, 0, 0));
                     newTile.transform.localScale = newTile.transform.localScale * scaleFactor * 1.1f;
@@ -44,9 +42,12 @@ public class generate : MonoBehaviour
             }
         }
     }
+
+    void PickRandomPallette(){chosenPallette = pallettes[Random.Range(0, pallettes.Length)];}
     
     void Start()
     {  
+        PickRandomPallette();
         SpawnSurface(diffHeights);
     }
 
