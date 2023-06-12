@@ -33,6 +33,9 @@ public class BasicsController : MonoBehaviourPunCallbacks
     protected CapsuleCollider col;
     private Animator anim;
 
+    private int xDir = -10;
+    private int zDir = -10;
+
     private Vector3 moveDir;
     protected float activeSpeed, moveSpeed = 8f;
 
@@ -208,11 +211,20 @@ public class BasicsController : MonoBehaviourPunCallbacks
         if (isMoving)
         {
             lastTimeMoved = Time.time;
-            
-            photonView.RPC("SetAnimInt", RpcTarget.All, "WalkX" , calcDirValForAnim(moveDir.x));
-            photonView.RPC("SetAnimInt", RpcTarget.All, "WalkZ" , calcDirValForAnim(moveDir.z));
+            int newXDir = calcDirValForAnim(moveDir.x);
+            int newZDir = calcDirValForAnim(moveDir.z);
+            if(newXDir != xDir || newZDir != zDir)
+                photonView.RPC("SetAnim", RpcTarget.All, "move Direction Changed");
+
+            xDir = newXDir;
+            zDir = newZDir;
+            photonView.RPC("SetAnimInt", RpcTarget.All, "Walk X" , xDir);
+            photonView.RPC("SetAnimInt", RpcTarget.All, "Walk Z" , zDir);
         }
-        photonView.RPC("SetAnim", RpcTarget.All, isMoving ? "Run" : "Idle");
+        else
+        {
+            photonView.RPC("SetAnimBool", RpcTarget.All, "is Walking", isMoving );
+        }
     }
     private int calcDirValForAnim(float dir)
     {
@@ -250,7 +262,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
             if (rb.velocity.y <= 0)
             {
                 rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplyer * downForce * Time.deltaTime;
-                photonView.RPC("SetAnim", RpcTarget.All, "JumpZeroG");
+                photonView.RPC("SetAnim", RpcTarget.All, "Jump - Zero G");
 
             }
             // Going up
@@ -273,7 +285,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     }
     public void Jump()
     {
-        photonView.RPC("SetAnim", RpcTarget.All, "Jump");
+        photonView.RPC("SetAnim", RpcTarget.All, "Jump - leap");
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         rb.AddForce(Vector3.up * jumpVelocity * additionToJump, ForceMode.Impulse);
         setGrounded(false);
@@ -317,8 +329,16 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     private IEnumerator DashCo(Vector3 dir)
     {
-        photonView.RPC("SetAnimFloat", RpcTarget.All, "DashX", dir.x);
-        photonView.RPC("SetAnimFloat", RpcTarget.All, "DashZ", dir.z);
+
+        if (dir.x > 0)
+            photonView.RPC("SetAnim", RpcTarget.All, "Dash R");
+        else if (dir.x < 0)
+            photonView.RPC("SetAnim", RpcTarget.All, "Dash L");
+        if (dir.z > 0)
+           photonView.RPC("SetAnim", RpcTarget.All, "Dash F");
+        else if (dir.z < 0)
+           photonView.RPC("SetAnim", RpcTarget.All, "Dash B");
+
         rb.velocity = rb.velocity + dir.normalized * dashForce;
         yield return new WaitForSeconds(dashDur);
         rb.velocity = Vector3.zero;
@@ -417,7 +437,9 @@ public class BasicsController : MonoBehaviourPunCallbacks
         {
             SoundManager.instacne.Play("Shot");
 
-            photonView.RPC("SetAnimBool", RpcTarget.All, "Attack", isAttackRight);
+            photonView.RPC("SetAnim", RpcTarget.All, "attack");
+
+            photonView.RPC("SetAnimBool", RpcTarget.All, "is Right Attack", isAttackRight);
             isAttackRight = !isAttackRight;
 
             GameObject shot = PhotonNetwork.Instantiate(shootPlaceholder.name, shootingPoint.position, Quaternion.identity);
@@ -611,7 +633,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
         if (collision.transform.CompareTag("Ground"))
         {
             setGrounded(true);
-            photonView.RPC("SetAnim", RpcTarget.All, "Land");
+            photonView.RPC("SetAnim", RpcTarget.All, "Jump - land");
 
         }
     }

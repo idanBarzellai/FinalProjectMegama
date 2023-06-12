@@ -46,7 +46,7 @@ public class AirPlayer : BasicsController
         photonView.RPC("triggerEffect", RpcTarget.All);
         StartCoroutine(AirBurstHandler());
         
-        photonView.RPC("SetAnim", RpcTarget.All, "Skill");
+        photonView.RPC("SetAnim", RpcTarget.All, "skill - start");
     }
 
 
@@ -77,7 +77,7 @@ public class AirPlayer : BasicsController
     {
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
-        photonView.RPC("SetAnimBool", RpcTarget.All, "InAir", true);
+        photonView.RPC("SetAnim", RpcTarget.All, "Jump - Zero G");
 
     }
 
@@ -87,7 +87,7 @@ public class AirPlayer : BasicsController
         rb.useGravity = true;
         gravityShouldBeStopped = false;
         SetSpeed(moveSpeed);
-        photonView.RPC("SetAnimBool", RpcTarget.All, "InAir", false);
+        photonView.RPC("SetAnim", RpcTarget.All, "skill - land");
     }
 
     private void AirBurstEffect()
