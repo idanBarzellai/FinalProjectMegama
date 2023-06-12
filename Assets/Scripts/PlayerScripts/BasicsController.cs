@@ -632,8 +632,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         if (collision.transform.CompareTag("Ground"))
         {
+            //if(!isGrounded) photonView.RPC("SetAnim", RpcTarget.All, "Jump - land");
             setGrounded(true);
-            photonView.RPC("SetAnim", RpcTarget.All, "Jump - land");
 
         }
     }
