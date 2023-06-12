@@ -221,10 +221,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
             photonView.RPC("SetAnimInt", RpcTarget.All, "Walk X" , xDir);
             photonView.RPC("SetAnimInt", RpcTarget.All, "Walk Z" , zDir);
         }
-        else
-        {
-            photonView.RPC("SetAnimBool", RpcTarget.All, "is Walking", isMoving );
-        }
+        photonView.RPC("SetAnimBool", RpcTarget.All, "is Walking", isMoving );
     }
     private int calcDirValForAnim(float dir)
     {
@@ -632,7 +629,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         if (collision.transform.CompareTag("Ground"))
         {
-            //if(!isGrounded) photonView.RPC("SetAnim", RpcTarget.All, "Jump - land");
+            if(!isGrounded) photonView.RPC("SetAnim", RpcTarget.All, "Jump - land");
             setGrounded(true);
 
         }

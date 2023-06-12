@@ -194,7 +194,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: WalkX
+    m_ConditionEvent: Walk X
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: move Direction Changed
@@ -299,10 +299,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: WalkX
+    m_ConditionEvent: Walk X
     m_EventTreshold: 0
   - m_ConditionMode: 7
-    m_ConditionEvent: WalkZ
+    m_ConditionEvent: Walk Z
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: move Direction Changed
@@ -666,10 +666,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: WalkX
+    m_ConditionEvent: Walk X
     m_EventTreshold: 0
   - m_ConditionMode: 7
-    m_ConditionEvent: WalkZ
+    m_ConditionEvent: Walk Z
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: move Direction Changed
@@ -737,10 +737,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 7
-    m_ConditionEvent: WalkX
+    m_ConditionEvent: Walk X
     m_EventTreshold: 0
   - m_ConditionMode: 4
-    m_ConditionEvent: WalkZ
+    m_ConditionEvent: Walk Z
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: move Direction Changed
@@ -1199,10 +1199,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: WalkZ
+    m_ConditionEvent: Walk Z
     m_EventTreshold: 0
   - m_ConditionMode: 6
-    m_ConditionEvent: WalkX
+    m_ConditionEvent: Walk X
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8790059484790907956}
@@ -1227,10 +1227,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: WalkZ
+    m_ConditionEvent: Walk Z
     m_EventTreshold: 0
   - m_ConditionMode: 6
-    m_ConditionEvent: WalkX
+    m_ConditionEvent: Walk X
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: move Direction Changed
@@ -1623,13 +1623,13 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: WalkZ
+  - m_Name: Walk Z
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: WalkX
+  - m_Name: Walk X
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -1997,10 +1997,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: WalkZ
+    m_ConditionEvent: Walk Z
     m_EventTreshold: 0
   - m_ConditionMode: 6
-    m_ConditionEvent: WalkX
+    m_ConditionEvent: Walk X
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: move Direction Changed
@@ -2238,10 +2238,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: WalkX
+    m_ConditionEvent: Walk X
     m_EventTreshold: 0
   - m_ConditionMode: 6
-    m_ConditionEvent: WalkZ
+    m_ConditionEvent: Walk Z
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: move Direction Changed
@@ -2269,7 +2269,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: WalkZ
+    m_ConditionEvent: Walk Z
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: move Direction Changed
@@ -2440,10 +2440,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 7
-    m_ConditionEvent: WalkX
+    m_ConditionEvent: Walk X
     m_EventTreshold: 0
   - m_ConditionMode: 7
-    m_ConditionEvent: WalkZ
+    m_ConditionEvent: Walk Z
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: move Direction Changed
@@ -2524,10 +2524,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 7
-    m_ConditionEvent: WalkX
+    m_ConditionEvent: Walk X
     m_EventTreshold: 0
   - m_ConditionMode: 3
-    m_ConditionEvent: WalkZ
+    m_ConditionEvent: Walk Z
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: move Direction Changed
@@ -2961,10 +2961,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: WalkX
+    m_ConditionEvent: Walk X
     m_EventTreshold: 0
   - m_ConditionMode: 7
-    m_ConditionEvent: WalkZ
+    m_ConditionEvent: Walk Z
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: move Direction Changed
@@ -3175,10 +3175,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 7
-    m_ConditionEvent: WalkX
+    m_ConditionEvent: Walk X
     m_EventTreshold: 0
   - m_ConditionMode: 6
-    m_ConditionEvent: WalkZ
+    m_ConditionEvent: Walk Z
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: move Direction Changed
@@ -3374,10 +3374,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: WalkX
+    m_ConditionEvent: Walk X
     m_EventTreshold: 0
   - m_ConditionMode: 6
-    m_ConditionEvent: WalkZ
+    m_ConditionEvent: Walk Z
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: move Direction Changed
