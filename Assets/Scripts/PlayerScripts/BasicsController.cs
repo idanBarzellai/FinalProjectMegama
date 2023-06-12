@@ -214,13 +214,13 @@ public class BasicsController : MonoBehaviourPunCallbacks
         // Animation controller
         bool isMoving = Math.Abs(moveDir.x) > 0 || Math.Abs(moveDir.z) > 0;
         lastTimeMoved = Time.time;
-        int newXDir = calcDirValForAnim(moveDir.x);
-        int newZDir = calcDirValForAnim(moveDir.z);
+        int newXDir = (int)Input.GetAxisRaw("Horizontal");
+        int newZDir = (int)Input.GetAxisRaw("Vertical");
 
 
         isDirectionChanged = newXDir != xDir || newZDir != zDir;
         bool startedWalking = !isWalking && (isMoving && !inSkill && isGrounded);
-        if (isDirectionChanged && startedWalking)
+        if (isDirectionChanged || startedWalking)
             photonView.RPC("SetAnim", RpcTarget.All, "move Direction Changed");
 
         xDir = newXDir;
