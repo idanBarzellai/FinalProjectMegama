@@ -24,6 +24,9 @@ public class BasicsController : MonoBehaviourPunCallbacks
     protected float jumpVelocity = 40, fallMultiplyer = 10, downForce = 1.2f;
     protected bool shouldJump = false;
     protected float additionToJump = 1;
+    private float lastValY = 0, newValY = 0;
+
+
     private bool isAttackRight = true;
 
     public bool isGrounded = true;
@@ -221,7 +224,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
             photonView.RPC("SetAnimInt", RpcTarget.All, "Walk X" , xDir);
             photonView.RPC("SetAnimInt", RpcTarget.All, "Walk Z" , zDir);
         }
-        photonView.RPC("SetAnimBool", RpcTarget.All, "is Walking", isMoving );
+        photonView.RPC("SetAnimBool", RpcTarget.All, "is Walking", isMoving && !inSkill && isGrounded);
     }
     private int calcDirValForAnim(float dir)
     {
@@ -255,13 +258,16 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         if (IsApplingDownForce())
         {
-            // Falling down
-            if (rb.velocity.y <= 0)
-            {
-                rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplyer * downForce * Time.deltaTime;
+            newValY = rb.velocity.y;
+            if(newValY <= 0 && Mathf.Abs(newValY) != Mathf.Abs(lastValY))
                 photonView.RPC("SetAnim", RpcTarget.All, "Jump - Zero G");
 
-            }
+            lastValY = newValY;
+
+            // Falling down
+            if (rb.velocity.y <= 0)
+                rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplyer * downForce * Time.deltaTime;
+
             // Going up
             else
                 rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplyer * Time.deltaTime;
