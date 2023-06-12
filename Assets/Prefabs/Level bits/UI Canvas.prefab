@@ -1159,7 +1159,7 @@ MonoBehaviour:
           m_StringArgument: BaseCharacter_Cheer
           m_BoolArgument: 0
         m_CallState: 2
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &2864710159847983099
 GameObject:
   m_ObjectHideFlags: 0
@@ -1271,7 +1271,7 @@ MonoBehaviour:
           m_StringArgument: A_Idle_Action
           m_BoolArgument: 0
         m_CallState: 2
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!1 &3044806111938988141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2470,7 +2470,7 @@ MonoBehaviour:
   fireButton: {fileID: 5647392150647289187}
   waterButton: {fileID: 2165411491928200354}
   earthButton: {fileID: 136155860603942138}
-  isPlayerPicked: 2
+  isPlayerPicked: 3
 --- !u!114 &7280598273951551617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6497,15 +6497,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7200483885399718641, guid: e9c3f4129ae1b8a4dad9f331a3af2ccd, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7200483885399718641, guid: e9c3f4129ae1b8a4dad9f331a3af2ccd, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7200483885399718641, guid: e9c3f4129ae1b8a4dad9f331a3af2ccd, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7200483885399718641, guid: e9c3f4129ae1b8a4dad9f331a3af2ccd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6513,7 +6513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7200483885399718641, guid: e9c3f4129ae1b8a4dad9f331a3af2ccd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.35
+      value: -0.64
       objectReference: {fileID: 0}
     - target: {fileID: 7200483885399718641, guid: e9c3f4129ae1b8a4dad9f331a3af2ccd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7826,15 +7826,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7200483885399718641, guid: e9c3f4129ae1b8a4dad9f331a3af2ccd, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7200483885399718641, guid: e9c3f4129ae1b8a4dad9f331a3af2ccd, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7200483885399718641, guid: e9c3f4129ae1b8a4dad9f331a3af2ccd, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7200483885399718641, guid: e9c3f4129ae1b8a4dad9f331a3af2ccd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7842,7 +7842,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7200483885399718641, guid: e9c3f4129ae1b8a4dad9f331a3af2ccd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.35
+      value: -0.64
       objectReference: {fileID: 0}
     - target: {fileID: 7200483885399718641, guid: e9c3f4129ae1b8a4dad9f331a3af2ccd, type: 3}
       propertyPath: m_LocalPosition.z

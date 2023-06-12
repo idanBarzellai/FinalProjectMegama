@@ -259,7 +259,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
         if (IsApplingDownForce())
         {
             newValY = rb.velocity.y;
-            if(newValY <= 0 && Mathf.Abs(newValY) != Mathf.Abs(lastValY))
+            if(newValY <= 0 && Mathf.Sign(newValY) != Mathf.Sign(lastValY))
                 photonView.RPC("SetAnim", RpcTarget.All, "Jump - Zero G");
 
             lastValY = newValY;
