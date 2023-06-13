@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class generate : MonoBehaviour
+public class Generate : MonoBehaviour
 {
     
-    [SerializeField] bool diffHeights;
+    public bool diffHeights;
     [SerializeField] int mapRadius = 3;
     [SerializeField] float pBadTile = 0.2f;
 
-    [SerializeField] MapPalletteScriptableObject [] pallettes;
+    public MapPalletteScriptableObject [] pallettes;
     MapPalletteScriptableObject chosenPallette;
     [SerializeField] float scaleFactor = 1;
     
     float heightDeltas = 3.5f;
  
-    void SpawnSurface(bool diffHeights){
+    public void SpawnSurface(bool diffHeights){
         int i=0, j=0;
         float x, y;
         for (i = -mapRadius + 1; i < mapRadius; i++)
@@ -42,8 +42,19 @@ public class generate : MonoBehaviour
             }
         }
     }
-
     void PickRandomPallette(){chosenPallette = pallettes[Random.Range(0, pallettes.Length)];}
+    
+    public void RecreateSurface(){
+        PickRandomPallette();
+
+        foreach (Transform tile in transform)
+        {
+            Destroy(tile.gameObject);
+        }
+
+        SpawnSurface(diffHeights);
+    }
+
     
     void Start()
     {  

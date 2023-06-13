@@ -1981,10 +1981,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3598535857287717688, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: pallettes.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3598535857287717688, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: pallettes.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4d345678df11e5848885db9eb08d75ae, type: 2}
+    - target: {fileID: 3598535857287717688, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
+      propertyPath: pallettes.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: af06c88d1847c784ea1d966131987a68, type: 2}
     - target: {fileID: 3899952123481108556, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
