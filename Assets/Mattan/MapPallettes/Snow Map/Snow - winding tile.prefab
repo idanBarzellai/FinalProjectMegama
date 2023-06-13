@@ -1063,10 +1063,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6188984417390018200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c65c5aa8cbe45c54e929e79cea6466f0, type: 3}
+  m_Script: {fileID: 11500000, guid: e5a6c41cea9cdb54b9336284441b71f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 15
+  cooldown: 2
 --- !u!114 &726358738943335678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1076,10 +1076,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6188984417390018200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 535922806a4fa794ba265cdca01315b8, type: 3}
+  m_Script: {fileID: 11500000, guid: ca84255629d0fab41aed9152ede2eb75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 2
+  damage: 15
 --- !u!1 &6828752932003436850
 GameObject:
   m_ObjectHideFlags: 0
