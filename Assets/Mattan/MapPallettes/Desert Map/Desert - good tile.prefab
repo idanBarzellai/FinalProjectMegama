@@ -92,6 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4490701188702303255}
+  - component: {fileID: 7507132759865284029}
   m_Layer: 0
   m_Name: Desert - good tile
   m_TagString: Untagged
@@ -116,6 +117,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7507132759865284029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3826366833241763501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dadcf38de3e3f64c9e048002eb84d6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  decors:
+  - {fileID: 7639269008525603473, guid: 5f6d6be1bf859c8479db5daddc17324b, type: 3}
+  - {fileID: 4375944474646908325, guid: 0c1dc9162f86dac488068fdcb3cf9715, type: 3}
+  - {fileID: 1576868528277753531, guid: e282280263592284b8c7c955e3517805, type: 3}
+  - {fileID: 6499632691131198808, guid: 03129de0bceaad4418f7f0375b4b3c38, type: 3}
+  - {fileID: 4867889463058203156, guid: f550c80a288252347bddcb7465dc52df, type: 3}
+  decorChance: 33
 --- !u!1001 &417567278375460652
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -131,9 +131,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   decors:
-  - {fileID: 3791522370450605294, guid: 05cb74e224b76664c90a2b937170082a, type: 3}
-  - {fileID: 1434140513878795178, guid: b21e39a4e05509d409754f9b6869c35e, type: 3}
   - {fileID: 7639269008525603473, guid: 5f6d6be1bf859c8479db5daddc17324b, type: 3}
+  - {fileID: 4375944474646908325, guid: 0c1dc9162f86dac488068fdcb3cf9715, type: 3}
+  - {fileID: 8293685147537449210, guid: 89c243b5404a4554985c1d903093fa00, type: 3}
+  - {fileID: 803495133056919301, guid: 284148a5985781342877af69bf326a2e, type: 3}
+  - {fileID: 100000, guid: ac812c2731bb9334aa4ea6c245c390ba, type: 3}
+  decorChance: 33
 --- !u!1 &8403029113463764634
 GameObject:
   m_ObjectHideFlags: 0

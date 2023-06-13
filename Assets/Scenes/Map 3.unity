@@ -1981,7 +1981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3598535857287717688, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: pallettes.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3598535857287717688, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: pallettes.Array.data[0]
@@ -1991,6 +1991,10 @@ PrefabInstance:
       propertyPath: pallettes.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: af06c88d1847c784ea1d966131987a68, type: 2}
+    - target: {fileID: 3598535857287717688, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
+      propertyPath: pallettes.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 957bb9378fa820f45bb5c4e5482908c6, type: 2}
     - target: {fileID: 3899952123481108556, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

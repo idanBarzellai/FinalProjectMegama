@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FlyingController
 {
-    BasicsController controller;
+    public BasicsController controller;
 
     struct DoubleVector3{public Vector3 newV; public Vector3 oldV;}
     Rigidbody rb;
@@ -54,7 +54,7 @@ public class GenerateEditor : Editor
 
         Generate generator = (Generate)target;
         
-        if (controller == null) Initialize();
+        if (controller == null || controller.controller == null) Initialize();
 
         if (GUILayout.Button("Pick Different Palette")) generator.RecreateSurface();
 

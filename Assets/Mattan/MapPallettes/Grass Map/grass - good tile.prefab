@@ -684,6 +684,7 @@ MonoBehaviour:
   - {fileID: 1434140513878795178, guid: b21e39a4e05509d409754f9b6869c35e, type: 3}
   - {fileID: 4958067169381350611, guid: 87fc38d2c8f0c254082b88efc30e9201, type: 3}
   - {fileID: 7639269008525603473, guid: 5f6d6be1bf859c8479db5daddc17324b, type: 3}
+  decorChance: 33
 --- !u!1 &2510879020855328215
 GameObject:
   m_ObjectHideFlags: 0
