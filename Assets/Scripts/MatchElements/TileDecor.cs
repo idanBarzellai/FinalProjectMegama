@@ -9,7 +9,7 @@ public class TileDecor : MonoBehaviour
     {
         if(Random.Range(0, 3) == 1)
         {
-            float scaleFactor = FindObjectOfType<generate>().GetScaleFactor() / 2;
+            float scaleFactor = FindObjectOfType<Generate>().GetScaleFactor() / 2;
             Vector3 pos = transform.position + new Vector3(Random.Range(0, scaleFactor), scaleFactor, Random.Range(0, scaleFactor));
             GameObject decorToSpawn = decors[Random.Range(0, decors.Length)];
             //decorToSpawn.transform.localScale = decorToSpawn.transform.localScale * scaleFactor / 2;
