@@ -262,7 +262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a1b34a308489f489053e62bba671cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disappearEffect: {fileID: 1391160036557399179, guid: 5f7e6f6302c09d343a6b27936a81af1a, type: 3}
 --- !u!1001 &3728061825076522882
 PrefabInstance:
   m_ObjectHideFlags: 0

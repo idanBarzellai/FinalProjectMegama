@@ -1,6 +1,6 @@
 Shader "MyShaders/LiquidShader"
 {
-Properties
+    Properties
     {
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
@@ -121,13 +121,13 @@ Properties
                 #endif
 
                 #ifdef UNITY_UI_ALPHACLIP
-                clip (color.a - 0.001);
+                clip(color.a - 0.001);
                 #endif
 
                 return color;
             }
 
-        
+
             float _Progress;
             fixed4 _WaterColor;
             float _WaveStrength;
@@ -136,7 +136,7 @@ Properties
             float _WaterAngle;
 
             fixed4 drawWater(fixed4 water_color, sampler2D color, float transparency, float height, float angle, float wave_strength, float wave_ratio, fixed2 uv);
-            fixed4 frag (v2f i) : SV_Target
+            fixed4 frag(v2f i) : SV_Target
             {
                 fixed2 uv = i.texcoord;
                 float WATER_HEIGHT = _Progress;
@@ -148,14 +148,14 @@ Properties
 
                 fixed4 fragColor = drawWater(WATER_COLOR, _MainTex, WATER_TRANSPARENCY, WATER_HEIGHT, WATER_ANGLE, WAVE_STRENGTH, WAVE_FREQUENCY, uv);
 
-         
+
                 #ifdef UNITY_UI_CLIP_RECT
                 half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(i.mask.xy)) * i.mask.zw);
                 fragColor.a *= m.x * m.y;
                 #endif
 
                 #ifdef UNITY_UI_ALPHACLIP
-                fragColor (color.a - 0.001);
+                clip(fragColor.a - 0.001);
                 #endif
                 return fragColor;
             }
@@ -163,26 +163,25 @@ Properties
             fixed4 drawWater(fixed4 water_color, sampler2D color, float transparency, float height, float angle, float wave_strength, float wave_frequency, fixed2 uv)
             {
                 float iTime = _Time;
-                angle *= uv.y/height+angle/1.5; //3D effect
+                angle *= uv.y / height + angle / 1.5; //3D effect
                 wave_strength /= 1000.0;
-                float wave = sin(10.0*uv.y+10.0*uv.x+wave_frequency*iTime)*wave_strength;
-                wave += sin(20.0*-uv.y+20.0*uv.x+wave_frequency*1.0*iTime)*wave_strength*0.5;
-                wave += sin(15.0*-uv.y+15.0*-uv.x+wave_frequency*0.6*iTime)*wave_strength*1.3;
-                wave += sin(3.0*-uv.y+3.0*-uv.x+wave_frequency*0.3*iTime)*wave_strength*10.0;
-                
-                if(uv.y - wave <= height)
+                float wave = sin(10.0 * uv.y + 10.0 * uv.x + wave_frequency * iTime) * wave_strength;
+                wave += sin(20.0 * -uv.y + 20.0 * uv.x + wave_frequency * 1.0 * iTime) * wave_strength * 0.5;
+                wave += sin(15.0 * -uv.y + 15.0 * -uv.x + wave_frequency * 0.6 * iTime) * wave_strength * 1.3;
+                wave += sin(3.0 * -uv.y + 3.0 * -uv.x + wave_frequency * 0.3 * iTime) * wave_strength * 10.0;
+
+                if (uv.y - wave <= height)
                     return lerp(
-                    lerp(
-                        tex2D(color, fixed2(uv.x, ((1.0 + angle)*(height + wave) - angle*uv.y + wave))),
-                        water_color,
-                        0.6-(0.3-(0.3*uv.y/height))),
-                    tex2D(color, fixed2(uv.x + wave, uv.y - wave)),
-                    transparency-(transparency*uv.y/height));
+                        lerp(
+                            tex2D(color, fixed2(uv.x, ((1.0 + angle) * (height + wave) - angle * uv.y + wave))),
+                            water_color,
+                            0.6 - (0.3 - (0.3 * uv.y / height))),
+                        tex2D(color, fixed2(uv.x + wave, uv.y - wave)),
+                        transparency - (transparency * uv.y / height));
                 else
-                    return fixed4(0,0,0,0);
+                    return fixed4(0, 0, 0, 0);
             }
         ENDCG
         }
-    
     }
 }

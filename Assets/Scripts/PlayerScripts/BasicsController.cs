@@ -146,7 +146,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
                 // Rolling Head
                 else
                 {
-                    MoveDeadHead();
+                    if(deadHead && deadHeadParent)
+                        MoveDeadHead();
                     
                     Respawn();
                 }
@@ -196,7 +197,10 @@ public class BasicsController : MonoBehaviourPunCallbacks
             if (!isDead)
                 transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + mouseInput.x, transform.rotation.eulerAngles.z);
             else
-                deadHeadParent.transform.rotation = Quaternion.Euler(deadHeadParent.transform.rotation.eulerAngles.x, deadHeadParent.transform.rotation.eulerAngles.y + mouseInput.x, deadHeadParent.transform.rotation.eulerAngles.z);
+            {
+                if(deadHeadParent)
+                    deadHeadParent.transform.rotation = Quaternion.Euler(deadHeadParent.transform.rotation.eulerAngles.x, deadHeadParent.transform.rotation.eulerAngles.y + mouseInput.x, deadHeadParent.transform.rotation.eulerAngles.z);
+            }
         }
     }
 
@@ -385,10 +389,13 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     public void Die(string damager, int actor)
     {
+        isDead = true;
         SoundManager.instacne.Play("Death");
         col.enabled = false;
         rb.velocity = Vector3.zero;
-        photonView.RPC("ScatterBodyParts", RpcTarget.All);
+        Destroy(rb);
+        GetComponentInChildren<CharcterBody>().gameObject.SetActive(false);
+        //photonView.RPC("ScatterBodyParts", RpcTarget.All);
         PlayerSpawner.instance.Die(damager); // debug purposes change false to regular
         PhotonNetwork.Instantiate(playerDeathEffect.name, transform.position, Quaternion.identity);
         MatchManager.instance.UpdateStatSend(actor, 0, 1);

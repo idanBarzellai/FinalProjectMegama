@@ -140,7 +140,7 @@ public class UIController : MonoBehaviour
     public void StartMatchPlayerChosen()
     {
 
-        //PlayerSpawner.instance.SpawnPlayer();
+        PlayerSpawner.instance.SpawnPlayer();
     }
 
     
@@ -165,6 +165,11 @@ public class UIController : MonoBehaviour
                  button.GetComponent<PowerUpButton>().ResetButton();
             }
         }
+    }
+
+    public void PlayGenericButtonSound()
+    {
+        SoundManager.instacne.Play("GenericButton");
     }
 
     public void DebugCoins()

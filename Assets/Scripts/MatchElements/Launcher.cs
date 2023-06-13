@@ -339,7 +339,10 @@ public class Launcher : MonoBehaviourPunCallbacks
         loadingText.text = "Creating test room...";
         loadingScreen.SetActive(true);
     }
-
+    public void PlayGenericButtonSound()
+    {
+        SoundManager.instacne.Play("GenericButton");
+    }
     public void QuitGame()
     {
         Application.Quit();
