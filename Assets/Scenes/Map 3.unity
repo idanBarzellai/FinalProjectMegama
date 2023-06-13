@@ -944,10 +944,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diffHeights: 1
-  mapRadius: 3
-  pBadTile: 0.2
+  mapRadius: 8
+  pBadTile: 0.1
   pallettes:
   - {fileID: 11400000, guid: 957bb9378fa820f45bb5c4e5482908c6, type: 2}
   - {fileID: 11400000, guid: af06c88d1847c784ea1d966131987a68, type: 2}
   - {fileID: 11400000, guid: 4d345678df11e5848885db9eb08d75ae, type: 2}
-  scaleFactor: 1
+  scaleFactor: 10
