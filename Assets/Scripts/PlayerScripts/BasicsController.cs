@@ -88,6 +88,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
         // Canvas controlller
         currHealth = maxHelath;
         skillLastUseTime = Time.time;
+        lastTimeMoved = Time.time;
 
         UIController.instance.healthShaderProgress.SetFloat("_Progress", maxHelath / maxHelath);
 
@@ -217,7 +218,6 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
         // Animation controller
         bool isMoving = Math.Abs(moveDir.x) > 0 || Math.Abs(moveDir.z) > 0;
-        lastTimeMoved = Time.time;
         int newXDir = (int)Input.GetAxisRaw("Horizontal");
         int newZDir = (int)Input.GetAxisRaw("Vertical");
 
@@ -225,7 +225,11 @@ public class BasicsController : MonoBehaviourPunCallbacks
         isDirectionChanged = newXDir != xDir || newZDir != zDir;
         bool startedWalking = !isWalking && (isMoving && !inSkill && isGrounded);
         if (isDirectionChanged || startedWalking)
+        {
             photonView.RPC("SetAnim", RpcTarget.All, "move Direction Changed");
+            lastTimeMoved = Time.time;
+
+        }
 
         xDir = newXDir;
         zDir = newZDir;

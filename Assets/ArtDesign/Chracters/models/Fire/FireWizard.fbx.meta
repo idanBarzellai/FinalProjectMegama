@@ -270,7 +270,7 @@ ModelImporter:
       name: A_Jump_leap
       takeName: A_Jump_leap
       internalID: 0
-      firstFrame: 0
+      firstFrame: 3
       lastFrame: 7
       wrapMode: 0
       orientationOffsetY: 0

@@ -85,7 +85,8 @@ public class EarthPlayer : BasicsController
     {
 
         base.SkillTrigger();
-        photonView.RPC("SetAnimBool", RpcTarget.All, "IsAiming", true);
+        
+        photonView.RPC("SetAnim", RpcTarget.All, "skill - build");
 
         showImpactPlace= true;
         SetIsStaticSkill(true);
@@ -196,8 +197,7 @@ public class EarthPlayer : BasicsController
         {
             skillTriggered = true;
             playerLeapedFromGround = true;
-            photonView.RPC("SetAnimBool", RpcTarget.All, "IsAiming", false);
-            photonView.RPC("SetAnim", RpcTarget.All, "Jump");
+            photonView.RPC("SetAnim", RpcTarget.All, "skill - leap");
             rb.AddForce(transform.forward * forwardForce + Vector3.up * upwordForce, ForceMode.VelocityChange); // TODO forcemode.impulse
         }
         
@@ -218,7 +218,7 @@ public class EarthPlayer : BasicsController
     private void resetVariables()
     {
         SetFallMultiplyer(basicFallForce);
-        photonView.RPC("SetAnim", RpcTarget.All, "SkillEnd");
+        photonView.RPC("SetAnim", RpcTarget.All, "skill - land");
         SetIsStaticSkill(false);
         SetInSkill(false);
         skillTriggered = false;

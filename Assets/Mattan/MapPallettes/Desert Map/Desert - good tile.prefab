@@ -131,11 +131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   decors:
   - {fileID: 7639269008525603473, guid: 5f6d6be1bf859c8479db5daddc17324b, type: 3}
-  - {fileID: 4375944474646908325, guid: 0c1dc9162f86dac488068fdcb3cf9715, type: 3}
-  - {fileID: 1576868528277753531, guid: e282280263592284b8c7c955e3517805, type: 3}
-  - {fileID: 6499632691131198808, guid: 03129de0bceaad4418f7f0375b4b3c38, type: 3}
-  - {fileID: 4867889463058203156, guid: f550c80a288252347bddcb7465dc52df, type: 3}
-  decorChance: 33
+  - {fileID: 3791522370450605294, guid: f2100becbfb8cd1429447b07fdb426cd, type: 3}
+  - {fileID: 1434140513878795178, guid: b21e39a4e05509d409754f9b6869c35e, type: 3}
 --- !u!1001 &417567278375460652
 PrefabInstance:
   m_ObjectHideFlags: 0

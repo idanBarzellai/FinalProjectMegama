@@ -39,32 +39,34 @@ public class FlyingController
     }
 }
 
+//public class GenerateEditor : MonoBehaviour { }
+
 [CustomEditor(typeof(Generate))]
-public class GenerateEditor : Editor
+public class GenerateEditor2 : Editor
 {
     private bool showPickPaletteButton = false;
     Vector3 spawnPoint;
     FlyingController controller;
 
-    private void Initialize() {controller = new FlyingController(FindObjectOfType<BasicsController>());}
-    
+    private void Initialize() { controller = new FlyingController(FindObjectOfType<BasicsController>()); }
+
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
         Generate generator = (Generate)target;
-        
+
         if (controller == null || controller.controller == null) Initialize();
 
         if (GUILayout.Button("Pick Different Palette")) generator.RecreateSurface();
 
         GUILayout.Space(15);
 
-        try{if (GUILayout.Button("Fly")) controller?.Fly();}
-        catch (MissingReferenceException e){Initialize(); controller?.Fly();}
-        
-        try{if (GUILayout.Button("Land")) controller?.Land();}
-        catch (MissingReferenceException e){Initialize(); controller?.Land();}
+        try { if (GUILayout.Button("Fly")) controller?.Fly(); }
+        catch (MissingReferenceException e) { Initialize(); controller?.Fly(); }
+
+        try { if (GUILayout.Button("Land")) controller?.Land(); }
+        catch (MissingReferenceException e) { Initialize(); controller?.Land(); }
 
     }
 

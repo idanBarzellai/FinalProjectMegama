@@ -46,7 +46,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public float waitAfterEnding = 5f;
 
     public bool perpetual;
-    private float matchLength = 18000;
+    private float matchLength = 60;
     private float choosingTime = 10;
     private float currentMatchTime;
     private float sendTimer;
