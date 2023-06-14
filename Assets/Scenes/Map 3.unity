@@ -760,6 +760,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 7272427848328177025, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -720.99994
+      objectReference: {fileID: 0}
     - target: {fileID: 7343735721099873453, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -950,4 +954,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 957bb9378fa820f45bb5c4e5482908c6, type: 2}
   - {fileID: 11400000, guid: af06c88d1847c784ea1d966131987a68, type: 2}
   - {fileID: 11400000, guid: 4d345678df11e5848885db9eb08d75ae, type: 2}
+  - {fileID: 11400000, guid: ca9fe93b1d9c61e489310133496a5b20, type: 2}
   scaleFactor: 10
