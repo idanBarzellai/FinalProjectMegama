@@ -55,9 +55,19 @@ public class Launcher : MonoBehaviourPunCallbacks
     public string[] allMaps;
     public bool changeMapBetweenRounds = true;
 
+    void UpdateMinMaxMatchLength(){
+        TMP_Text text = GameObject.FindWithTag("MatchLengthMinMax").GetComponent<TMP_Text>();
+        PassDataScriptableObject passData = Resources.Load<PassDataScriptableObject>("passDataScriptable");
+        text.text = string.Format("{0} - {1}", passData.min, passData.max);
+        
+        text = GameObject.FindWithTag("MatchLengthDefault").GetComponent<TMP_Text>();
+        text.text = passData.length.ToString();
+    
+    }
+
     void Start()
     {
-
+        UpdateMinMaxMatchLength();
         CloseMenus();
 
         loadingScreen.SetActive(true);
@@ -126,10 +136,22 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
+        
+        string roundDurationInput = GameObject.Find("Round Duration Input Field").GetComponent<TMP_InputField>().text;
+        PassDataScriptableObject passDataScriptable = Resources.Load<PassDataScriptableObject>("passDataScriptable");
+
+        try {passDataScriptable.length = float.Parse(roundDurationInput);}
+        catch (System.FormatException fe){} catch (System.NullReferenceException ne){}
+ 
+
+
         string createRoomInput = createRoomInputField.text;
+
         if (!string.IsNullOrEmpty(createRoomInput))
         {
             RoomOptions options= new RoomOptions();
+
+
 
             byte maxPlayersOut;
             byte.TryParse(maxPlayersCounter.text, out maxPlayersOut);
@@ -146,6 +168,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
                 createRoomInputField.text = "";
             }
+
 
             else
             {

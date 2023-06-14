@@ -14,6 +14,9 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     private void Awake()
     {
         instance = this;
+        PassDataScriptableObject passData = Resources.Load<PassDataScriptableObject>("passDataScriptable");
+        if (passData != null) matchLength = Mathf.Clamp(passData.length, passData.min, passData.max);
+        
     }
 
     public enum EventCodes : byte
@@ -46,7 +49,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public float waitAfterEnding = 5f;
 
     public bool perpetual;
-    private float matchLength = 60;
+    public float matchLength = 60;
     private float choosingTime = 10;
     private float currentMatchTime;
     private float sendTimer;

@@ -12,6 +12,8 @@ TagManager:
   - Powerup
   - TileTop
   - TileDecor
+  - MatchLengthMinMax
+  - MatchLengthDefault
   layers:
   - Default
   - TransparentFX
