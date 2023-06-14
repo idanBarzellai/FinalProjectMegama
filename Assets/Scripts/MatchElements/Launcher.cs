@@ -55,19 +55,24 @@ public class Launcher : MonoBehaviourPunCallbacks
     public string[] allMaps;
     public bool changeMapBetweenRounds = true;
 
+    TMP_Text [] AllTextsWithTag(string tag){
+        GameObject [] objects = GameObject.FindGameObjectsWithTag(tag);
+        List<TMP_Text> texts = new List<TMP_Text>();
+        foreach (GameObject taggedObject in objects) texts.Add(taggedObject.GetComponent<TMP_Text>());
+        return texts.ToArray();
+    }
+    [SerializeField] TMP_Text [] lengthDefaults;
+    [SerializeField] TMP_Text [] lengthMinMax;
     void UpdateMinMaxMatchLength(){
-        TMP_Text text = GameObject.FindWithTag("MatchLengthMinMax").GetComponent<TMP_Text>();
-        PassDataScriptableObject passData = Resources.Load<PassDataScriptableObject>("passDataScriptable");
-        text.text = string.Format("{0} - {1}", passData.min, passData.max);
-        
-        text = GameObject.FindWithTag("MatchLengthDefault").GetComponent<TMP_Text>();
-        text.text = passData.length.ToString();
-    
+        PassDataScriptableObject data = Resources.Load<PassDataScriptableObject>("passDataScriptable");
+
+        data.length = Mathf.Clamp(data.length, data.min, data.max);
+        foreach (TMP_Text t in lengthDefaults) t.text = string.Format("{0}", data.length);
+        foreach (TMP_Text t in lengthMinMax) t.text = string.Format("{0} - {1}", data.min, data.max);
     }
 
     void Start()
     {
-        UpdateMinMaxMatchLength();
         CloseMenus();
 
         loadingScreen.SetActive(true);
@@ -82,6 +87,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        UpdateMinMaxMatchLength();
+
     }
 
     void CloseMenus()
@@ -140,9 +147,10 @@ public class Launcher : MonoBehaviourPunCallbacks
         string roundDurationInput = GameObject.Find("Round Duration Input Field").GetComponent<TMP_InputField>().text;
         PassDataScriptableObject passDataScriptable = Resources.Load<PassDataScriptableObject>("passDataScriptable");
 
-        try {passDataScriptable.length = float.Parse(roundDurationInput);}
+        try {passDataScriptable.length = float.Parse(roundDurationInput); Debug.Log("success");}
         catch (System.FormatException fe){} catch (System.NullReferenceException ne){}
  
+        UpdateMinMaxMatchLength();
 
 
         string createRoomInput = createRoomInputField.text;

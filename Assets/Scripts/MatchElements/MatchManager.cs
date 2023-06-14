@@ -15,7 +15,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         instance = this;
         PassDataScriptableObject passData = Resources.Load<PassDataScriptableObject>("passDataScriptable");
-        if (passData != null) matchLength = Mathf.Clamp(passData.length, passData.min, passData.max);
+        if (passData != null) matchLength = passData.length;
         
     }
 
