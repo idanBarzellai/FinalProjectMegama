@@ -45,7 +45,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     private float dashForce = 25f;
     private float lastTimeDashed = 0f, dashCooldown = 1f, dashThershold = 0.005f, dashDur = 0.8f;
 
-    private float shotForce = 5f;
+    private float shotForce = 15f;
 
     private bool inSkill = false, isStaticSkill = false, isRotationStaticSkill = false;
     protected float skillCooldown = 5f, skillLastUseTime = 0f;
@@ -176,6 +176,45 @@ public class BasicsController : MonoBehaviourPunCallbacks
     }
 
     // ******************************Movement******************************************
+     private float touchSensitivity = 0.5f;
+
+       protected virtual Vector2 TouchMovement()
+    {
+        Vector2 touchInput = Vector2.zero;
+
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Moved)
+            {
+                // Get the delta position of the touch
+                Vector2 touchDelta = touch.deltaPosition;
+
+                // Adjust rotation based on touch delta
+                float rotationX = touchDelta.y * touchSensitivity;
+                float rotationY = touchDelta.x * touchSensitivity;
+
+                // Apply rotation based on touch input
+                verticalRotStore += rotationX * 0.5f;
+                verticalRotStore = Mathf.Clamp(verticalRotStore, -60f, 60f);
+
+                if (invertLook)
+                    viewPoint.rotation = Quaternion.Euler(verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
+                else
+                    viewPoint.rotation = Quaternion.Euler(-verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
+
+                // Set touch input values similar to Input.GetAxisRaw()
+                touchInput.x = rotationY;
+                touchInput.y = rotationX;
+
+                return touchInput;
+            }
+        }
+
+        return Vector2.zero;
+    }
+
     protected virtual Vector2 MouseMovement()
     {
         mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")) * mouseSensitivity;
@@ -188,7 +227,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
         else
             viewPoint.rotation = Quaternion.Euler(-verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
 
-        return mouseInput;
+        return mouseInput + TouchMovement();
     }
 
     protected virtual void RotateWithCamMovement()
@@ -449,10 +488,19 @@ public class BasicsController : MonoBehaviourPunCallbacks
         }
     }
     // ******************************Skills******************************************
+    bool canShoot = true;
+    float shotCooldown = 0.1f;
+    IEnumerator ShootCooldown(){
+        canShoot = false;
+        yield return new WaitForSecondsRealtime(shotCooldown);
+        canShoot = true;
+    }
     protected virtual void Shoot()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!canShoot) return;
+        if (Input.GetMouseButton(0) || Input.touchCount > 0)
         {
+            StartCoroutine(ShootCooldown());
             SoundManager.instacne.Play("Shot");
 
             photonView.RPC("SetAnim", RpcTarget.All, "attack");
@@ -464,8 +512,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
             shot.GetComponent<ShotController>().SetPlayer(this);
             shot.GetComponent<ShotController>().SetName(photonView.Owner.NickName);
             
-
-            shot.GetComponent<Rigidbody>().AddForce((eyes.forward) * shotForce, ForceMode.Impulse);
+            Vector3 stabilizer = new Vector3(0,2,0);
+            shot.GetComponent<Rigidbody>().AddForce((eyes.forward) * shotForce - stabilizer , ForceMode.Impulse);
         }
     }
 
