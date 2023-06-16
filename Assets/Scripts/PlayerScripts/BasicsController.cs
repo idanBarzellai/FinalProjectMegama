@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using UnityEngine;
 using UnityEditor;
+using TMPro;
 
 
 public class BasicsController : MonoBehaviourPunCallbacks
@@ -90,10 +91,9 @@ public class BasicsController : MonoBehaviourPunCallbacks
         skillLastUseTime = Time.time;
         lastTimeMoved = Time.time;
 
-        UIController.instance.healthShaderProgress.SetFloat("_Progress", maxHelath / maxHelath);
+        // UIController.instance.healthShaderProgress.SetFloat("_Progress", maxHelath / maxHelath);
 
-       // UIController.instance.healthSlider.maxValue = maxHelath;
-        UIController.instance.skillSliderFillColor.SetFloat("_Progress", (Time.time - skillLastUseTime) / skillCooldown);
+        // UIController.instance.skillSliderFillColor.SetFloat("_Progress", (Time.time - skillLastUseTime) / skillCooldown);
 
         UpdateUIController(currHealth, Time.time - skillLastUseTime);
     }
@@ -180,55 +180,78 @@ public class BasicsController : MonoBehaviourPunCallbacks
      private float touchSensitivity = 0.5f;
     Vector3 GetJoystickMovement(){
         Vector3 joystickMovement = Vector3.zero;
-        FixedJoystick joystick = FindObjectOfType<FixedJoystick>();
+        Joystick joystick = FindObjectOfType<Joystick>();
         if(joystick != null) joystickMovement = Vector3.forward * joystick.Vertical + Vector3.right * joystick.Horizontal;
         return joystickMovement;
     }
-       protected virtual Vector2 TouchMovement()
+
+    int joystickTouchIndex = -1;
+    protected virtual Vector2 TouchMovement()
     {
-
         Vector2 touchInput = Vector2.zero;
-
-        bool onlyTouchingJoystick = Input.touchCount == 1 && GetJoystickMovement() != Vector3.zero;
-        bool touchingTheScreen = Input.touchCount > 0;
         
-        if (touchingTheScreen && !onlyTouchingJoystick)
-        {
-            Touch touch = Input.GetTouch(0);
-            bool touchIsSwipe = touch.phase == TouchPhase.Moved;
-            bool swipedOnRightHalfOfScreen = touchIsSwipe && touch.position.x > Screen.width / 2;
-            
-            if (swipedOnRightHalfOfScreen)
-            {
-                // Get the delta position of the touch
-                Vector2 touchDelta = touch.deltaPosition;
+        bool joystickMoving = GetJoystickMovement() != Vector3.zero;
 
-                // Adjust rotation based on touch delta
-                float rotationX = touchDelta.y * touchSensitivity;
-                float rotationY = touchDelta.x * touchSensitivity;
+        if (!joystickMoving) {joystickTouchIndex = -1;}
+        else{
+            if (Input.touchCount == 1) {joystickTouchIndex = 0; return touchInput;}
 
-                // Apply rotation based on touch input
-                verticalRotStore += rotationX * 0.5f;
-                verticalRotStore = Mathf.Clamp(verticalRotStore, -60f, 60f);
+            else if (joystickTouchIndex == -1) {
+                for (int i = 0; i < Input.touchCount; i++){
+                    Touch touch = Input.touches[i];
 
-                if (invertLook)
-                    viewPoint.rotation = Quaternion.Euler(verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
-                else
-                    viewPoint.rotation = Quaternion.Euler(-verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
-
-                // Set touch input values similar to Input.GetAxisRaw()
-                touchInput.x = rotationY;
-                touchInput.y = rotationX;
-
-                return touchInput;
-            }
+                    bool touchingJoystick = FindObjectOfType<Joystick>().TouchingJoystick(touch.position);
+                    if (touchingJoystick){
+                        joystickTouchIndex = i;
+                        break;
+                    }
+                    // float delta = 0.001f;
+                    // Vector2 joystickPos = FindObjectOfType<Joystick>().GetPositionInScreen();
+                    // Vector2 touchPos = touch.position;
+                    // float x_distance = touchPos.x - joystickPos.x;
+                    // float y_distance = touchPos.y - joystickPos.y;
+                    // if (Mathf.Abs(x_distance) < delta && MathF.Abs(y_distance) < delta){
+                }
+        }
         }
 
+
+        for (int i = 0; i < Input.touchCount; i++){
+            if (i == joystickTouchIndex) continue;
+            
+            Touch touch = Input.touches[i];
+
+
+            Vector2 touchDelta = touch.deltaPosition;
+
+
+            float rotationX = touchDelta.y * touchSensitivity;
+            float rotationY = touchDelta.x * touchSensitivity;
+
+            // Apply rotation based on touch input
+            verticalRotStore += rotationX * 0.5f;
+            verticalRotStore = Mathf.Clamp(verticalRotStore, -60f, 60f);
+
+            if (invertLook)
+                viewPoint.rotation = Quaternion.Euler(verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
+            else
+                viewPoint.rotation = Quaternion.Euler(-verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
+
+            // Set touch input values similar to Input.GetAxisRaw()
+            touchInput.x = rotationY;
+            touchInput.y = rotationX;
+
+            return touchInput;
+        }
+        
         return Vector2.zero;
     }
 
     protected virtual Vector2 MouseMovement()
     {
+        if (Input.touchCount > 0) return TouchMovement();
+        else                      joystickTouchIndex = -1;
+
         mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")) * mouseSensitivity;
 
         verticalRotStore += mouseInput.y;
@@ -239,7 +262,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
         else
             viewPoint.rotation = Quaternion.Euler(-verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
 
-        return mouseInput + TouchMovement();
+        return mouseInput;
+        
     }
 
     protected virtual void RotateWithCamMovement()
@@ -258,6 +282,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     protected virtual Vector3 GetMovement()
     {
+
         Vector3 pcMovement = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
         
         return pcMovement + GetJoystickMovement();
@@ -581,11 +606,11 @@ public class BasicsController : MonoBehaviourPunCallbacks
     }
     public void UpdateUIController(float health, float skillTime)
     {
-        UIController.instance.healthShaderProgress.SetFloat("_Progress", health / maxHelath);
-        UIController.instance.skillSliderFillColor.SetFloat("_Progress", skillTime / skillCooldown);
+        // UIController.instance.healthShaderProgress.SetFloat("_Progress", health / maxHelath);
+        // UIController.instance.skillSliderFillColor.SetFloat("_Progress", skillTime / skillCooldown);
 
-        //UIController.instance.healthSlider.value = health;
-        //UIController.instance.skillSlider.value = skillTime;
+        UIController.instance.healthSlider.value = health / maxHelath;
+        UIController.instance.skillSlider.value = skillTime / skillCooldown;
     } 
 
     private void UnlockAndLockMouse()
@@ -602,8 +627,8 @@ public class BasicsController : MonoBehaviourPunCallbacks
     }
     protected void SetSkillBarColor(Color color)
     {
-        if (photonView.IsMine)
-            UIController.instance.skillSliderFillColor.SetColor("_WaterColor", color); ;
+        // if (photonView.IsMine)
+        //     UIController.instance.skillSliderFillColor.SetColor("_WaterColor", color); ;
 
     }
     

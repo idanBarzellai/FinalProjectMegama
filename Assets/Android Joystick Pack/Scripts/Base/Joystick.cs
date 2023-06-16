@@ -87,6 +87,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
             input = Vector2.zero;
     }
 
+
+    public bool TouchingJoystick(Vector2 touchPosition) => 
+        touchPosition.x <= GetComponent<RectTransform>().rect.width && touchPosition.y <= GetComponent<RectTransform>().rect.height;
     private void FormatInput()
     {
         if (axisOptions == AxisOptions.Horizontal)

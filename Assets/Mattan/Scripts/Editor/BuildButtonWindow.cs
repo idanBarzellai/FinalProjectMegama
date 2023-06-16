@@ -1,5 +1,7 @@
 using UnityEditor;
 using UnityEngine;
+using System.IO;
+using System.IO.Compression;
 
 public class BuildButtonWindow : EditorWindow
 {
@@ -67,13 +69,30 @@ public class BuildButtonWindow : EditorWindow
         }
     }
 
+    public static void ZipBuildFolder(string buildFolderPath, string zipPath)
+    {
+        string directoryName = Path.GetDirectoryName(zipPath);
+        if (!Directory.Exists(directoryName))
+        {
+            Directory.CreateDirectory(directoryName);
+        }
+
+        ZipFile.CreateFromDirectory(buildFolderPath, zipPath, System.IO.Compression.CompressionLevel.Optimal, false);
+    }
     public static void BuildForPC()
     {
         bool confirmed = EditorUtility.DisplayDialog("Confirmation", "Build for PC? (This might take a while...)", "Yes", "Not Now");
         if (confirmed)
         {
+            string gameName = PlayerSettings.productName;
+            string version = PlayerSettings.bundleVersion;
+            string pcBuildPath = $"Builds/PC/{gameName} {version}/{gameName}.exe";
+
             BuildPlayerOptions pcBuildOptions = CreatePCBuildOptions();
             BuildPipeline.BuildPlayer(pcBuildOptions);
+            
+            string zipPath = string.Format("Builds/PC/{0} {1}/{0} {1}.zip", gameName, version);
+            ZipBuildFolder(pcBuildPath, zipPath);
         }
     }
 

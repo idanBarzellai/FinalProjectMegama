@@ -19,11 +19,13 @@ public class UIController : MonoBehaviour
     public TMP_Text respawntext;
 
 
-    public GameObject healthOrb;
-    public GameObject skillOrb;
+    // public GameObject healthOrb;
+    public Slider healthSlider;
+    // public GameObject skillOrb;
+    public Slider skillSlider;
 
-    public Material skillSliderFillColor;
-    public Material healthShaderProgress;
+    // public Material skillSliderFillColor;
+    // public Material healthShaderProgress;
 
     public TMP_Text killsText;
     public TMP_Text deathsText;

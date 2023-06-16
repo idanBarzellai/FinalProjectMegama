@@ -23,8 +23,11 @@ public class PlayerSpawner : MonoBehaviour
         if (PhotonNetwork.IsConnected) { 
             UIController.instance.playerChoosingScreen.SetActive(false);
 
-            UIController.instance.skillOrb.gameObject.SetActive(true);
-            UIController.instance.healthOrb.gameObject.SetActive(true);
+            // UIController.instance.skillOrb.gameObject.SetActive(true);
+            UIController.instance.skillSlider.gameObject.SetActive(true);
+            // UIController.instance.healthOrb.gameObject.SetActive(true);
+            UIController.instance.healthSlider.gameObject.SetActive(true);
+            
             Transform spawnPoint = SpawnManager.instance.GetSpawnPoint();
 
             int playerChosen = (int)UIController.instance.isPlayerPicked;
@@ -45,8 +48,13 @@ public class PlayerSpawner : MonoBehaviour
         UIController.instance.deathText.text = "You were killed by " + killingPlayer;
         UIController.instance.respawntext.gameObject.SetActive(true);
         UIController.instance.deathScreen.SetActive(true);
-        UIController.instance.skillOrb.gameObject.SetActive(false);
-        UIController.instance.healthOrb.gameObject.SetActive(false);
+
+        // UIController.instance.skillOrb.gameObject.SetActive(false);
+        UIController.instance.skillSlider.gameObject.SetActive(false);
+        // UIController.instance.healthOrb.gameObject.SetActive(false);
+        UIController.instance.healthSlider.gameObject.SetActive(false);
+            
+
         addedPower = PowerupsManager.PowerUpsPowers.Null;
     }
 
