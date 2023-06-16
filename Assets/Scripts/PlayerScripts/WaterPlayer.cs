@@ -79,7 +79,7 @@ public class WaterPlayer : BasicsController
         SkillManager.instance.DestoryOverNetwork(5f, impactAreaInstance);
     }
 
-    private void resetVariables()
+    public void resetVariables()
     {
         skillCanceled = true;
         SetInSkill(false);

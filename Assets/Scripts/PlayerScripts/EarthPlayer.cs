@@ -52,7 +52,7 @@ public class EarthPlayer : BasicsController
                 DrawProjection();
             }
             //rb.AddForce(Vector3.up * -fallMultiplyer, ForceMode.Acceleration);
-            earthSkill();
+            if (Input.GetKeyUp(KeyCode.Q)) earthSkill();
             
         }
     }
@@ -193,7 +193,8 @@ public class EarthPlayer : BasicsController
 
     public void earthSkill()
     {
-        if (!skillTriggered && GetInSkill() && Input.GetKeyUp(KeyCode.Q))// && isGrounded) // TODO 
+
+        if (!skillTriggered && GetInSkill())// && isGrounded) // TODO 
         {
             skillTriggered = true;
             playerLeapedFromGround = true;

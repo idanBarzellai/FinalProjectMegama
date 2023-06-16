@@ -98,6 +98,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
         UpdateUIController(currHealth, Time.time - skillLastUseTime);
     }
 
+    public bool IsPlaying() => MatchManager.instance.state == MatchManager.GameState.Playing;
     protected virtual void Update()
     {
         if (photonView.IsMine)
@@ -114,7 +115,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
             //moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
             moveDir = GetMovement();
 
-            if (MatchManager.instance.state == MatchManager.GameState.Playing)
+            if (IsPlaying())
             {
                 if (!isDead)
                 {
@@ -129,12 +130,12 @@ public class BasicsController : MonoBehaviourPunCallbacks
                     
                     setGrounded(Physics.Raycast(transform.position, Vector3.down, rayhit, LayerMask.GetMask("Ground")));
 
-                    TryJump();
+                    if (Input.GetKeyDown(KeyCode.Space)) TryJump();
 
-                    Dash();
+                    if (Input.GetKeyDown(KeyCode.LeftShift)) TryDash();
 
                     // Skill trigger
-                    IsAbleToPreformSkill();
+                    if (Input.GetKeyDown(KeyCode.Q)) TryPreformSkill();
                     
                      Shoot();
 
@@ -150,7 +151,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
                     if(deadHead && deadHeadParent)
                         MoveDeadHead();
                     
-                    Respawn();
+                    if (Input.GetKey(KeyCode.R)) Respawn();
                 }
             }
             // Unlocking camera and mouse connection
@@ -177,16 +178,27 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     // ******************************Movement******************************************
      private float touchSensitivity = 0.5f;
-
+    Vector3 GetJoystickMovement(){
+        Vector3 joystickMovement = Vector3.zero;
+        FixedJoystick joystick = FindObjectOfType<FixedJoystick>();
+        if(joystick != null) joystickMovement = Vector3.forward * joystick.Vertical + Vector3.right * joystick.Horizontal;
+        return joystickMovement;
+    }
        protected virtual Vector2 TouchMovement()
     {
+
         Vector2 touchInput = Vector2.zero;
 
-        if (Input.touchCount > 0)
+        bool onlyTouchingJoystick = Input.touchCount == 1 && GetJoystickMovement() != Vector3.zero;
+        bool touchingTheScreen = Input.touchCount > 0;
+        
+        if (touchingTheScreen && !onlyTouchingJoystick)
         {
             Touch touch = Input.GetTouch(0);
-
-            if (touch.phase == TouchPhase.Moved)
+            bool touchIsSwipe = touch.phase == TouchPhase.Moved;
+            bool swipedOnRightHalfOfScreen = touchIsSwipe && touch.position.x > Screen.width / 2;
+            
+            if (swipedOnRightHalfOfScreen)
             {
                 // Get the delta position of the touch
                 Vector2 touchDelta = touch.deltaPosition;
@@ -246,7 +258,9 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     protected virtual Vector3 GetMovement()
     {
-        return new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+        Vector3 pcMovement = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+        
+        return pcMovement + GetJoystickMovement();
     }
 
     protected virtual void MoveTowards()
@@ -349,7 +363,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     }
     protected virtual bool IsAbleToJump()
     {
-        return Input.GetKeyDown(KeyCode.Space) && !inSkill && isGrounded ;
+        return !inSkill && isGrounded ;
     }
 
     protected virtual void IsDeadFromFallDmg()
@@ -362,36 +376,33 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
     
 
-    private void Dash()//Vector3 dir, bool withDir)
-    {
+    public void TryDash(){
+        bool enoughTimePassed = Time.time - lastTimeDashed > dashCooldown;
+        if (inSkill || !enoughTimePassed) return;
+
         Vector3 dir = Vector3.zero;
-        if (!inSkill && Input.GetKeyDown(KeyCode.LeftShift) && Time.time - lastTimeDashed > dashCooldown)
-        {
-            if (Mathf.Abs(moveDir.z) < dashThershold && Mathf.Abs(moveDir.x) < dashThershold)
+        if (Mathf.Abs(moveDir.z) < dashThershold && Mathf.Abs(moveDir.x) < dashThershold)
                 dir = transform.forward;
-            
-            else
-                dir = (moveDir.z * transform.forward) + (moveDir.x * transform.right);
+        else    dir = (moveDir.z * transform.forward) + (moveDir.x * transform.right);
 
-            dir.y += 0.5f;
+        dir.y += 0.5f;
 
-            //rb.AddForce(dir.normalized * dashForce, ForceMode.Impulse);
-            StartCoroutine(DashCo(dir));
-            lastTimeDashed = Time.time;
-        }
+        StartCoroutine(DashCo(dir));
+        lastTimeDashed = Time.time;
+
     }
 
     private IEnumerator DashCo(Vector3 dir)
     {
-        photonView.RPC("SetAnim", RpcTarget.All, "Dash");
+        photonView.RPC("SetAnim", RpcTarget.All, "TryDash");
         //if (dir.x > 0)
-        //    photonView.RPC("SetAnimInt", RpcTarget.All, "Dash R");
+        //    photonView.RPC("SetAnimInt", RpcTarget.All, "TryDash R");
         //else if (dir.x < 0)
-        //    photonView.RPC("SetAnimInt", RpcTarget.All, "Dash L");
+        //    photonView.RPC("SetAnimInt", RpcTarget.All, "TryDash L");
         //if (dir.z > 0)
-        //   photonView.RPC("SetAnim", RpcTarget.All, "Dash F");
+        //   photonView.RPC("SetAnim", RpcTarget.All, "TryDash F");
         //else if (dir.z < 0)
-        //   photonView.RPC("SetAnim", RpcTarget.All, "Dash B");
+        //   photonView.RPC("SetAnim", RpcTarget.All, "TryDash B");
 
         rb.velocity = rb.velocity + dir.normalized * dashForce;
         yield return new WaitForSeconds(dashDur);
@@ -473,10 +484,9 @@ public class BasicsController : MonoBehaviourPunCallbacks
         isDead = true;
     }
 
-    protected virtual void Respawn()
+    public virtual void Respawn()
     {
-        if (Input.GetKey(KeyCode.R))
-            PlayerSpawner.instance.ReSpawn();
+        PlayerSpawner.instance.ReSpawn();
     }
 
     private void TryIdle()
@@ -517,9 +527,11 @@ public class BasicsController : MonoBehaviourPunCallbacks
         }
     }
 
-    protected virtual void IsAbleToPreformSkill()
+    public bool IsInSkill() => inSkill;
+
+    public virtual void TryPreformSkill()
     {
-        if (Time.time - skillLastUseTime > skillCooldown && !inSkill && Input.GetKeyDown(KeyCode.Q))
+        if (Time.time - skillLastUseTime > skillCooldown && !inSkill)
         {
             skillLastUseTime = Time.time;
 

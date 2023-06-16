@@ -44,7 +44,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         
     }
 
-    public int killsToWIn = 3;
+    public int killsToWIn = int.MaxValue;
     public GameState state = GameState.Waiting;
     public float waitAfterEnding = 5f;
 
