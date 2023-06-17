@@ -180,10 +180,10 @@ public class BasicsController : MonoBehaviourPunCallbacks
     void PrintToDebugger(string message){GameObject.Find("DEBUGGER").GetComponent<TMP_Text>().text = $"{message}{'\n'}"; Debug.Log(message);}
     void AddToDebugger(string message){GameObject.Find("DEBUGGER").GetComponent<TMP_Text>().text += $"{message}{'\n'}"; Debug.Log(message);}
 
+
      private float touchSensitivity = 0.5f;
     Vector3 GetJoystickMovement(){
 #if UNITY_ANDROID
-        PrintToDebugger("getting joystick movement"); 
         Vector3 joystickMovement = Vector3.zero;
         Joystick joystick = FindObjectOfType<Joystick>();
         if(joystick != null) joystickMovement = Vector3.forward * joystick.Vertical + Vector3.right * joystick.Horizontal;
@@ -193,6 +193,38 @@ public class BasicsController : MonoBehaviourPunCallbacks
         return Vector3.zero;
     }
 
+    bool TouchOnJoystick(){
+        for (int i = 0; i < Input.touchCount; i++){
+            Touch touch = Input.touches[i];
+
+            bool touchingJoystick = FindObjectOfType<Joystick>().TouchingJoystick(touch.position);
+            if (touchingJoystick){
+                joystickTouchIndex = i;
+                return true;
+            }
+        }
+        return false;
+    }
+    void TouchNearJoystick(){
+        float minVal = float.MaxValue;
+        int minIndex = -1;
+        
+        Rect rect = FindObjectOfType<Joystick>().GetComponent<RectTransform>().rect;
+        Vector2 rectDimentions = new Vector2 (rect.width, rect.height);
+
+        for (int i = 0; i < Input.touchCount; i++){
+            Touch touch = Input.touches[i];
+
+            float dis = Vector2.Distance(rectDimentions, touch.position);
+            
+            if (dis < minVal){
+                minIndex = i;
+            }
+        }
+
+        joystickTouchIndex = minIndex;
+    }
+
     int joystickTouchIndex = -1;
     protected virtual Vector2 TouchMovement()
     {
@@ -200,23 +232,28 @@ public class BasicsController : MonoBehaviourPunCallbacks
         
         bool joystickMoving = GetJoystickMovement() != Vector3.zero;
 
-        if (!joystickMoving) {joystickTouchIndex = -1;}
-        else{
-            if (Input.touchCount == 1) {joystickTouchIndex = 0; return touchInput;}
+        if (!joystickMoving) joystickTouchIndex = -1;
+        else TouchNearJoystick();
+        // else{
+        //     if (Input.touchCount == 1) {joystickTouchIndex = 0; return touchInput;}
+        //     else if (joystickTouchIndex == -1) {
+        //         bool caughtIndex = TouchOnJoystick();
+        //         if (!caughtIndex) TouchNearJoystick();
+        // }
+        // }
+        
+        string message = "";
+        
+        for (int i = 0; i < Input.touchCount; i++){
+            Touch touch = Input.touches[i];
 
-            else if (joystickTouchIndex == -1) {
-                for (int i = 0; i < Input.touchCount; i++){
-                    Touch touch = Input.touches[i];
-
-                    bool touchingJoystick = FindObjectOfType<Joystick>().TouchingJoystick(touch.position);
-                    if (touchingJoystick){
-                        joystickTouchIndex = i;
-                        break;
-                    }
-                }
+            bool touchingJoystick = FindObjectOfType<Joystick>().TouchingJoystick(touch.position);
+            message += String.Format("touch #{0} is {1} touching joystick. position: {2}\n", i, (touchingJoystick ? " " : " not"), touch.position);
         }
-        }
-
+        message += "joystick touch index: " + joystickTouchIndex;
+        PrintToDebugger(message);
+       
+        
 
         for (int i = 0; i < Input.touchCount; i++){
             if (i == joystickTouchIndex) continue;

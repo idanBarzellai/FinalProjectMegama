@@ -30,11 +30,17 @@ public class PlayerSpawner : MonoBehaviour
             
             Transform spawnPoint = SpawnManager.instance.GetSpawnPoint();
 
-            int playerChosen = (int)UIController.instance.isPlayerPicked;
-            GameObject playerToSpawn = playerPrefabs[playerChosen == 4 ? Random.Range(0, playerPrefabs.Length) : playerChosen];
+            int playerChosen = (int)UIController.instance.isPlayerPicked == playerPrefabs.Length ? 
+                                Random.Range(0, playerPrefabs.Length) :
+                                (int)UIController.instance.isPlayerPicked;
+            // int randomPlayer = playerChosen == 4 ?  : ;
+            GameObject playerToSpawn = playerPrefabs[playerChosen];
             player = PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint.position, spawnPoint.rotation);
+            UIController.instance.PickImage(playerChosen); 
+
             UIController.instance.androidUI.SetController(player.GetComponent<BasicsController>());
             
+
             // Addd powerup
             if(addedPower != PowerupsManager.PowerUpsPowers.Null)
             {

@@ -88,8 +88,11 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     }
 
 
-    public bool TouchingJoystick(Vector2 touchPosition) => 
-        touchPosition.x <= GetComponent<RectTransform>().rect.width && touchPosition.y <= GetComponent<RectTransform>().rect.height;
+    
+    public bool TouchingJoystick(Vector2 touchPosition) {
+        bool touchingJoystick = touchPosition.x <= GetComponent<RectTransform>().rect.width && touchPosition.y <= GetComponent<RectTransform>().rect.height;
+        return touchingJoystick;
+    }
     private void FormatInput()
     {
         if (axisOptions == AxisOptions.Horizontal)

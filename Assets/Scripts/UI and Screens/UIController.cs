@@ -54,12 +54,20 @@ public class UIController : MonoBehaviour
     public PlayerChosen isPlayerPicked = PlayerChosen.None;
 
     public AndroidMovementButtons androidUI;
+
+    [SerializeField] GameObject [] airFireWaterEarthImages;
+
+    public void PickImage(int pickedNum){
+        foreach (GameObject g in airFireWaterEarthImages) g.SetActive(false);
+
+        airFireWaterEarthImages[pickedNum].SetActive(true);
+    }
     private void Start()
     {
         TurnOnOffAllBuyButtons(PowerupsManager.PowerUpsPowers.Null, false);
         ReleasePlayersChooseButtons();
         playerChoosingScreen.SetActive(true);
-
+        
 #if !UNITY_ANDROID
         androidUI.gameObject.SetActive(false);
 #else
