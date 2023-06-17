@@ -33,7 +33,8 @@ public class PlayerSpawner : MonoBehaviour
             int playerChosen = (int)UIController.instance.isPlayerPicked;
             GameObject playerToSpawn = playerPrefabs[playerChosen == 4 ? Random.Range(0, playerPrefabs.Length) : playerChosen];
             player = PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint.position, spawnPoint.rotation);
-
+            UIController.instance.androidUI.SetController(player.GetComponent<BasicsController>());
+            
             // Addd powerup
             if(addedPower != PowerupsManager.PowerUpsPowers.Null)
             {

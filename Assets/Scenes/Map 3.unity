@@ -305,7 +305,7 @@ GameObject:
   - component: {fileID: 279909172}
   - component: {fileID: 279909171}
   m_Layer: 5
-  m_Name: touching text
+  m_Name: DEBUGGER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -625,7 +625,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1667892930}
   m_Layer: 5
-  m_Name: touching
+  m_Name: debug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -645,7 +645,7 @@ RectTransform:
   m_Children:
   - {fileID: 279909170}
   m_Father: {fileID: 9001275979005326296}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1253,7 +1253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7272427848328177025, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -721
+      value: -721.00006
       objectReference: {fileID: 0}
     - target: {fileID: 7282301242065885075, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: m_Name

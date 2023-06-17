@@ -46,7 +46,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     private float dashForce = 25f;
     private float lastTimeDashed = 0f, dashCooldown = 1f, dashThershold = 0.005f, dashDur = 0.8f;
 
-    private float shotForce = 15f;
+    private float shotForce = 7.5f;
 
     private bool inSkill = false, isStaticSkill = false, isRotationStaticSkill = false;
     protected float skillCooldown = 5f, skillLastUseTime = 0f;
@@ -177,12 +177,20 @@ public class BasicsController : MonoBehaviourPunCallbacks
     }
 
     // ******************************Movement******************************************
+    void PrintToDebugger(string message){GameObject.Find("DEBUGGER").GetComponent<TMP_Text>().text = $"{message}{'\n'}"; Debug.Log(message);}
+    void AddToDebugger(string message){GameObject.Find("DEBUGGER").GetComponent<TMP_Text>().text += $"{message}{'\n'}"; Debug.Log(message);}
+
      private float touchSensitivity = 0.5f;
     Vector3 GetJoystickMovement(){
+#if UNITY_ANDROID
+        PrintToDebugger("getting joystick movement"); 
         Vector3 joystickMovement = Vector3.zero;
         Joystick joystick = FindObjectOfType<Joystick>();
         if(joystick != null) joystickMovement = Vector3.forward * joystick.Vertical + Vector3.right * joystick.Horizontal;
         return joystickMovement;
+#endif
+
+        return Vector3.zero;
     }
 
     int joystickTouchIndex = -1;
@@ -205,12 +213,6 @@ public class BasicsController : MonoBehaviourPunCallbacks
                         joystickTouchIndex = i;
                         break;
                     }
-                    // float delta = 0.001f;
-                    // Vector2 joystickPos = FindObjectOfType<Joystick>().GetPositionInScreen();
-                    // Vector2 touchPos = touch.position;
-                    // float x_distance = touchPos.x - joystickPos.x;
-                    // float y_distance = touchPos.y - joystickPos.y;
-                    // if (Mathf.Abs(x_distance) < delta && MathF.Abs(y_distance) < delta){
                 }
         }
         }
@@ -533,7 +535,14 @@ public class BasicsController : MonoBehaviourPunCallbacks
     protected virtual void Shoot()
     {
         if (!canShoot) return;
-        if (Input.GetMouseButton(0) || Input.touchCount > 0)
+
+        bool isShooting = Input.GetMouseButton(0);
+
+#if UNITY_ANDROID
+        isShooting = TouchMovement() != Vector2.zero;
+#endif
+
+        if (isShooting)
         {
             StartCoroutine(ShootCooldown());
             SoundManager.instacne.Play("Shot");
@@ -547,8 +556,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
             shot.GetComponent<ShotController>().SetPlayer(this);
             shot.GetComponent<ShotController>().SetName(photonView.Owner.NickName);
             
-            Vector3 stabilizer = new Vector3(0,2,0);
-            shot.GetComponent<Rigidbody>().AddForce((eyes.forward) * shotForce - stabilizer , ForceMode.Impulse);
+            shot.GetComponent<Rigidbody>().AddForce((eyes.forward) * shotForce , ForceMode.Impulse);
         }
     }
 

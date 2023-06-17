@@ -1,46 +1,53 @@
 using UnityEngine;
 using System;
+using TMPro;
 
-[Serializable]
-public enum ButtonType {JUMP, DASH, SKILL, RESPAWN};
 public class AndroidMovementButtons : MonoBehaviour {
+    void PrintToDebugger(string message){GameObject.Find("DEBUGGER").GetComponent<TMP_Text>().text = $"{message}{'\n'}"; Debug.Log(message);}
+    void AddToDebugger(string message){GameObject.Find("DEBUGGER").GetComponent<TMP_Text>().text += $"{message}{'\n'}"; Debug.Log(message);}
 
+    BasicsController controller;
+
+    void Show(){PrintToDebugger("show"); respawnButton.gameObject.SetActive(false); gameObject.SetActive(true);}
+    void Hide(){PrintToDebugger("hide"); respawnButton.gameObject.SetActive(true); gameObject.SetActive(false);}
+    void SelfDestruct(){DestroyImmediate(respawnButton, true); DestroyImmediate(this.gameObject, true);}
+
+    public void SetController(BasicsController _controller){
+        controller = _controller;
+        PrintToDebugger($"set controller: {controller.gameObject.name}");
+        Show();
+    }
+
+    
     private void Awake() {
 #if (!UNITY_ANDROID) 
-        gameObject.SetActive(false);
+        PrintToDebugger("no android");
+        SelfDestruct();
+        return;
 #endif
     }
 
     [SerializeField] GameObject respawnButton; 
-    BasicsController controller;
-
-    void SetController(){
-        foreach (BasicsController controller_i in FindObjectsOfType<BasicsController>()){
-            if (!controller_i.photonView.IsMine) continue;
-
-            controller = controller_i;
-            break;
-        }
-    }
     
-    private void Start() {
-        respawnButton.transform.parent = this.transform.parent;
-        respawnButton.transform.SetSiblingIndex(6);
-
-        respawnButton.SetActive(false);
-        SetController();
-    }   
+    private void Start() => Show();
 
 
-    private void Update(){
-        SetController();
+    private void Update() 
+    {
+        if (controller == null) return;
+
+        bool gameHasEnded = MatchManager.instance.state == MatchManager.GameState.Ending;
+        // if (gameHasEnded) SelfDestruct();
+        if (gameHasEnded) return;
+        if (!controller.IsDead()) return;
         
-        if(controller != null) respawnButton.SetActive(controller.IsDead());
+        Hide();
     }
 
+    bool CanJump() => controller.isGrounded && !controller.IsInSkill();
+    void ButtonClickJump() {if(CanJump()) controller?.Jump();}
     void ButtonClickDash() =>    controller?.TryDash();
-    void ButtonClickJump() =>    controller?.TryJump();
-    void ButtonClickRespawm() => controller?.Respawn();
+    void ButtonClickRespawm() {controller?.Respawn(); Show();}
     void ButtonClickSkill() {
         if (controller == null) return;
 
@@ -56,44 +63,36 @@ public class AndroidMovementButtons : MonoBehaviour {
 
 
 
-
     public void ClickButton(string str){
-        ButtonType type = ButtonTypeToString(str);
-        SetController();
 
         // if not playing, return
         if (controller == null || !controller.IsPlaying()) return;
 
+        PrintToDebugger($"button click: {str}");
+        AddToDebugger($"controller exist? {controller!=null}");
+        AddToDebugger($"controller can jump? {CanJump()}");
+
         // if dead, only respawn available
         if (controller.IsDead()) {
-            if (type == ButtonType.RESPAWN) 
+            if (str == "respawn") 
                 ButtonClickRespawm(); 
             return;
         }
 
         
-        switch (type)
+        switch (str)
         {
-            case ButtonType.JUMP:
+            case "jump":
                 ButtonClickJump();
                 break;
-            case ButtonType.DASH:
+            case "dash":
                 ButtonClickDash();
                 break;
-            case ButtonType.SKILL:
+            case "skill":
                 ButtonClickSkill();
                 break;
         }
 
 
-    }
-    public ButtonType ButtonTypeToString(string str){
-        switch (str)
-        {
-            case "jump":    return ButtonType.JUMP;
-            case "dash":    return ButtonType.DASH;
-            case "skill":   return ButtonType.SKILL;
-            default:        return ButtonType.RESPAWN;
-        }
     }
 }

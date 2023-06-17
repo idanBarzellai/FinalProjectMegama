@@ -53,14 +53,20 @@ public class UIController : MonoBehaviour
     public Toggle airButton, fireButton, waterButton, earthButton;
     public PlayerChosen isPlayerPicked = PlayerChosen.None;
 
+    public AndroidMovementButtons androidUI;
     private void Start()
     {
         TurnOnOffAllBuyButtons(PowerupsManager.PowerUpsPowers.Null, false);
         ReleasePlayersChooseButtons();
         playerChoosingScreen.SetActive(true);
 
-        
+#if !UNITY_ANDROID
+        androidUI.gameObject.SetActive(false);
+#else
+        androidUI.gameObject.SetActive(true);
+#endif
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -141,7 +147,6 @@ public class UIController : MonoBehaviour
 
     public void StartMatchPlayerChosen()
     {
-
         PlayerSpawner.instance.SpawnPlayer();
     }
 
