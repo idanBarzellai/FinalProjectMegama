@@ -488,11 +488,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
             
             if(currHealth <= 0)
             {
-                //rb.velocity= Vector3.zero;
-                //photonView.RPC("ScatterBodyParts", RpcTarget.All);
-                //PlayerSpawner.instance.Die(damager); // debug purposes change false to regular
-                //PhotonNetwork.Instantiate(playerDeathEffect.name, transform.position, Quaternion.identity);
-                //MatchManager.instance.UpdateStatSend(actor, 0, 1);
+                // TODO this is where you die!
                 Die(damager, actor);
             }
             else
@@ -504,7 +500,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
         }
     }
     // Maybe should be a PUN RPC
-
+    // TODO this is where you die!
     public void Die(string damager, int actor)
     {
         isDead = true;

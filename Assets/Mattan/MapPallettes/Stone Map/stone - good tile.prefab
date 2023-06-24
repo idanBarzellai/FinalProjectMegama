@@ -591,6 +591,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1610383260290949054}
   - component: {fileID: 574597167179705165}
+  - component: {fileID: 1443066777848421412}
   m_Layer: 3
   m_Name: stone - good tile
   m_TagString: Ground
@@ -635,6 +636,28 @@ MonoBehaviour:
   - {fileID: 4958067169381350611, guid: 87fc38d2c8f0c254082b88efc30e9201, type: 3}
   - {fileID: 7639269008525603473, guid: 5f6d6be1bf859c8479db5daddc17324b, type: 3}
   - {fileID: 3791522370450605294, guid: f2100becbfb8cd1429447b07fdb426cd, type: 3}
+--- !u!114 &1443066777848421412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094995881845638404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2510879020855328215
 GameObject:
   m_ObjectHideFlags: 0

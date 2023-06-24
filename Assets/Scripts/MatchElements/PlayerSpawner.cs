@@ -56,11 +56,8 @@ public class PlayerSpawner : MonoBehaviour
         UIController.instance.respawntext.gameObject.SetActive(true);
         UIController.instance.deathScreen.SetActive(true);
 
-        // UIController.instance.skillOrb.gameObject.SetActive(false);
         UIController.instance.skillSlider.gameObject.SetActive(false);
-        // UIController.instance.healthOrb.gameObject.SetActive(false);
         UIController.instance.healthSlider.gameObject.SetActive(false);
-            
 
         addedPower = PowerupsManager.PowerUpsPowers.Null;
     }

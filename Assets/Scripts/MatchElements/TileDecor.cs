@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class TileDecor : MonoBehaviour
+public class TileDecor : MonoBehaviourPunCallbacks
 {
     int decorChance = 33;
     public GameObject[] decors;
@@ -17,7 +18,11 @@ public class TileDecor : MonoBehaviour
                 Vector3 pos = transform.position + new Vector3(Random.Range(0, scaleFactor), scaleFactor, Random.Range(0, scaleFactor));
                 GameObject decorToSpawn = decors[Random.Range(0, decors.Length)];
                 //decorToSpawn.transform.localScale = decorToSpawn.transform.localScale * scaleFactor / 2;
-                Instantiate(decorToSpawn, pos, Quaternion.identity, this.transform);
+
+                // TODO make this objetc child of the tile
+                GameObject decor =  PhotonNetwork.Instantiate(decorToSpawn.name, pos, Quaternion.identity);
+                decor.transform.parent = this.transform;
+
 
             }
         }

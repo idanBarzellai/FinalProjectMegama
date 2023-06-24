@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 4490701188702303255}
   - component: {fileID: 7507132759865284029}
   - component: {fileID: 6797533541417485452}
+  - component: {fileID: 1178006739375164522}
   m_Layer: 0
   m_Name: Desert - good tile
   m_TagString: Untagged
@@ -151,11 +152,28 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
+  observableSearch: 0
+  ObservedComponents:
+  - {fileID: 1178006739375164522}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1178006739375164522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3826366833241763501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1
 --- !u!1001 &417567278375460652
 PrefabInstance:
   m_ObjectHideFlags: 0

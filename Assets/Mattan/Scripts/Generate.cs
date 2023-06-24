@@ -1,8 +1,9 @@
 ﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Generate : MonoBehaviour
+public class Generate : MonoBehaviourPunCallbacks
 {
     
     public bool diffHeights;
@@ -30,8 +31,9 @@ public class Generate : MonoBehaviour
                     float z = !diffHeights ? 0 : Mathf.Sin((i + j) * 2.2f) / heightDeltas;
                     bool spawnGoodTile = Random.Range(0f,1f) > pBadTile || ((Mathf.Abs(i) < 2) && (Mathf.Abs(j) < 2));
                     GameObject goodTile =  chosenPallette.goodTile;
-                    GameObject newTile = Instantiate(
-                                            spawnGoodTile ? goodTile : (Random.Range(0f,1f) < 0.5f ? chosenPallette.dmgTile : chosenPallette.windingTile), 
+                    string palletteName = chosenPallette.name + "/";
+                    GameObject newTile = PhotonNetwork.Instantiate(
+                                            spawnGoodTile ? palletteName + goodTile.name : (Random.Range(0f,1f) < 0.5f ? palletteName + chosenPallette.dmgTile.name : palletteName + chosenPallette.windingTile.name), 
                                             new Vector3(x * scaleFactor, z * scaleFactor,  y * scaleFactor), 
                                             Quaternion.Euler(0, 0, 0));
                     newTile.transform.localScale = newTile.transform.localScale * scaleFactor * 1.1f;
@@ -57,9 +59,12 @@ public class Generate : MonoBehaviour
 
     
     void Start()
-    {  
-        PickRandomPallette();
-        SpawnSurface(diffHeights);
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PickRandomPallette();
+            SpawnSurface(diffHeights);
+        }
     }
 
 

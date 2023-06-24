@@ -222,6 +222,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         StateCheck();
     }
+    // Stat to update 0 - death , 1 - kill
     public void UpdateStatSend(int actorSending, int statToUpdate, int amountToChange)
     {
         object[] package = new object[] { actorSending, statToUpdate, amountToChange };
