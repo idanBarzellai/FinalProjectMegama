@@ -23,14 +23,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877434676}
-  m_LocalRotation: {x: -0.13052624, y: 0, z: 0, w: 0.9914449}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.2535771, z: 5.2285943}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1800862436}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -15, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1800862435
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,6 +60,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 877434677}
+  - {fileID: 4149731797310258183}
   m_Father: {fileID: 3451145452832909878}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
@@ -136,6 +137,37 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!1 &460823680406499701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4149731797310258183}
+  m_Layer: 0
+  m_Name: ShootingPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4149731797310258183
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460823680406499701}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1800862436}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1115650528814414480
 GameObject:
   m_ObjectHideFlags: 0
@@ -1148,7 +1180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eyes: {fileID: 877434677}
   viewPoint: {fileID: 1800862436}
-  shootingPoint: {fileID: 7212876656145483867}
+  shootingPoint: {fileID: 4149731797310258183}
   shootPlaceholder: {fileID: 4449766195229451486, guid: b9dde53a376beb5439c6bcf70290c6b6, type: 3}
   playerHitEffect: {fileID: 4787146697146794734, guid: e9050f838eb01db44b8958e4d8266866, type: 3}
   playerDeathEffect: {fileID: 4397334591890123670, guid: b0159ffb3464ec5478e3f6e6ce51d561, type: 3}
@@ -1183,10 +1215,78 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 0
+    Name: 30 / Game_FPS
+  - Type: 9
+    SynchronizeType: 0
+    Name: Bored
+  - Type: 3
+    SynchronizeType: 0
+    Name: Walk Z
+  - Type: 3
+    SynchronizeType: 0
+    Name: Walk X
+  - Type: 9
+    SynchronizeType: 0
+    Name: Jump - leap
+  - Type: 9
+    SynchronizeType: 0
+    Name: Jump - Zero G
+  - Type: 9
+    SynchronizeType: 0
+    Name: Jump - land
+  - Type: 9
+    SynchronizeType: 0
+    Name: attack
+  - Type: 4
+    SynchronizeType: 0
+    Name: is Right Attack
+  - Type: 9
+    SynchronizeType: 0
+    Name: cheer
+  - Type: 9
+    SynchronizeType: 0
+    Name: Dash
+  - Type: 9
+    SynchronizeType: 0
+    Name: move Direction Changed
+  - Type: 4
+    SynchronizeType: 0
+    Name: is Walking
+  - Type: 9
+    SynchronizeType: 0
+    Name: skill - start
+  - Type: 9
+    SynchronizeType: 0
+    Name: skill - releas
+  - Type: 9
+    SynchronizeType: 0
+    Name: skill - land
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+  - SynchronizeType: 0
+    LayerIndex: 1
+  - SynchronizeType: 0
+    LayerIndex: 2
+  - SynchronizeType: 0
+    LayerIndex: 3
+  - SynchronizeType: 0
+    LayerIndex: 4
+  - SynchronizeType: 0
+    LayerIndex: 5
+  - SynchronizeType: 0
+    LayerIndex: 6
+  - SynchronizeType: 0
+    LayerIndex: 7
+  - SynchronizeType: 0
+    LayerIndex: 8
+  - SynchronizeType: 0
+    LayerIndex: 9
+  - SynchronizeType: 0
+    LayerIndex: 10
 --- !u!1 &2975858704789075952 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -9141735197031073235, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
@@ -1210,11 +1310,6 @@ GameObject:
 --- !u!1 &6055709062769539569 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -259972160606440404, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
-  m_PrefabInstance: {fileID: 2913362750391586269}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7212876656145483867 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -3713465393802623610, guid: 6ba83a1347641bf479bda01f601547f9, type: 3}
   m_PrefabInstance: {fileID: 2913362750391586269}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8009787099195928142

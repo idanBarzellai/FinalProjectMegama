@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6791161632818875042}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 324.96783}
+  m_LocalPosition: {x: -0, y: 0.27894, z: 0.014544}
+  m_LocalScale: {x: 100, y: 87.815506, z: 260.88834}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7012089350508898347}
@@ -109,8 +109,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7450403646179644973}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0.013125963, y: 0, z: 0.006562981}
-  m_LocalScale: {x: 100.9086, y: 100.9086, z: 327.9205}
+  m_LocalPosition: {x: -0.013125963, y: 0.27894, z: 0.020308}
+  m_LocalScale: {x: 100.9086, y: 88.61339, z: 263.25876}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7012089350508898347}
@@ -176,6 +176,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7012089350508898347}
   - component: {fileID: 2949225718461556172}
+  - component: {fileID: 7638721349699066027}
+  - component: {fileID: 4420081053007393273}
   m_Layer: 3
   m_Name: tall rock
   m_TagString: TileDecor
@@ -191,7 +193,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7639269008525603473}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -214,3 +216,42 @@ CapsuleCollider:
   m_Height: 3.7285619
   m_Direction: 1
   m_Center: {x: 0.044019, y: 1.3642802, z: 0.035103112}
+--- !u!114 &7638721349699066027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7639269008525603473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 0
+  ObservedComponents:
+  - {fileID: 0}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &4420081053007393273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7639269008525603473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1

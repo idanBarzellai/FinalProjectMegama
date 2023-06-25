@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0155260a00c46444681b901db76f2081, type: 3}
   m_Name: passDataScriptable
   m_EditorClassIdentifier: 
-  length: 60
+  length: 99
   min: 40
   max: 6000

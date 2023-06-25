@@ -8,9 +8,13 @@ public class AndroidMovementButtons : MonoBehaviour {
 
     BasicsController controller;
 
-    void Show(){respawnButton.gameObject.SetActive(false); gameObject.SetActive(true);}
-    void Hide(){respawnButton.gameObject.SetActive(true); gameObject.SetActive(false);}
-    void SelfDestruct(){DestroyImmediate(respawnButton, true); DestroyImmediate(this.gameObject, true);}
+    bool IsDestroyed() => respawnButton == null || gameObject == null;
+    void Show(){if(IsDestroyed()) return; respawnButton.gameObject.SetActive(false); gameObject.SetActive(true);}
+    void Hide(){if(IsDestroyed()) return; respawnButton.gameObject.SetActive(true); gameObject.SetActive(false);}
+    void SelfDestruct(){
+        DestroyImmediate(respawnButton, true); 
+        DestroyImmediate(this.gameObject, true);
+    }
 
     public void SetController(BasicsController _controller){
         controller = _controller;

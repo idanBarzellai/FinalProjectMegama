@@ -194,7 +194,7 @@ public class EarthPlayer : BasicsController
     public void earthSkill()
     {
 
-        if (!skillTriggered && GetInSkill())// && isGrounded) // TODO 
+        if (!skillTriggered && GetInSkill()) 
         {
             skillTriggered = true;
             playerLeapedFromGround = true;

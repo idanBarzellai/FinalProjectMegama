@@ -69,7 +69,7 @@ public class UIController : MonoBehaviour
         playerChoosingScreen.SetActive(true);
         
 #if !UNITY_ANDROID
-        androidUI.gameObject.SetActive(false);
+        if(androidUI != null) androidUI.gameObject.SetActive(false);
 #else
         androidUI.gameObject.SetActive(true);
 #endif

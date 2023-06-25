@@ -425,6 +425,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5730064710765651561}
   - component: {fileID: 97413730158139884}
+  - component: {fileID: 6736306101388576895}
+  - component: {fileID: 8370338355128801877}
   m_Layer: 3
   m_Name: spruce tree
   m_TagString: TileDecor
@@ -469,6 +471,45 @@ CapsuleCollider:
   m_Height: 10.788435
   m_Direction: 1
   m_Center: {x: -0.1264903, y: 3.8387246, z: 0.028588474}
+--- !u!114 &6736306101388576895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4958067169381350611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 0
+  ObservedComponents:
+  - {fileID: 0}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &8370338355128801877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4958067169381350611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1
 --- !u!1 &5309624966260578415
 GameObject:
   m_ObjectHideFlags: 0

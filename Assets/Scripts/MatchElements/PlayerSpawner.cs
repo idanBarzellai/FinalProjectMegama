@@ -11,12 +11,10 @@ public class PlayerSpawner : MonoBehaviour
     {
         instance= this;
     }
-
     public GameObject[] playerPrefabs;
     private GameObject player;
     private float respawnTime = 1.5f;
     public PowerupsManager.PowerUpsPowers addedPower = PowerupsManager.PowerUpsPowers.Null;
-
 
     public void SpawnPlayer()
     {
@@ -28,7 +26,7 @@ public class PlayerSpawner : MonoBehaviour
             // UIController.instance.healthOrb.gameObject.SetActive(true);
             UIController.instance.healthSlider.gameObject.SetActive(true);
             
-            Transform spawnPoint = SpawnManager.instance.GetSpawnPoint();
+            Transform spawnPoint = SpawnManager.GetSpawnPoint();
 
             int playerChosen = (int)UIController.instance.isPlayerPicked == playerPrefabs.Length ? 
                                 Random.Range(0, playerPrefabs.Length) :

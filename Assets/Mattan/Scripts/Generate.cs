@@ -5,6 +5,9 @@ using Photon.Pun;
 
 public class Generate : MonoBehaviourPunCallbacks
 {
+      private void Awake()
+    {
+    }
     
     public bool diffHeights;
     [SerializeField] int mapRadius = 3;
@@ -16,7 +19,13 @@ public class Generate : MonoBehaviourPunCallbacks
     
     float heightDeltas = 3.5f;
  
+    
+    void PickRandomPallette(){chosenPallette = pallettes[Random.Range(0, pallettes.Length)];}
     public void SpawnSurface(bool diffHeights){
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        PickRandomPallette();
+
         int i=0, j=0;
         float x, y;
         for (i = -mapRadius + 1; i < mapRadius; i++)
@@ -31,9 +40,9 @@ public class Generate : MonoBehaviourPunCallbacks
                     float z = !diffHeights ? 0 : Mathf.Sin((i + j) * 2.2f) / heightDeltas;
                     bool spawnGoodTile = Random.Range(0f,1f) > pBadTile || ((Mathf.Abs(i) < 2) && (Mathf.Abs(j) < 2));
                     GameObject goodTile =  chosenPallette.goodTile;
-                    string palletteName = chosenPallette.name + "/";
+                    string resourcesPath = $"Tiles/{chosenPallette.name}/";
                     GameObject newTile = PhotonNetwork.Instantiate(
-                                            spawnGoodTile ? palletteName + goodTile.name : (Random.Range(0f,1f) < 0.5f ? palletteName + chosenPallette.dmgTile.name : palletteName + chosenPallette.windingTile.name), 
+                                            spawnGoodTile ? resourcesPath + goodTile.name : (Random.Range(0f,1f) < 0.5f ? resourcesPath + chosenPallette.dmgTile.name : resourcesPath + chosenPallette.windingTile.name), 
                                             new Vector3(x * scaleFactor, z * scaleFactor,  y * scaleFactor), 
                                             Quaternion.Euler(0, 0, 0));
                     newTile.transform.localScale = newTile.transform.localScale * scaleFactor * 1.1f;
@@ -44,10 +53,7 @@ public class Generate : MonoBehaviourPunCallbacks
             }
         }
     }
-    void PickRandomPallette(){chosenPallette = pallettes[Random.Range(0, pallettes.Length)];}
-    
     public void RecreateSurface(){
-        PickRandomPallette();
 
         foreach (Transform tile in transform)
         {
@@ -57,14 +63,9 @@ public class Generate : MonoBehaviourPunCallbacks
         SpawnSurface(diffHeights);
     }
 
-    
     void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PickRandomPallette();
-            SpawnSurface(diffHeights);
-        }
+        SpawnSurface(diffHeights);
     }
 
 
@@ -73,41 +74,8 @@ public class Generate : MonoBehaviourPunCallbacks
         return scaleFactor;
     }
 
-    class Polynom
-    {
-        public float a, b, c, d;
-        public Polynom(float a, float b, float c, float d)
-        {
-            this.a = a; this.b = b; this.c = c; this.d = d;
-        }
-
-        public float calculate(float x)
-        {
-            a = a * x * x * x;
-            b = a * x * x;
-            c = a * x;
-            d = a;
-            return (a + b + c + d);
-        }
+    private void Update() {
+        bool isWaiting = MatchManager.GetState() == MatchManager.GameState.Waiting;
+        if (transform.childCount == 0 && isWaiting) SpawnSurface(diffHeights);
     }
-/*
-    class tile
-    {
-        public int x;
-        public int y;
-        public int z=0;
-
-        public tile(int x, int y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-        
-        public void setX(int x) { this.x = x; }
-        public void setY(int y) { this.y = y; }
-        public void setZ(int z) { this.z = z; }
-        
-    }
-*/
-
 }

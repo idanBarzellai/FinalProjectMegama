@@ -525,6 +525,8 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         SoundManager.instacne.Play("BG");
     }
+
+    public static GameState GetState() => instance.state;
 }
 
 [System.Serializable]

@@ -18,7 +18,7 @@ public class DmgEffect : Effect {
             if (tile.otherPlayerPhotoneView.IsDead())
                tile.otherPlayerPhotoneView = null;
             else
-                tile.otherPlayerPhotoneView.TakeDamage(damage, push, 200, "Bad tile");
+                tile.otherPlayerPhotoneView.TakeDamage(damage, push, 200, "stepping on a bad tile!");
         }
         //GetComponent<Tile>().otherPlayerPhotoneView.RPC("DealDamage", RpcTarget.All,gameObject.name);
 

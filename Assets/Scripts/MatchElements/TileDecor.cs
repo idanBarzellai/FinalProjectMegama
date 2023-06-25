@@ -5,25 +5,25 @@ using Photon.Pun;
 
 public class TileDecor : MonoBehaviourPunCallbacks
 {
-    int decorChance = 33;
+    int decorChance = 40;
     public GameObject[] decors;
     void Start()
     {
         if (Random.Range(0f, 1f) <= Mathf.Clamp((float)decorChance, 0f, 100f) / 100f)
-        //if(Random.Range(0, 3) == 1)
         {
             if (decors.Length != 0)
             {
-                float scaleFactor = FindObjectOfType<Generate>().GetScaleFactor() / 2;
-                Vector3 pos = transform.position + new Vector3(Random.Range(0, scaleFactor), scaleFactor, Random.Range(0, scaleFactor));
                 GameObject decorToSpawn = decors[Random.Range(0, decors.Length)];
-                //decorToSpawn.transform.localScale = decorToSpawn.transform.localScale * scaleFactor / 2;
-
-                // TODO make this objetc child of the tile
-                GameObject decor =  PhotonNetwork.Instantiate(decorToSpawn.name, pos, Quaternion.identity);
-                decor.transform.parent = this.transform;
+                float randomX = Random.Range(-2f, 0.2f);
+                float randomZ = Random.Range(-2f, 0.2f);
+                Vector3 pos = new Vector3(randomX, 0.75f + decorToSpawn.transform.localPosition.y, randomZ);
 
 
+                string decorPath = $"Tiles/Decors/{decorToSpawn.name}";
+                GameObject decor =  PhotonNetwork.Instantiate(decorPath, pos, Quaternion.identity);
+
+                decor.transform.SetParent(this.transform, false);
+                decor.transform.localScale = new Vector3(0.2f,0.2f,0.2f);
             }
         }
         
