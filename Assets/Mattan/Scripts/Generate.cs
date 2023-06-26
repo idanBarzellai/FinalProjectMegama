@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using TileMap_Auto_Generation;
 
 public class Generate : MonoBehaviourPunCallbacks
 {
@@ -20,31 +21,58 @@ public class Generate : MonoBehaviourPunCallbacks
     float heightDeltas = 3.5f;
  
     
+    public float GetScaleFactor()
+    {
+        return scaleFactor;
+    }
     void PickRandomPallette(){chosenPallette = pallettes[Random.Range(0, pallettes.Length)];}
+
     public void SpawnSurface(bool diffHeights){
-        if (!PhotonNetwork.IsMasterClient) return;
+
+        bool inTestMode = MatchManager.GetState() == MatchManager.GameState.Testing;
+        if (!inTestMode && !PhotonNetwork.IsMasterClient) return;
+
 
         PickRandomPallette();
 
         int i=0, j=0;
         float x, y;
+        float minX = float.MaxValue, minY = float.MaxValue;
+        float maxX = float.MinValue, maxY = float.MinValue;
+
         for (i = -mapRadius + 1; i < mapRadius; i++)
         {
             for (j = -mapRadius + 1; j < mapRadius; j++)
             {
                 if (i + j < mapRadius && i + j > -mapRadius)
                 {
-                    x = 1.75f * i + (1.75f / 2.0f) * j;
-                    y = 1.5f * j;
+
+                    x = 1.5f * j;
+                    minX = Mathf.Min(x, minX);
+                    maxX = Mathf.Max(x, maxX);
+
+                    y = 1.75f * i + (1.75f / 2.0f) * j;
+                    minY = Mathf.Min(y, minY);
+                    maxY = Mathf.Max(y, maxY);
 
                     float z = !diffHeights ? 0 : Mathf.Sin((i + j) * 2.2f) / heightDeltas;
                     bool spawnGoodTile = Random.Range(0f,1f) > pBadTile || ((Mathf.Abs(i) < 2) && (Mathf.Abs(j) < 2));
                     GameObject goodTile =  chosenPallette.goodTile;
                     string resourcesPath = $"Tiles/{chosenPallette.name}/";
-                    GameObject newTile = PhotonNetwork.Instantiate(
-                                            spawnGoodTile ? resourcesPath + goodTile.name : (Random.Range(0f,1f) < 0.5f ? resourcesPath + chosenPallette.dmgTile.name : resourcesPath + chosenPallette.windingTile.name), 
+                    string prefabPath = spawnGoodTile       
+                                        ? resourcesPath + goodTile.name 
+                                        : (Random.Range(0f,1f) < 0.5f 
+                                                ? resourcesPath + chosenPallette.dmgTile.name 
+                                                : resourcesPath + chosenPallette.windingTile.name
+                                        );
+                    GameObject newTile = inTestMode 
+                                    ?   Instantiate(Resources.Load(prefabPath), 
                                             new Vector3(x * scaleFactor, z * scaleFactor,  y * scaleFactor), 
-                                            Quaternion.Euler(0, 0, 0));
+                                            Quaternion.Euler(0, 30, 0)) as GameObject
+                                    :   PhotonNetwork.Instantiate(
+                                            prefabPath, 
+                                            new Vector3(x * scaleFactor, z * scaleFactor,  y * scaleFactor), 
+                                            Quaternion.Euler(0, 30, 0));
                     newTile.transform.localScale = newTile.transform.localScale * scaleFactor * 1.1f;
                     newTile.transform.Rotate(0, 60 * Random.Range(0, 6), 0);
                     newTile.transform.parent = this.transform;
@@ -52,7 +80,38 @@ public class Generate : MonoBehaviourPunCallbacks
 
             }
         }
+        
+        if (!interpolateHeights) return;
+
+        int iMinX = (int)Mathf.Floor(minX);
+        int iMinY = (int)Mathf.Floor(minY);
+        
+        int iWeidth = (int)Mathf.Ceil(maxX) - iMinX;
+        int iHeight = (int)Mathf.Ceil(maxY) - iMinY;
+
+        Debug.Log($"min x: {iMinX}, min y: {iMinY}, weidth: {iWeidth}, height: {iHeight}");
+
+        var grid = GridGenerator.GenerateDoubleGridOver(iWeidth, iHeight, iMinX, iMinY, rangeY, distBetweenDots,subDotsCount);
+        var linearInterpolator = new LinearInterpolator(grid);
+        
+        foreach (Transform child in transform)
+        { 
+            Debug.Log("creating point");
+            var childPoint = new Point3D(child.position.x, child.position.z);
+            Debug.Log($"calculating point for child at {child.position}");
+            var childY = (float)linearInterpolator.Calculate(childPoint, includeSubGrid);
+            Debug.Log("positioning child");
+            child.position = new Vector3 (child.position.x, childY, child.position.z);
+            Debug.Log(string.Format("child{0}: interpolation = {1}, height = {2}"
+                                    , child.GetSiblingIndex(), (float)linearInterpolator.Calculate(childPoint,includeSubGrid), child.position.y));
+
+        }
     }
+    public bool interpolateHeights; 
+    public bool includeSubGrid; 
+    public int rangeY; 
+    public int distBetweenDots; 
+    public int subDotsCount;
     public void RecreateSurface(){
 
         foreach (Transform tile in transform)
@@ -69,13 +128,8 @@ public class Generate : MonoBehaviourPunCallbacks
     }
 
 
-    public float GetScaleFactor()
-    {
-        return scaleFactor;
-    }
-
     private void Update() {
-        bool isWaiting = MatchManager.GetState() == MatchManager.GameState.Waiting;
+        bool isWaiting = MatchManager.GetState() == MatchManager.GameState.Waiting || MatchManager.GetState() == MatchManager.GameState.Testing;
         if (transform.childCount == 0 && isWaiting) SpawnSurface(diffHeights);
     }
 }

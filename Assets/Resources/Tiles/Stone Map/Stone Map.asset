@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a2c3b2d3abb0b4c933b220d3bb95a7, type: 3}
   m_Name: Stone Map
   m_EditorClassIdentifier: 
-  goodTile: {fileID: 2094995881845638404, guid: 54477e796d473a448af317587ee9bfcc, type: 3}
-  dmgTile: {fileID: 2133436026596090474, guid: b6c5b0b11e42d7f47bab337064956302, type: 3}
-  windingTile: {fileID: 6122081080097813425, guid: 27ef3e9add37cfa4c898979f46dc6d38, type: 3}
+  goodTile: {fileID: 2094995881845638404, guid: 27d1856a2b66c894fa1b79db3c54194d, type: 3}
+  dmgTile: {fileID: 2133436026596090474, guid: d3721360403b711429ee12036b374cb6, type: 3}
+  windingTile: {fileID: 6122081080097813425, guid: f5627c430b23dea4f83479f7a0babaa4, type: 3}

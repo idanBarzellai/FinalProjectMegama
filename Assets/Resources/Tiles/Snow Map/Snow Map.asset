@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a2c3b2d3abb0b4c933b220d3bb95a7, type: 3}
   m_Name: Snow Map
   m_EditorClassIdentifier: 
-  goodTile: {fileID: 1364704761871440912, guid: 33d901a694dc8394b9209fab6ce8fd08, type: 3}
-  dmgTile: {fileID: 3826366833241763501, guid: 55102c377f4bc7241b1f785d0d648ef0, type: 3}
-  windingTile: {fileID: 2094995881845638404, guid: 00a9edd6007428f49864c5ac8f7944bf, type: 3}
+  goodTile: {fileID: 1364704761871440912, guid: 3975a9b522a15204e92bbc9be8b61833, type: 3}
+  dmgTile: {fileID: 3826366833241763501, guid: 24dbf9e6fea555b4b803321f2a15af61, type: 3}
+  windingTile: {fileID: 2094995881845638404, guid: 5024bf719c3e266428524ed023ff1904, type: 3}

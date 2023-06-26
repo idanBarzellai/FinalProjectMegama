@@ -40,7 +40,8 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         Waiting,
         Playing,
-        Ending
+        Ending,
+        Testing
         
     }
 
@@ -526,7 +527,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         SoundManager.instacne.Play("BG");
     }
 
-    public static GameState GetState() => instance.state;
+    public static GameState GetState() {if(instance == null) return GameState.Testing; return instance.state;}
 }
 
 [System.Serializable]

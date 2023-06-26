@@ -1275,7 +1275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7272427848328177025, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -720.99994
+      value: -721
       objectReference: {fileID: 0}
     - target: {fileID: 7282301242065885075, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: m_Name
@@ -1572,10 +1572,10 @@ MonoBehaviour:
   mapRadius: 8
   pBadTile: 0.1
   pallettes:
-  - {fileID: 11400000, guid: 957bb9378fa820f45bb5c4e5482908c6, type: 2}
-  - {fileID: 11400000, guid: af06c88d1847c784ea1d966131987a68, type: 2}
-  - {fileID: 11400000, guid: 4d345678df11e5848885db9eb08d75ae, type: 2}
-  - {fileID: 11400000, guid: ca9fe93b1d9c61e489310133496a5b20, type: 2}
+  - {fileID: 11400000, guid: f86bcc43a7b84ea4b91140d884866598, type: 2}
+  - {fileID: 11400000, guid: bb6b2741c21590047b39820bc17c2727, type: 2}
+  - {fileID: 11400000, guid: 6f7bf5f7bcfa3244b9d10ae10e8936d8, type: 2}
+  - {fileID: 11400000, guid: a7ee35f69ce48ad4d97fcea162d9fd81, type: 2}
   scaleFactor: 10
 --- !u!224 &9001275979005326296 stripped
 RectTransform:
