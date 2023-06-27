@@ -16,5 +16,9 @@ public class OnStepCooldownTile : Tile {
         
         effect.Apply();
         lastApply = Time.realtimeSinceStartup;
+        var animator = GetComponent<Animator>();
+        if (animator == null) return;
+
+        animator.SetTrigger("hit");
     }
 }

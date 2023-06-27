@@ -3,7 +3,8 @@ using TileMap_Auto_Generation;
 using System.Collections.Generic;
 
 public static class GridGenerator {
-    static double NextDouble() => (double)Random.Range(0f,1f);
+    public static double NextDouble() => (double)Random.Range(0f,1f);
+    public static int Next(int n) => Random.Range(0,n);
     
     public static List<Point3D> 
     GenerateDoubleGridOver(float sizeX, float sizeZ, float fromX, float fromZ, float rangeY, float distBetweenDots, float subDotsCount) //subDotsCount -> num of point between grid points

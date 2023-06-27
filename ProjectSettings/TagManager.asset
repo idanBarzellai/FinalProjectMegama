@@ -15,6 +15,7 @@ TagManager:
   - MatchLengthMinMax
   - MatchLengthDefault
   - SpawnPoint
+  - STONE
   layers:
   - Default
   - TransparentFX

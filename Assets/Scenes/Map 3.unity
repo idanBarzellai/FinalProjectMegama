@@ -1181,6 +1181,10 @@ PrefabInstance:
       propertyPath: rangeY
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5677543786695250345, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
+      propertyPath: seedsCount
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 5691880953564772736, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1328,6 +1332,10 @@ PrefabInstance:
     - target: {fileID: 7343735721099873453, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7473060191908801782, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7603617401399153357, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1517,6 +1525,14 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 9001275978532985159, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
+      propertyPath: playerPrefabs.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9001275978532985159, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
+      propertyPath: playerPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 1181435818788363390, guid: a1f03f5b06b0ac04a8355a9e27845a5d, type: 3}
     - target: {fileID: 9001275978922627523, guid: def786cf75c548a48ab0f37e3a7cfd6a, type: 3}
       propertyPath: m_RootOrder
       value: 6

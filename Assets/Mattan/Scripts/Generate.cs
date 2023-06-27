@@ -1,4 +1,4 @@
-﻿ using System.Collections;
+﻿ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -18,6 +18,7 @@ public class Generate : MonoBehaviourPunCallbacks
     public MapPalletteScriptableObject [] pallettes;
     MapPalletteScriptableObject chosenPallette;
     [SerializeField] float scaleFactor = 1;
+    [SerializeField] int seedsCount = 2;
     
     float heightDeltas = 3.5f;
 
@@ -42,6 +43,16 @@ public class Generate : MonoBehaviourPunCallbacks
         float originY = -(sizeY + 2) / 2;
         var grid = GridGenerator.GenerateDoubleGridOver(sizeX, sizeY, originX, originY, rangeY, distBetweenDots, subDotsCount);
         var linearInterpolator = new LinearInterpolator(grid);
+        
+        List<Point3D> seeds = new List<Point3D>();
+        for (var i = 0; i < seedsCount; i++)
+        {
+            var seedX = (GridGenerator.NextDouble() * sizeX) - (sizeX / 2);
+            var seedY = (GridGenerator.NextDouble() * sizeY) - (sizeY / 2);
+            var type = GridGenerator.Next(chosenPallette.tiles.Length);
+            var seed = new Point3D(seedX, seedY, 0, type);
+            seeds.Add(seed);
+        }
 
         for (int xIndex = -mapRadius + 1; xIndex < mapRadius; xIndex++)
         {
@@ -53,13 +64,25 @@ public class Generate : MonoBehaviourPunCallbacks
                     float x = xStep * xIndex + (xStep/2f) * yIndex;
 
                     float y = yStep * yIndex;
+                    
+                    var closest = new Point3D((double)x, (double)y).FindClosestPointInList(seeds);
 
-                    float z = (float)linearInterpolator.CalculateAt(x,y,includeSubGrid);
+                    GameObject tileToSpawn = chosenPallette.tiles[closest.Type];
+                    float z;
+                    switch (tileToSpawn.tag)
+                    {
+                        case "STONE":
+                            z = (float)linearInterpolator.CalculateAt(x,y,true);
+                            break;
+                        default:
+                            z = (float)linearInterpolator.CalculateAt(x,y,false);
+                            break;
+                    }
 
                     Vector3 pos = new Vector3(x * scaleFactor, z * scaleFactor,  y * scaleFactor);
 
                     
-                    string prefabPath = $"Tiles/{chosenPallette.tiles[0].name}";
+                    string prefabPath = $"Tiles/{tileToSpawn.name}";
 
                     GameObject newTile = inTestMode 
                                     ?   Instantiate(Resources.Load(prefabPath), 
@@ -101,7 +124,6 @@ public class Generate : MonoBehaviourPunCallbacks
     }
 
     public bool interpolateHeights; 
-    public bool includeSubGrid; 
     public int rangeY; 
     public int distBetweenDots; 
     public int subDotsCount;
