@@ -22,7 +22,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     public GameObject playerDeathEffect;
 
 
-    protected float jumpVelocity = 40, fallMultiplyer = 10, downForce = 1.2f;
+    protected float jumpVelocity = 50, fallMultiplyer = 10, downForce = 1.2f;
     protected bool shouldJump = false;
     protected float additionToJump = 1;
     private float lastValY = 0, newValY = 0;
@@ -46,7 +46,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     private float dashForce = 25f;
     private float lastTimeDashed = 0f, dashCooldown = 1f, dashThershold = 0.005f, dashDur = 0.8f;
 
-    private float shotForce = 6f;
+    private float shotForce = 7f;
 
     private bool inSkill = false, isStaticSkill = false, isRotationStaticSkill = false;
     protected float skillCooldown = 5f, skillLastUseTime = 0f;
@@ -242,16 +242,16 @@ public class BasicsController : MonoBehaviourPunCallbacks
         // }
         // }
         
-        string message = "";
+        // string message = "";
         
-        for (int i = 0; i < Input.touchCount; i++){
-            Touch touch = Input.touches[i];
+        // for (int i = 0; i < Input.touchCount; i++){
+        //     Touch touch = Input.touches[i];
 
-            bool touchingJoystick = FindObjectOfType<Joystick>().TouchingJoystick(touch.position);
-            message += String.Format("touch #{0} is {1} touching joystick. position: {2}\n", i, (touchingJoystick ? " " : " not"), touch.position);
-        }
-        message += "joystick touch index: " + joystickTouchIndex;
-        PrintToDebugger(message);
+        //     bool touchingJoystick = FindObjectOfType<Joystick>().TouchingJoystick(touch.position);
+        //     message += String.Format("touch #{0} is {1} touching joystick. position: {2}\n", i, (touchingJoystick ? " " : " not"), touch.position);
+        // }
+        // message += "joystick touch index: " + joystickTouchIndex;
+        // PrintToDebugger(message);
        
         
 

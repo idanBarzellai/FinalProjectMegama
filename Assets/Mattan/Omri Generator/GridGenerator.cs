@@ -22,7 +22,7 @@ public static class GridGenerator {
                 for (int zIndex = (int)(fromZ); zIndex <= sizeZ + fromZ + distBetweenDots; zIndex += (int)distBetweenDots)
                 {
                     grid.Add(new Point3D(xIndex, zIndex, (NextDouble() * rangeY) + rangeYFrom,0));
-                    Debug.Log($"grid[{grid.Count - 1}]: " + grid[grid.Count - 1]);
+                    // Debug.Log($"grid[{grid.Count - 1}]: " + grid[grid.Count - 1]);
 
                     for (int m = 0; m < subDotsCount; m++)
                     {

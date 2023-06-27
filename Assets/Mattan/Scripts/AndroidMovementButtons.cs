@@ -12,13 +12,14 @@ public class AndroidMovementButtons : MonoBehaviour {
     void Show(){if(IsDestroyed()) return; respawnButton.gameObject.SetActive(false); gameObject.SetActive(true);}
     void Hide(){if(IsDestroyed()) return; respawnButton.gameObject.SetActive(true); gameObject.SetActive(false);}
     void SelfDestruct(){
+        PrintToDebugger("DESTROYING ANDOID BUTTONS");
         DestroyImmediate(respawnButton, true); 
         DestroyImmediate(this.gameObject, true);
     }
 
     public void SetController(BasicsController _controller){
         controller = _controller;
-        PrintToDebugger($"set controller: {controller.gameObject.name}");
+        // PrintToDebugger($"set controller: {controller.gameObject.name}");
         Show();
     }
 
@@ -72,9 +73,9 @@ public class AndroidMovementButtons : MonoBehaviour {
         // if not playing, return
         if (controller == null || !controller.IsPlaying()) return;
 
-        PrintToDebugger($"button click: {str}");
-        AddToDebugger($"controller exist? {controller!=null}");
-        AddToDebugger($"controller can jump? {CanJump()}");
+        // PrintToDebugger($"button click: {str}");
+        // AddToDebugger($"controller exist? {controller!=null}");
+        // AddToDebugger($"controller can jump? {CanJump()}");
 
         // if dead, only respawn available
         if (controller.IsDead()) {
