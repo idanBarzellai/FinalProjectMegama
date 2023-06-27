@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &656884795
 Transform:
   m_ObjectHideFlags: 0
@@ -226,8 +226,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb6b2741c21590047b39820bc17c2727, type: 2}
   - {fileID: 11400000, guid: 6f7bf5f7bcfa3244b9d10ae10e8936d8, type: 2}
   scaleFactor: 8
+  seedsCount: 2
   interpolateHeights: 1
-  includeSubGrid: 0
   rangeY: 6
   distBetweenDots: 5
   subDotsCount: 2
