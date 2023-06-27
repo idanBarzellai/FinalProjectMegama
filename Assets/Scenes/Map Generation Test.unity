@@ -123,6 +123,57 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &656884794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 656884795}
+  - component: {fileID: 656884796}
+  m_Layer: 0
+  m_Name: GridShower
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &656884795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656884794}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 60, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &656884796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656884794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7a20053df0d32a4e97e2883c39b62de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapRadius: 8
+  gridPoint: {fileID: 1389394864482478514, guid: 7937762959dae60478052755a0e4d68b, type: 3}
+  includeSubGrid: 0
+  rangeY: 10
+  distBetweenDots: 5
+  subDotsCount: 2
+  scaleFactor: 10
 --- !u!1 &1299643181
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,11 +225,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f86bcc43a7b84ea4b91140d884866598, type: 2}
   - {fileID: 11400000, guid: bb6b2741c21590047b39820bc17c2727, type: 2}
   - {fileID: 11400000, guid: 6f7bf5f7bcfa3244b9d10ae10e8936d8, type: 2}
-  - {fileID: 11400000, guid: a7ee35f69ce48ad4d97fcea162d9fd81, type: 2}
-  scaleFactor: 10
+  scaleFactor: 8
   interpolateHeights: 1
   includeSubGrid: 0
-  rangeY: 10
+  rangeY: 6
   distBetweenDots: 5
   subDotsCount: 2
 --- !u!1 &1707437589

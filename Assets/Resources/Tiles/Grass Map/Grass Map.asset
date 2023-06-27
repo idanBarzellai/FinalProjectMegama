@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a2c3b2d3abb0b4c933b220d3bb95a7, type: 3}
   m_Name: Grass Map
   m_EditorClassIdentifier: 
-  goodTile: {fileID: 2094995881845638404, guid: 0c9cceb2fe73b654fa09990b85d5e8b9, type: 3}
   dmgTile: {fileID: 2133436026596090474, guid: 15d356b44f49cd34bb28d9be8904707d, type: 3}
+  goodTile: {fileID: 2094995881845638404, guid: 0c9cceb2fe73b654fa09990b85d5e8b9, type: 3}
   windingTile: {fileID: 6122081080097813425, guid: 63e033930c630244e8518e28d6d7a352, type: 3}
+  tiles:
+  - {fileID: 2094995881845638404, guid: 92df41475b3e0ec429644cf497682deb, type: 3}
+  - {fileID: 3826366833241763501, guid: ecc492dd0417e8e4f82adbc70be90cbf, type: 3}
+  - {fileID: 3826366833241763501, guid: cadc48a461396634688153266b6bbca8, type: 3}

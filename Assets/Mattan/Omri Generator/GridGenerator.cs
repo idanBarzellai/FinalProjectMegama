@@ -1,58 +1,59 @@
 using UnityEngine;
 using TileMap_Auto_Generation;
 using System.Collections.Generic;
-using UnityEngine;
 
-class RandomDoubler{  }
 public static class GridGenerator {
     static double NextDouble() => (double)Random.Range(0f,1f);
     
     public static List<Point3D> 
-    GenerateDoubleGridOver(int width, int height, int fromX, int fromZ, int rangeY, int distBetweenDots, int subDotsCount) //subDotsCount -> num of point between grid points
+    GenerateDoubleGridOver(float sizeX, float sizeZ, float fromX, float fromZ, float rangeY, float distBetweenDots, float subDotsCount) //subDotsCount -> num of point between grid points
         {
+            
             int rangeYFrom = 0;
             var distBetweensubDots = distBetweenDots / subDotsCount;
 
             List<Point3D> grid = new List<Point3D>();
 
-            for (int i = fromX - (distBetweenDots); i <= height + fromX + distBetweenDots; i += distBetweenDots)
+            // for (int xIndex = (int)(fromX - (distBetweenDots)); xIndex <= sizeZ + fromX + distBetweenDots; xIndex += (int)distBetweenDots)
+            for (int xIndex = (int)(fromX); xIndex <= sizeX + fromX + distBetweenDots; xIndex += (int)distBetweenDots)
             {
-                for (int j = fromZ - (distBetweenDots); j <= width + fromZ + distBetweenDots; j += distBetweenDots)
+                // for (int zIndex = (int)(fromZ - (distBetweenDots)); zIndex <= sizeX + fromZ + distBetweenDots; zIndex += (int)distBetweenDots)
+                for (int zIndex = (int)(fromZ); zIndex <= sizeZ + fromZ + distBetweenDots; zIndex += (int)distBetweenDots)
                 {
-                    grid.Add(new Point3D(i, j, (NextDouble() * rangeY) + rangeYFrom,0));
+                    grid.Add(new Point3D(xIndex, zIndex, (NextDouble() * rangeY) + rangeYFrom,0));
                     Debug.Log($"grid[{grid.Count - 1}]: " + grid[grid.Count - 1]);
 
                     for (int m = 0; m < subDotsCount; m++)
                     {
                         for (int n = 0; n < subDotsCount; n++)
                         {
-                            var atX = i + (m * distBetweensubDots);
-                            var atY = j + (n * distBetweensubDots);
+                            var atX = xIndex + (m * distBetweensubDots);
+                            var atZ = zIndex + (n * distBetweensubDots);
                             if (!(m == 0 && n == 0 ||
                                 m * distBetweensubDots == distBetweenDots && n == 0 ||
                                 m == 0 && n * distBetweensubDots == distBetweenDots||
                                 m * distBetweensubDots == distBetweenDots && n * distBetweensubDots == distBetweenDots))
                             {
-                                var point = new Point3D(atX, atY, (NextDouble() * rangeY) + rangeYFrom, 1);
+                                var point = new Point3D(atX, atZ, (NextDouble() * rangeY) + rangeYFrom, 1);
                                 grid.Add(point);
                             }
                         }
                     }
                     if (distBetweenDots % subDotsCount != 0)
                     {
-                        if (i == height + fromX + distBetweenDots)
+                        if (xIndex == sizeX + fromX + distBetweenDots)
                         {
                             for (int m = 1; m <= subDotsCount; m++)
                             {
-                                grid.Add(new Point3D(i, j + (m * distBetweensubDots), (NextDouble() * rangeY) + rangeYFrom, 1));
+                                grid.Add(new Point3D(xIndex, zIndex + (m * distBetweensubDots), (NextDouble() * rangeY) + rangeYFrom, 1));
                             }
                         }
 
-                        if (j == width + fromZ + distBetweenDots)
+                        if (zIndex == sizeZ + fromZ + distBetweenDots)
                         {
                             for (int m = 1; m <= subDotsCount; m++)
                             {
-                                grid.Add(new Point3D(i + (1 * distBetweensubDots), j, (NextDouble() * rangeY) + rangeYFrom, 1));
+                                grid.Add(new Point3D(xIndex + (1 * distBetweensubDots), zIndex, (NextDouble() * rangeY) + rangeYFrom, 1));
                             }
                         }
                     }

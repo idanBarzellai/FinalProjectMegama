@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a2c3b2d3abb0b4c933b220d3bb95a7, type: 3}
   m_Name: Desert Map
   m_EditorClassIdentifier: 
-  goodTile: {fileID: 3826366833241763501, guid: ecc492dd0417e8e4f82adbc70be90cbf, type: 3}
   dmgTile: {fileID: 3826366833241763501, guid: 8e8e35bde02dc2d48b741ce3b62cceb2, type: 3}
+  goodTile: {fileID: 3826366833241763501, guid: ecc492dd0417e8e4f82adbc70be90cbf, type: 3}
   windingTile: {fileID: 2094995881845638404, guid: d0dea1e0f7390b044897e4b5760970f4, type: 3}
+  tiles:
+  - {fileID: 3826366833241763501, guid: ecc492dd0417e8e4f82adbc70be90cbf, type: 3}
+  - {fileID: 3826366833241763501, guid: cadc48a461396634688153266b6bbca8, type: 3}
