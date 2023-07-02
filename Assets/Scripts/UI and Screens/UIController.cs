@@ -12,8 +12,10 @@ public class UIController : MonoBehaviour
 
     private void Awake()
     {
-        instance= this; 
+        instance= this;
+        androidUI = GetComponentInChildren<AndroidMovementButtons>(); 
     }
+    
     public GameObject deathScreen;
     public TMP_Text deathText;
     public TMP_Text respawntext;

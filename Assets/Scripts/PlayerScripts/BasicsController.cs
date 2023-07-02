@@ -15,6 +15,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     public Transform eyes;
     public Transform viewPoint;
     public Transform shootingPoint;
+    private float touchSensitivity = 0.8f;
     private float mouseSensitivity = 1;
 
     public GameObject shootPlaceholder;
@@ -181,117 +182,40 @@ public class BasicsController : MonoBehaviourPunCallbacks
     void AddToDebugger(string message){GameObject.Find("DEBUGGER").GetComponent<TMP_Text>().text += $"{message}{'\n'}"; Debug.Log(message);}
 
 
-     private float touchSensitivity = 0.5f;
+    public float Horizontal;
+    public float Vertical;
     Vector3 GetJoystickMovement(){
-#if UNITY_ANDROID
-        Vector3 joystickMovement = Vector3.zero;
-        Joystick joystick = FindObjectOfType<Joystick>();
-        if(joystick != null) joystickMovement = Vector3.forward * joystick.Vertical + Vector3.right * joystick.Horizontal;
-        return joystickMovement;
+
+#if !UNITY_ANDROID
+        return Vector3.zero;
 #endif
 
-        return Vector3.zero;
+        Vector3 joystickMovement = new Vector3(Horizontal, 0f, Vertical);
+        return joystickMovement;
     }
-
-    bool TouchOnJoystick(){
-        for (int i = 0; i < Input.touchCount; i++){
-            Touch touch = Input.touches[i];
-
-            bool touchingJoystick = FindObjectOfType<Joystick>().TouchingJoystick(touch.position);
-            if (touchingJoystick){
-                joystickTouchIndex = i;
-                return true;
-            }
-        }
-        return false;
-    }
-    void TouchNearJoystick(){
-        float minVal = float.MaxValue;
-        int minIndex = -1;
-        
-        Rect rect = FindObjectOfType<Joystick>().GetComponent<RectTransform>().rect;
-        Vector2 rectDimentions = new Vector2 (rect.width, rect.height);
-
-        for (int i = 0; i < Input.touchCount; i++){
-            Touch touch = Input.touches[i];
-
-            float dis = Vector2.Distance(rectDimentions, touch.position);
-            
-            if (dis < minVal){
-                minIndex = i;
-            }
-        }
-
-        joystickTouchIndex = minIndex;
-    }
-
-    int joystickTouchIndex = -1;
     protected virtual Vector2 TouchMovement()
     {
-        Vector2 touchInput = Vector2.zero;
-        
-        bool joystickMoving = GetJoystickMovement() != Vector3.zero;
-
-        if (!joystickMoving) joystickTouchIndex = -1;
-        else TouchNearJoystick();
-        // else{
-        //     if (Input.touchCount == 1) {joystickTouchIndex = 0; return touchInput;}
-        //     else if (joystickTouchIndex == -1) {
-        //         bool caughtIndex = TouchOnJoystick();
-        //         if (!caughtIndex) TouchNearJoystick();
-        // }
-        // }
-        
-        // string message = "";
-        
-        // for (int i = 0; i < Input.touchCount; i++){
-        //     Touch touch = Input.touches[i];
-
-        //     bool touchingJoystick = FindObjectOfType<Joystick>().TouchingJoystick(touch.position);
-        //     message += String.Format("touch #{0} is {1} touching joystick. position: {2}\n", i, (touchingJoystick ? " " : " not"), touch.position);
-        // }
-        // message += "joystick touch index: " + joystickTouchIndex;
-        // PrintToDebugger(message);
-       
-        
-
-        for (int i = 0; i < Input.touchCount; i++){
-            if (i == joystickTouchIndex) continue;
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            Touch touch = Input.GetTouch(i);
+            bool isTouchJoystick = touch.position.x < Screen.width / 2f;
+            Debug.Log(string.Format("touch {0} at: {1}",i, isTouchJoystick));
             
-            Touch touch = Input.touches[i];
-
-
-            Vector2 touchDelta = touch.deltaPosition;
-
-
-            float rotationX = touchDelta.y * touchSensitivity;
-            float rotationY = touchDelta.x * touchSensitivity;
-
-            // Apply rotation based on touch input
-            verticalRotStore += rotationX * 0.5f;
-            verticalRotStore = Mathf.Clamp(verticalRotStore, -60f, 60f);
-
-            if (invertLook)
-                viewPoint.rotation = Quaternion.Euler(verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
-            else
-                viewPoint.rotation = Quaternion.Euler(-verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
-
-            // Set touch input values similar to Input.GetAxisRaw()
-            touchInput.x = rotationY;
-            touchInput.y = rotationX;
-
-            return touchInput;
+            if (isTouchJoystick) continue;
+            return touch.deltaPosition * touchSensitivity;
         }
-        
         return Vector2.zero;
     }
 
     protected virtual Vector2 MouseMovement()
     {
-        if (Input.touchCount > 0) return TouchMovement();
-        else                      joystickTouchIndex = -1;
+        bool touchingTheScreen = Input.touchCount > 0;
 
+#if (UNITY_ANDROID)
+        mouseInput = TouchMovement();
+#else
         mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")) * mouseSensitivity;
+#endif
 
         verticalRotStore += mouseInput.y;
         verticalRotStore = Mathf.Clamp(verticalRotStore, -60f, 60f);
@@ -573,9 +497,9 @@ public class BasicsController : MonoBehaviourPunCallbacks
 
         bool isShooting = Input.GetMouseButton(0);
 
-#if UNITY_ANDROID
-        isShooting = TouchMovement() != Vector2.zero;
-#endif
+// #if UNITY_ANDROID
+//         isShooting = TouchMovement() != Vector2.zero;
+// #endif
 
         if (isShooting)
         {

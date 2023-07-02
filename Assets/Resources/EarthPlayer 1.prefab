@@ -1991,6 +1991,9 @@ MonoBehaviour:
   - {fileID: 845944528437491218}
   - {fileID: 3471555419671228164}
   - {fileID: 8704945030515875947}
+  JoystickTouchIndex: 0
+  Horizontal: 0
+  Vertical: 0
   LandPlaceGameObject: {fileID: 6810688040913367738}
   impactArea: {fileID: 4344771732463078517}
   impactAreaEffect: {fileID: 1733887475443806906}

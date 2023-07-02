@@ -6,7 +6,7 @@ public class AndroidMovementButtons : MonoBehaviour {
     void PrintToDebugger(string message){GameObject.Find("DEBUGGER").GetComponent<TMP_Text>().text = $"{message}{'\n'}"; Debug.Log(message);}
     void AddToDebugger(string message){GameObject.Find("DEBUGGER").GetComponent<TMP_Text>().text += $"{message}{'\n'}"; Debug.Log(message);}
 
-    BasicsController controller;
+    [HideInInspector] public BasicsController controller;
 
     bool IsDestroyed() => respawnButton == null || gameObject == null;
     void Show(){if(IsDestroyed()) return; respawnButton.gameObject.SetActive(false); gameObject.SetActive(true);}
@@ -19,7 +19,6 @@ public class AndroidMovementButtons : MonoBehaviour {
 
     public void SetController(BasicsController _controller){
         controller = _controller;
-        // PrintToDebugger($"set controller: {controller.gameObject.name}");
         Show();
     }
 
@@ -42,7 +41,6 @@ public class AndroidMovementButtons : MonoBehaviour {
         if (controller == null) return;
 
         bool gameHasEnded = MatchManager.instance.state == MatchManager.GameState.Ending;
-        // if (gameHasEnded) SelfDestruct();
         if (gameHasEnded) return;
         if (!controller.IsDead()) return;
         
@@ -73,9 +71,6 @@ public class AndroidMovementButtons : MonoBehaviour {
         // if not playing, return
         if (controller == null || !controller.IsPlaying()) return;
 
-        // PrintToDebugger($"button click: {str}");
-        // AddToDebugger($"controller exist? {controller!=null}");
-        // AddToDebugger($"controller can jump? {CanJump()}");
 
         // if dead, only respawn available
         if (controller.IsDead()) {

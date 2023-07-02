@@ -5021,6 +5021,7 @@ MonoBehaviour:
   rangeY: 4
   distBetweenDots: 5
   subDotsCount: 2
+  inTestMode: 0
 --- !u!1 &6054149648429401694
 GameObject:
   m_ObjectHideFlags: 0
@@ -5358,10 +5359,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7343735721099873453}
     m_Modifications:
-    - target: {fileID: 279909173, guid: bd5bd682ddb9575468b4c89d221677dd, type: 3}
-      propertyPath: m_ShowMaskGraphic
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2505459731009940214, guid: bd5bd682ddb9575468b4c89d221677dd, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

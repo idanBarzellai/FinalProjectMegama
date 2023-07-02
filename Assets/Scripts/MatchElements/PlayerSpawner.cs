@@ -36,7 +36,7 @@ public class PlayerSpawner : MonoBehaviour
             player = PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint.position, spawnPoint.rotation);
             UIController.instance.PickImage(playerChosen); 
 
-            UIController.instance.androidUI.SetController(player.GetComponent<BasicsController>());
+            UIController.instance.androidUI?.SetController(player.GetComponent<BasicsController>());
             
 
             // Addd powerup

@@ -1590,6 +1590,8 @@ MonoBehaviour:
   - {fileID: 8468467706000267099}
   - {fileID: 2098288572222404809}
   - {fileID: 7573598848416146703}
+  Horizontal: 0
+  Vertical: 0
   ImpactArea: {fileID: 4743030604366730846}
   impactAreaEffect: {fileID: 1591020906539915966}
 --- !u!1 &1616809216240382195 stripped

@@ -65,7 +65,6 @@ public class ShotController : MonoBehaviourPunCallbacks
         yield return new WaitForSecondsRealtime(waitBeforeDestroy);
         if (photonView.IsMine)
         {
-            Debug.Log("Destoryed shot");
             PhotonNetwork.Destroy(gameObject);
         }
 

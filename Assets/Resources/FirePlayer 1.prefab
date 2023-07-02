@@ -2616,6 +2616,9 @@ MonoBehaviour:
   - {fileID: 7955489084656240969}
   - {fileID: 7406148689840620872}
   - {fileID: 4112006708849335814}
+  JoystickTouchIndex: 0
+  Horizontal: 0
+  Vertical: 0
   fireTrail: {fileID: 5212674803331259590, guid: 8e18caeb00733444fbf503740142f128, type: 3}
   firetrailInstances: []
 --- !u!114 &6009414979023058638

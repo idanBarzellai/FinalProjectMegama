@@ -1200,6 +1200,9 @@ MonoBehaviour:
   - {fileID: 4010033308446821035}
   - {fileID: 4403160519571512338}
   - {fileID: 1115650528814414480}
+  JoystickTouchIndex: 0
+  Horizontal: 0
+  Vertical: 0
   impactArea: {fileID: 4641799441074548902, guid: 59534d05e8238ed43ad92ee997da3721, type: 3}
 --- !u!114 &1573022670529203127
 MonoBehaviour:
