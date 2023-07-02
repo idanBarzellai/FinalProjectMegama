@@ -19,9 +19,6 @@ public class SpawnManager : MonoBehaviour
     public static Transform GetSpawnPoint()
     {
         var spawnPoints = instance.spawnPoints;
-        Debug.Log(spawnPoints == null ? (instance == null ? "instance is null" : "instance isnt null but spawn points list is null") 
-                    : $"spawn points count: {spawnPoints.Count}");
-
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
         spawnPoints.Remove(spawnPoint);
         return spawnPoint;

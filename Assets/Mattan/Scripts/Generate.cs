@@ -11,6 +11,8 @@ public class Generate : MonoBehaviourPunCallbacks
     {
     }
     
+    string badBehaviourPath = "Tiles/behaviour - dmg";
+    string windingBehaviourPath = "Tiles/behaviour - winding";
     public bool diffHeights;
     [SerializeField] int mapRadius = 3;
     [SerializeField] float pBadTile = 0.2f;
@@ -19,15 +21,17 @@ public class Generate : MonoBehaviourPunCallbacks
     MapPalletteScriptableObject chosenPallette;
     [SerializeField] float scaleFactor = 1;
     [SerializeField] int seedsCount = 2;
+    public bool interpolateHeights; 
+    public int rangeY; 
+    public int distBetweenDots; 
+    public int subDotsCount;
+    public bool inTestMode = false;
     
-    float heightDeltas = 3.5f;
 
     void PickRandomPallette(){chosenPallette = pallettes[Random.Range(0, pallettes.Length)];}
 
     public void SpawnSurface(){
-        if (!PhotonNetwork.IsMasterClient) return;
-
-        bool inTestMode = MatchManager.GetState() == MatchManager.GameState.Testing;
+        if (!inTestMode && !PhotonNetwork.IsMasterClient) return;
 
 
         PickRandomPallette();
@@ -53,7 +57,6 @@ public class Generate : MonoBehaviourPunCallbacks
             var seed = new Point3D(seedX, seedY, 0, type);
             seeds.Add(seed);
         }
-
         for (int xIndex = -mapRadius + 1; xIndex < mapRadius; xIndex++)
         {
             for (int yIndex = -mapRadius + 1; yIndex < mapRadius; yIndex++)
@@ -104,17 +107,16 @@ public class Generate : MonoBehaviourPunCallbacks
                                                                 : Random.Range(0f,1f) < 0.5f 
                                                                     ? TileBehaviour.BAD 
                                                                     : TileBehaviour.WINDING;
-
                     switch (tileBehaviour)
                     {
                         case TileBehaviour.BAD:
-                            newTile.transform.Find("behaviour - dmg").gameObject.SetActive(true);
+                            newTile.GetComponent<TileDecorBehaviour>().SpawnBehaviour(badBehaviourPath);
                             break;
                         case TileBehaviour.WINDING:
-                            newTile.transform.Find("behaviour - winding").gameObject.SetActive(true);
+                            newTile.GetComponent<TileDecorBehaviour>().SpawnBehaviour(windingBehaviourPath);
                             break;
                         default:
-                            newTile.GetComponent<TileDecor>().Decor();
+                            newTile.GetComponent<TileDecorBehaviour>().Decor();
                             break;
                     }
                 }
@@ -123,10 +125,6 @@ public class Generate : MonoBehaviourPunCallbacks
         }
     }
 
-    public bool interpolateHeights; 
-    public int rangeY; 
-    public int distBetweenDots; 
-    public int subDotsCount;
     public void RecreateSurface(){
 
         foreach (Transform tile in transform)
@@ -144,7 +142,7 @@ public class Generate : MonoBehaviourPunCallbacks
 
 
     private void Update() {
-        bool isWaiting = MatchManager.GetState() == MatchManager.GameState.Waiting || MatchManager.GetState() == MatchManager.GameState.Testing;
+        bool isWaiting = MatchManager.GetState() == MatchManager.GameState.Waiting || inTestMode;
         if (transform.childCount == 0 && isWaiting) SpawnSurface();
     }
 }

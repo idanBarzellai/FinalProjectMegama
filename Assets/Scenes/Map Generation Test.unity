@@ -231,6 +231,7 @@ MonoBehaviour:
   rangeY: 6
   distBetweenDots: 5
   subDotsCount: 2
+  inTestMode: 0
 --- !u!1 &1707437589
 GameObject:
   m_ObjectHideFlags: 0
