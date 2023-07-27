@@ -11,23 +11,33 @@ public class Generate : MonoBehaviourPunCallbacks
     {
     }
     
-    string badBehaviourPath = "Tiles/behaviour - dmg";
-    string windingBehaviourPath = "Tiles/behaviour - winding";
-    public bool diffHeights;
+    [Header("Grid properties")]
     [SerializeField] int mapRadius = 3;
-    [SerializeField] float pBadTile = 0.2f;
-
-    public MapPalletteScriptableObject [] pallettes;
-    MapPalletteScriptableObject chosenPallette;
-    [SerializeField] float scaleFactor = 1;
-    [SerializeField] int seedsCount = 2;
-    public bool interpolateHeights; 
     public int rangeY; 
+    [SerializeField] int seedsCount = 2;
+    [SerializeField] float scaleFactor = 1;
+    public bool interpolateHeights; 
     public int distBetweenDots; 
     public int subDotsCount;
+    public bool diffHeights;
+
+    [Header("Map variety properties")]
+    [SerializeField] float pBadTile = 0.2f;
+    public MapPalletteScriptableObject [] pallettes;
+
+
+    [Header("Test mode behaviours")]
+
+    [Tooltip("Use on test mode")]
     public bool inTestMode = false;
+
+    [Tooltip("Spawn behaviours on the tiles")]
     public bool spawnBehaviourInTesting = false;
     
+    
+    string badBehaviourPath = "Tiles/behaviour - dmg";
+    string windingBehaviourPath = "Tiles/behaviour - winding";
+    MapPalletteScriptableObject chosenPallette;
 
     void PickRandomPallette(){chosenPallette = pallettes[Random.Range(0, pallettes.Length)];}
 
@@ -235,12 +245,12 @@ public class Generate : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        SpawnSurface();
+        if (!inTestMode) SpawnSurface();
     }
 
 
     private void Update() {
-        bool isWaiting = MatchManager.GetState() == MatchManager.GameState.Waiting || inTestMode;
+        bool isWaiting = MatchManager.GetState() == MatchManager.GameState.Waiting && !inTestMode;
         if (transform.childCount == 0 && isWaiting) SpawnSurface();
     }
 }
