@@ -27,7 +27,10 @@ public class GenerateEditor2 : Editor
 
         Generate generator = (Generate)target;
 
-        if (GUILayout.Button("Pick Different Palette")) generator.RecreateSurface();
+        if (GUILayout.Button("Pick Different Palette")) {
+            generator.inTestMode = true;
+            generator.RecreateSurfaceTesting();
+        }
 
         GUILayout.Space(15);
 
