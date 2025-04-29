@@ -22,7 +22,7 @@ public class SkillHelper : MonoBehaviour
     {
         if (airSkillActive)
         {
-            if (!playerInMidAir && player.GetInSkill() && playerRb.velocity.y <= 0.005)
+            if (!playerInMidAir && player.GetInSkill() && playerRb.linearVelocity.y <= 0.005)
             {
                 StartCoroutine(airSKillHelper());
 
@@ -49,7 +49,7 @@ public class SkillHelper : MonoBehaviour
     {
         playerInMidAir = true;
         playerRb.useGravity = false;
-        playerRb.velocity= Vector3.zero;
+        playerRb.linearVelocity= Vector3.zero;
         yield return new WaitForSecondsRealtime(skillDuration);
         player.SetInSkill(false);
         playerInMidAir = false;

@@ -94,11 +94,11 @@ public class WaterPlayer : BasicsController
 
     private void stopGravityForSkill()
     {
-        if (GetInSkill() && !skillCanceled && gravityShouldBeStopped && rb.velocity.y <= stopGravityThershold)
+        if (GetInSkill() && !skillCanceled && gravityShouldBeStopped && rb.linearVelocity.y <= stopGravityThershold)
         {
             
             rb.useGravity = false;
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
         }
     }
     private IEnumerator ShouldStopGravity()

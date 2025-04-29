@@ -1,8 +1,5 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using WebSocketSharp;
 
 public class WaveInstanceController : SkillInstanceController
 {
@@ -31,14 +28,14 @@ public class WaveInstanceController : SkillInstanceController
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (!playerName.IsNullOrEmpty())
+        if (!string.IsNullOrEmpty(playerName))
         {
             if (other.CompareTag("Player") && other.gameObject.GetPhotonView().Owner.NickName != playerName)
             {
                 PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 3);
 
                 Vector3 dir = transform.forward;
-                other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg, dir * pushForce, player.gameObject.GetPhotonView().Owner.ActorNumber,  playerName);
+                other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg, dir * pushForce, player.gameObject.GetPhotonView().Owner.ActorNumber, playerName);
                 //other.gameObject.GetPhotonView().RPC("PushedForce", RpcTarget.All, dir * pushForce);
 
             }

@@ -26,16 +26,16 @@ public class Coin : PowerupBaseController
 
     private void FixedUpdate()
     {
-        if (rb.velocity.y <= 0)
-            rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplier * downForce * Time.deltaTime;
+        if (rb.linearVelocity.y <= 0)
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * fallMultiplier * downForce * Time.deltaTime;
         //rb.AddForce(Vector3.down * fallMultiplyer, ForceMode.Force);
 
         else
             // rb.AddForce(Vector3.down * fallMultiplyer * downForce, ForceMode.Force);
-            rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplier * Time.deltaTime;
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * fallMultiplier * Time.deltaTime;
         if (goToPlayer)
         {
-            rb.velocity = (player.transform.position - transform.position).normalized * speed;
+            rb.linearVelocity = (player.transform.position - transform.position).normalized * speed;
             //transform.position = Vector3.MoveTowards(transform.position, player.transform.position, .03f);
         }
     }

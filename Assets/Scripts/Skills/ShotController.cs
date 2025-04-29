@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using WebSocketSharp;
 
 public class ShotController : MonoBehaviourPunCallbacks
 {
@@ -26,7 +24,7 @@ public class ShotController : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!playerName.IsNullOrEmpty())
+        if (!string.IsNullOrEmpty(playerName))
         {
             if (other.CompareTag("Player") && !other.CompareTag("DeadHead") && other.gameObject.GetPhotonView().Owner.NickName != playerName)
             {
@@ -34,13 +32,13 @@ public class ShotController : MonoBehaviourPunCallbacks
                 coinToss = Instantiate(coinObject, other.gameObject.transform.position + offset, Quaternion.identity);
                 coinToss.GetComponentInChildren<Coin>().SetPlayer(shooter);
 
-                other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All,dmg , Vector3.zero, PhotonNetwork.LocalPlayer.ActorNumber, playerName);
+                other.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg, Vector3.zero, PhotonNetwork.LocalPlayer.ActorNumber, playerName);
                 PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 1);
                 StartCoroutine(DestroyOvertime());
             }
-            
+
         }
-        if(other.CompareTag("TileDecor") || other.CompareTag("Ground"))
+        if (other.CompareTag("TileDecor") || other.CompareTag("Ground"))
         {
             StartCoroutine(DestroyOvertime());
         }
@@ -58,7 +56,7 @@ public class ShotController : MonoBehaviourPunCallbacks
         shooter = _player;
     }
 
-   
+
 
     public IEnumerator DestroyOvertime(float waitBeforeDestroy = 0)
     {

@@ -214,13 +214,13 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         if (IsApplingDownForce())
         {
-            if (rb.velocity.y <= 0)
-                rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplyer  * downForce* Time.deltaTime;
+            if (rb.linearVelocity.y <= 0)
+                rb.linearVelocity += Vector3.up * Physics.gravity.y * fallMultiplyer  * downForce* Time.deltaTime;
             //rb.AddForce(Vector3.down * fallMultiplyer, ForceMode.Force);
 
             else
                // rb.AddForce(Vector3.down * fallMultiplyer * downForce, ForceMode.Force);
-                rb.velocity += Vector3.up * Physics.gravity.y *fallMultiplyer * Time.deltaTime;
+                rb.linearVelocity += Vector3.up * Physics.gravity.y *fallMultiplyer * Time.deltaTime;
         }
     }
     protected virtual bool IsApplingDownForce()
@@ -237,7 +237,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     }
     public void Jump()
     {
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpVelocity * additionToJump, ForceMode.Impulse);
         setGrounded(false);
         additionToJump = 1;
@@ -281,9 +281,9 @@ public class BasicsController : MonoBehaviourPunCallbacks
     private IEnumerator DashCo(Vector3 dir)
     {
         photonView.RPC("SetAnim", RpcTarget.All, "Dash");
-        rb.velocity = rb.velocity + dir.normalized * dashForce;
+        rb.linearVelocity = rb.linearVelocity + dir.normalized * dashForce;
         yield return new WaitForSeconds(dashDur);
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
     }
 
     [PunRPC]
@@ -322,7 +322,7 @@ public class BasicsController : MonoBehaviourPunCallbacks
     {
         SoundManager.instacne.Play("Death");
         col.enabled = false;
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         photonView.RPC("ScatterBodyParts", RpcTarget.All);
         PlayerSpawner.instance.Die(damager); // debug purposes change false to regular
         PhotonNetwork.Instantiate(playerDeathEffect.name, transform.position, Quaternion.identity);

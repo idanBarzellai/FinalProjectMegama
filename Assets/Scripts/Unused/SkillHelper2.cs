@@ -24,7 +24,7 @@ public class SkillHelper2 : MonoBehaviour
     {
         if (waterSkillActive)
         {
-            if (!skillCanceled && !playerInMidAir && player.GetInSkill() && playerRb.velocity.y <= 0.005)
+            if (!skillCanceled && !playerInMidAir && player.GetInSkill() && playerRb.linearVelocity.y <= 0.005)
                 StartCoroutine(airSKillHelper());
 
             if (player.GetIsStaticSkill())
@@ -77,7 +77,7 @@ public class SkillHelper2 : MonoBehaviour
         Debug.Log("hey");
         playerInMidAir = true;
         playerRb.useGravity = false;
-        playerRb.velocity = Vector3.zero;
+        playerRb.linearVelocity = Vector3.zero;
         yield return new WaitForSecondsRealtime(skillDuration);
         resetVariables();
     }

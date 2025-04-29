@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using WebSocketSharp;
 
 public class FireInstanceController : SkillInstanceController
 {
@@ -17,13 +15,13 @@ public class FireInstanceController : SkillInstanceController
         //StartCoroutine(skillManager.DestroyOvertime(lifetime, photonView.Owner));
     }
 
- 
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!playerName.IsNullOrEmpty())
+        if (!string.IsNullOrEmpty(playerName))
         {
             if (other.CompareTag("Player") && other.gameObject.GetPhotonView().Owner.NickName != playerName)
-            { 
+            {
                 BasicsController player = other.GetComponent<BasicsController>();
                 if (!player.GetReceivingDPS())
                 {
@@ -36,7 +34,7 @@ public class FireInstanceController : SkillInstanceController
     }
     private void OnTriggerExit(Collider other)
     {
-        if (!playerName.IsNullOrEmpty())
+        if (!string.IsNullOrEmpty(playerName))
             if (other.CompareTag("Player") && other.gameObject.GetPhotonView().Owner.NickName != playerName)
                 other.GetComponent<BasicsController>().SetReceivingDPS(false);
 
@@ -50,7 +48,7 @@ public class FireInstanceController : SkillInstanceController
             PhotonNetwork.Destroy(hitfx);
             PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 1);
 
-            player.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg,Vector3.zero, player.gameObject.GetPhotonView().Owner.ActorNumber, playerName);
+            player.gameObject.GetPhotonView().RPC("DealDamage", RpcTarget.All, dmg, Vector3.zero, player.gameObject.GetPhotonView().Owner.ActorNumber, playerName);
             yield return new WaitForSecondsRealtime(dpsCooldown);
         }
     }

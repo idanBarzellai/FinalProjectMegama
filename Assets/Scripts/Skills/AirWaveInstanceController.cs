@@ -1,10 +1,5 @@
-using Cinemachine.Utility;
 using Photon.Pun;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using WebSocketSharp;
 
 public class AirWaveInstanceController : SkillInstanceController
 {
@@ -21,7 +16,7 @@ public class AirWaveInstanceController : SkillInstanceController
     private void OnTriggerEnter(Collider other)
     {
 
-        if (!playerName.IsNullOrEmpty())
+        if (!string.IsNullOrEmpty(playerName))
         {
             PhotonView otherPlayerPhotoneView = other.gameObject.GetPhotonView();
             if (other.CompareTag("Player") && other.gameObject.GetPhotonView().Owner.NickName != playerName)
@@ -34,7 +29,7 @@ public class AirWaveInstanceController : SkillInstanceController
                 PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + 5);
 
                 //otherPlayerPhotoneView.RPC("PushedForce", RpcTarget.All,push);
-                otherPlayerPhotoneView.RPC("DealDamage", RpcTarget.All, dmg, push,PhotonNetwork.LocalPlayer.ActorNumber, playerName);
+                otherPlayerPhotoneView.RPC("DealDamage", RpcTarget.All, dmg, push, PhotonNetwork.LocalPlayer.ActorNumber, playerName);
 
             }
         }

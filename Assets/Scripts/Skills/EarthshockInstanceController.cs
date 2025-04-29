@@ -1,8 +1,5 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using WebSocketSharp;
 
 public class EarthshockInstanceController : SkillInstanceController
 {
@@ -17,7 +14,7 @@ public class EarthshockInstanceController : SkillInstanceController
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (!playerName.IsNullOrEmpty())
+        if (!string.IsNullOrEmpty(playerName))
         {
             if (other.CompareTag("Player") && other.gameObject.GetPhotonView().Owner.NickName != playerName)
             {

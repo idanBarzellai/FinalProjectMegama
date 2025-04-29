@@ -91,11 +91,11 @@ public class CharcterController : MonoBehaviourPunCallbacks
             moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
 
             // Falling
-            if (!isGrounded && rb.velocity.y < 0)
-                rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplyer * Time.deltaTime;
+            if (!isGrounded && rb.linearVelocity.y < 0)
+                rb.linearVelocity += Vector3.up * Physics.gravity.y * fallMultiplyer * Time.deltaTime;
 
-            if (!isGrounded && rb.velocity.y > 0)
-                rb.velocity += Vector3.up * Physics.gravity.y * Time.deltaTime;
+            if (!isGrounded && rb.linearVelocity.y > 0)
+                rb.linearVelocity += Vector3.up * Physics.gravity.y * Time.deltaTime;
 
             anim.SetTrigger((Math.Abs(moveDir.x) > 0 || Math.Abs(moveDir.z) > 0) ? "Run" : "Idle");
 
@@ -168,7 +168,7 @@ public class CharcterController : MonoBehaviourPunCallbacks
                 // Check minmumHeight
                 if (transform.position.y > 18)
                 {
-                    rb.velocity = new Vector3(rb.velocity.x, Physics.gravity.y, rb.velocity.z);
+                    rb.linearVelocity = new Vector3(rb.linearVelocity.x, Physics.gravity.y, rb.linearVelocity.z);
                 }
             }
         }

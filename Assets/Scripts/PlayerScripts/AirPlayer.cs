@@ -53,7 +53,7 @@ public class AirPlayer : BasicsController
 
     private void Fly()
     {
-        if (GetInSkill() && !isGrounded && gravityShouldBeStopped && rb.velocity.y <= stopGravityThershold)
+        if (GetInSkill() && !isGrounded && gravityShouldBeStopped && rb.linearVelocity.y <= stopGravityThershold)
         {
             StartCoroutine(FlyCo());
             AirBurstEffect();
@@ -76,7 +76,7 @@ public class AirPlayer : BasicsController
     void StopGravity()
     {
         rb.useGravity = false;
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
     }
 
     private void resetVariables()
